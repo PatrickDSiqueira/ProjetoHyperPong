@@ -1,30 +1,38 @@
-import { BsXLg as IconeClose } from "react-icons/bs";
-import { Container, Content } from "./styles";
+import { BsFillCaretLeftFill as IconeClose } from "react-icons/bs";
+import { Link } from "react-router-dom";
+import { Container, Content, ContinerHeader } from "./styles";
 
 interface Props {
     sidebar: boolean
-    active :  React.Dispatch<React.SetStateAction<boolean>>
+    active: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const Sidebar= (props : Props) =>{
-    const {sidebar, active}  = props;
+const Sidebar = (props: Props) => {
+    const { sidebar, active } = props;
 
-    const closeSidebar = () =>{
+    const closeSidebar = () => {
         active(false)
     }
 
-    return(
+    return (
         <Container sidebar={sidebar}>
-            <IconeClose onClick={closeSidebar} />
+            <ContinerHeader>
+            <IconeClose onClick={closeSidebar} size="40"/>
+            <h1>Menu</h1>
+            </ContinerHeader>
             <Content>
-                <p>Rachão</p>
-                <p>Campas</p>
-                <p>Contato</p>
-                <p>Número</p>
-                <p></p>
+                <Link to={''}>
+                    <p>Rachões</p>
+                </Link>
+                <Link to={''}>
+                    <p>Copa Hyper</p>
+                </Link>
+                <Link to={''}>
+                    <p>Contato</p>
+                </Link>
             </Content>
-        </Container> 
+        </Container>
     )
-} 
+}
 
 export default Sidebar;

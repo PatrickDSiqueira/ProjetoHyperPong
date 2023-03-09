@@ -11,7 +11,7 @@ export default function Header() {
 
     const showSidebar = () => setSidebar(!sidebar)
     return <Container>
-        <IconMenu onClick={showSidebar} />
+        <IconMenu onClick={showSidebar} size="40"/>
         {sidebar && <Sidebar active = {setSidebar} sidebar = {sidebar}/>}
     </ Container>
 }

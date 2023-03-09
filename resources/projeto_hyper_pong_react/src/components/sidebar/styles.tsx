@@ -5,6 +5,7 @@ interface Props {
 }
 
 export const Container  = styled.div<Props>`
+    color: #C1FF00 ;
     background-color: #171923;
     position: fixed;
     height: 100%;
@@ -15,7 +16,7 @@ export const Container  = styled.div<Props>`
     animation: showSidebar .4s;
 
     >svg {
-        position: fixed;
+        /* position: fixed; */
         color: white;
         width: 30px;
         height: 30px;
@@ -36,6 +37,18 @@ export const Container  = styled.div<Props>`
         
     }
 `;
+export const ContinerHeader = styled.div`
+    margin-left: 32px;
+    margin-top: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    
+    >h1{
+        margin-left: 50px;
+    }
+`;
+
 
 export const Content  = styled.div`
     margin-top: 100px;
