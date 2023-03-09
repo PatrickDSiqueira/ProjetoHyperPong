@@ -13,7 +13,7 @@ interface Props {
     data : Date | string
 }
 
-function CardEvento (props : Props){
+function CardEvento_Modelo2 (props : Props){
     const {bg, data, titulo, status} = props;
     return<>
         <ContainerCard bg={bg} >
@@ -27,4 +27,4 @@ function CardEvento (props : Props){
     </>
 }
 
-export default CardEvento;
+export default CardEvento_Modelo2;
