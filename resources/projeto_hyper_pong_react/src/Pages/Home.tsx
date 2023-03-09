@@ -3,6 +3,6 @@ import Header from "../components/header/Header";
 
 export default function Home() {
     return <>
-        <Header />
+        <Header titulo="Lista de Eventos Hyper"/>
     </>
 }

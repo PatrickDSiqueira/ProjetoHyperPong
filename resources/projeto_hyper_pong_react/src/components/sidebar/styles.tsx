@@ -16,8 +16,6 @@ export const Container  = styled.div<Props>`
     animation: showSidebar .4s;
 
     >svg {
-        /* position: fixed; */
-        color: white;
         width: 30px;
         height: 30px;
         margin-top: 32px;
