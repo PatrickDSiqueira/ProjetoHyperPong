@@ -8,7 +8,7 @@ export const Container = styled.div`
     color: #C1FF00;
 
     padding-left: 32px;
-    align-items: center;
+     align-items: center;
     justify-content: left;
 
     >h1 {

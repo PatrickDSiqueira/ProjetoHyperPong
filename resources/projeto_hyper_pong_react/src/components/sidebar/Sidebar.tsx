@@ -17,17 +17,17 @@ const Sidebar = (props: Props) => {
     return (
         <Container sidebar={sidebar}>
             <ContinerHeader>
-            <IconeClose onClick={closeSidebar} size="40"/>
+            <IconeClose onClick={closeSidebar} size="30"/>
             <h1>Menu</h1>
             </ContinerHeader>
             <Content>
-                <Link to={''}>
+                <Link to={'/rachoes'}>
                     <p>Rachões</p>
                 </Link>
-                <Link to={''}>
-                    <p>Copa Hyper</p>
+                <Link to={'/copas'}>
+                    <p>Copas Hyper</p>
                 </Link>
-                <Link to={''}>
+                <Link to={'/contato'}>
                     <p>Contato</p>
                 </Link>
             </Content>

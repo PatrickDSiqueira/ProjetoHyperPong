@@ -50,4 +50,17 @@ export const ContinerHeader = styled.div`
 
 export const Content  = styled.div`
     margin-top: 100px;
+    padding-left: 32px;
+
+    >a{
+        text-decoration: none;
+        cursor: pointer;
+        
+        >p{
+            padding-top: 24px;
+            font-size: 24px;
+            color: #FFFFFF;
+            
+        }
+    }
 `;
