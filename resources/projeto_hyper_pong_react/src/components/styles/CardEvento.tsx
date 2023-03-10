@@ -5,6 +5,7 @@ interface Props {
 }
 
 export const ContainerCard = styled.div<Props>`
+    background-image: url('http://rededoesporte.gov.br/pt-br/megaeventos/olimpiadas/modalidades/tenisdemesa1.jpeg/image');
     margin-top: 12px;
     display: flex;
     background-color: ${props => props.bg};
