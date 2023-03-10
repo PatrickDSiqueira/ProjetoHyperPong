@@ -1,4 +1,4 @@
-import { ContainerCard, TituloCard } from "./styles";
+import { ContainerCard, TituloCard } from "./styles/CardEvento";
 import { BsCalendar3 as IconCalendar } from "react-icons/bs";
 
 

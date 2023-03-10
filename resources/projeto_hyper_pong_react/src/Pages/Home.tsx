@@ -1,5 +1,5 @@
-import CardEvento, {Status} from "../components/CardEvento/CardEvento";
-import Header from "../components/header/Header";
+import CardEvento, {Status} from "../components/CardEvento";
+import Header from "../components/Header";
 
 export default function Home() {
     return <>

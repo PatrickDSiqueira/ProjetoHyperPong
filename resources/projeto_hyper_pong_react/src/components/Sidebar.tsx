@@ -1,6 +1,6 @@
 import { BsFillCaretLeftFill as IconeClose } from "react-icons/bs";
 import { Link } from "react-router-dom";
-import { Container, Content, ContinerHeader } from "./styles";
+import { Container, Content, ContinerHeader } from "./styles/Sidebar";
 
 interface Props {
     sidebar: boolean

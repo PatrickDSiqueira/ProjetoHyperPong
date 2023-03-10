@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { BsList as IconMenu } from "react-icons/bs"
-import Sidebar from "../sidebar/Sidebar";
-import { Container } from "./styles";
+import Sidebar from "./Sidebar";
+import { Container } from "./styles/Header";
 
 
 interface Props {
