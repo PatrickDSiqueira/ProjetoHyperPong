@@ -22,7 +22,7 @@ export const Container  = styled.div<Props>`
         margin-left: 32px;
         cursor: pointer;
     }
-    
+
     @keyframes showSidebar {
         from {
             opacity: 0;
@@ -32,7 +32,7 @@ export const Container  = styled.div<Props>`
             opacity: 1;
             width: 300px;
         }
-        
+
     }
 `;
 export const ContinerHeader = styled.div`
@@ -41,7 +41,11 @@ export const ContinerHeader = styled.div`
     display: flex;
     align-items: center;
     justify-content: left;
-    
+
+    > svg {
+        cursor: pointer;
+    }
+
     >h1{
         margin-left: 50px;
     }
@@ -55,12 +59,12 @@ export const Content  = styled.div`
     >a{
         text-decoration: none;
         cursor: pointer;
-        
+
         >p{
             padding-top: 24px;
             font-size: 24px;
             color: #FFFFFF;
-            
+
         }
     }
 `;

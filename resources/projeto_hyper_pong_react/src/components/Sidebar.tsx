@@ -17,7 +17,7 @@ const Sidebar = (props: Props) => {
     return (
         <Container sidebar={sidebar}>
             <ContinerHeader>
-            <IconeClose onClick={closeSidebar} size="30"/>
+            <IconeClose onClick={closeSidebar} size="30" />
             <h1>Menu</h1>
             </ContinerHeader>
             <Content>

@@ -18,8 +18,6 @@ function ListCardEvents() {
         }
     }
 
-    const eventos = database.CardEvento;
-
     return (
         <>{visible && <Message msg="Evento Encerrado !" type="error" /> }
             <ListCard>
@@ -34,7 +32,7 @@ function ListCardEvents() {
                             <div style={{ paddingLeft: "15px" }}>
                                 <span>{(database.CardEvento[0].data)}</span>
                                 <div style={{ display: "flex", justifyContent: "center" }}>
-                                    <LabelStatusEvent color={database.CardEvento[0].status == "DISPONIVEL" ? "green" : "red"}>{database.CardEvento[0].status}</LabelStatusEvent>
+                                    <LabelStatusEvent color={database.CardEvento[0].status === "DISPONIVEL" ? "green" : "red"}>{database.CardEvento[0].status}</LabelStatusEvent>
                                 </div>
                             </div>
                         </div>
@@ -52,7 +50,7 @@ function ListCardEvents() {
                             <div style={{ paddingLeft: "15px" }}>
                                 <span>{(database.CardEvento[1].data)}</span>
                                 <div style={{ display: "flex", justifyContent: "center" }}>
-                                    <LabelStatusEvent color={database.CardEvento[1].status == "DISPONIVEL" ? "green" : "red"}>{database.CardEvento[1].status}</LabelStatusEvent>
+                                    <LabelStatusEvent color={database.CardEvento[1].status === "DISPONIVEL" ? "green" : "red"}>{database.CardEvento[1].status}</LabelStatusEvent>
                                 </div>
                             </div>
                         </div>
@@ -71,7 +69,7 @@ function ListCardEvents() {
                             <div style={{ paddingLeft: "15px" }}>
                                 <span>{(database.CardEvento[0].data)}</span>
                                 <div style={{ display: "flex", justifyContent: "center" }}>
-                                    <LabelStatusEvent color={database.CardEvento[0].status == "DISPONIVEL" ? "green" : "red"}>{database.CardEvento[0].status}</LabelStatusEvent>
+                                    <LabelStatusEvent color={database.CardEvento[0].status === "DISPONIVEL" ? "green" : "red"}>{database.CardEvento[0].status}</LabelStatusEvent>
                                 </div>
                             </div>
                         </div>
@@ -89,7 +87,7 @@ function ListCardEvents() {
                             <div style={{ paddingLeft: "15px" }}>
                                 <span>{(database.CardEvento[1].data)}</span>
                                 <div style={{ display: "flex", justifyContent: "center" }}>
-                                    <LabelStatusEvent color={database.CardEvento[1].status == "DISPONIVEL" ? "green" : "red"}>{database.CardEvento[1].status}</LabelStatusEvent>
+                                    <LabelStatusEvent color={database.CardEvento[1].status === "DISPONIVEL" ? "green" : "red"}>{database.CardEvento[1].status}</LabelStatusEvent>
                                 </div>
                             </div>
                         </div>

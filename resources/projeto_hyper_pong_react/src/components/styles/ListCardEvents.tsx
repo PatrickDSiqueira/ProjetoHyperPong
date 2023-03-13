@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { Status } from "../../Database";
 
 interface PropsContainerCard {
     active : 1 | 0.6
@@ -12,7 +11,7 @@ export const ContainerCard = styled.div<PropsContainerCard>`
     margin-top: 12px;
     margin-left: 12px;
     display: flex;
-    background-color: '#000000';
+    background-color: #000000;
     width: 18rem;
     height: auto;
     border-radius: 31px;
@@ -64,7 +63,7 @@ export const LabelStatusEvent = styled.div<PropsLabelStatus>`
     justify-content: center;
     width: max-content;
     border-radius: 32px;
-    padding: 5px; 
+    padding: 5px;
     padding-left: 12px;
     padding-right: 12px;
     background-color: ${props =>props.color}
