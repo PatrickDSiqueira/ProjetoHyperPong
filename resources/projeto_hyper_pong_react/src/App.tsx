@@ -4,6 +4,7 @@ import {
 } from "react-router-dom";
 import Home from "./Pages/Home";
 import './App.css';
+import { Evento } from "./Pages/Evento";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
     <Route path="/copas" element={<Home />}  />
     <Route path="/rachoes" element={<Home />}  />
     <Route path="/contato" element={<Home />}  />
+    <Route path="/evento" element={<Evento />}  />
     </Routes>
     </BrowserRouter> 
   );
