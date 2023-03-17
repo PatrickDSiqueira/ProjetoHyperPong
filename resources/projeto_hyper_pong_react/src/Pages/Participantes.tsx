@@ -1,22 +1,32 @@
 import Header from "../components/Header";
-import {ContainerParticipantes} from "./styles/Participantes";
+import {ContainerParticipantes, ListaParticipante, TagParticipante} from "./styles/Participantes";
 import React from "react";
+import ButtonInscreva from "../components/ButtonInscreva";
 
-function ButtonInscreva() {
-    return null;
-}
+
 
 export default function Participantes(){
+    let nomeCategoria = "Categoria Absoluto";
     return <>
         <Header  titulo={"Lista de Participantes"}/>
         <ContainerParticipantes>
-            <p>Titulo</p>
-            <div>
-                legenda
-            </div>
-            <div>participantes</div>
-
-            <ButtonInscreva></ButtonInscreva>
+            <h1>{nomeCategoria}</h1>
+            <span id="containerLegenda">
+                <div className="containerIcone" >
+                    <div id="simbAmarelo" className="icone" /><span>Aguardando</span>
+                </div>
+                <div className="containerIcone">
+                    <div id="simbVerde" className="icone" /><span>Confirmado</span>
+                </div>
+            </span>
+            <ListaParticipante>
+                <TagParticipante statuscolor="#6AF367">Patrick Dias Siqueira</TagParticipante>
+                <TagParticipante statuscolor="#F1F367">Patrick Dias Siqueira</TagParticipante>
+                <TagParticipante statuscolor="#F1F367">Patrick Dias Siqueira</TagParticipante>
+                <TagParticipante statuscolor="#6AF367">Patrick Dias Siqueira</TagParticipante>
+                <TagParticipante statuscolor="#F1F367">Patrick Dias Siqueira</TagParticipante>
+            </ ListaParticipante>
+            <ButtonInscreva />
         </ContainerParticipantes>
     </>
 }
