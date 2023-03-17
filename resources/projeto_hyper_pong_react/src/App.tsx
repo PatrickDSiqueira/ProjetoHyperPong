@@ -6,6 +6,7 @@ import Home from "./Pages/Home";
 import './App.css';
 import { Evento } from "./Pages/Evento";
 import Participantes from "./Pages/Participantes";
+import Inscricao from "./Pages/Inscricao";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/contato" element={<Home />}  />
         <Route path="/evento" element={<Evento />}  />
         <Route path="/partipantes" element={<Participantes />}  />
+        <Route path="/inscricao" element={<Inscricao />}  />
     </Routes>
     </BrowserRouter>
   );

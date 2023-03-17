@@ -26,7 +26,7 @@ export default function Participantes(){
                 <TagParticipante statuscolor="#6AF367">Patrick Dias Siqueira</TagParticipante>
                 <TagParticipante statuscolor="#F1F367">Patrick Dias Siqueira</TagParticipante>
             </ ListaParticipante>
-            <ButtonInscreva />
+            <ButtonInscreva  />
         </ContainerParticipantes>
     </>
 }
