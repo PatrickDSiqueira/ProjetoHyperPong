@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/ProjetoHyperPong.iml" filepath="$PROJECT_DIR$/.idea/ProjetoHyperPong.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/projeto_hyper_pong_react.iml" filepath="$PROJECT_DIR$/.idea/projeto_hyper_pong_react.iml" />
     </modules>
   </component>
 </project>
