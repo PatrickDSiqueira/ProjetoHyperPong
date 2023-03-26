@@ -24,4 +24,9 @@ yarn-error.log*
 
 FirebaseService.tsx
 
+
 /.firebase
+
+*.cache
+
+.firebase/
