@@ -10,7 +10,7 @@ export default function CriarEvento() {
 
     interface Categoria  {
         nome: string,
-        numeroMáximoParticipante : number
+        maxParticipante : number
     }
     const [categorias, setCategorias] = useState<Categoria[]>([]);
     const [showNewCat, setShowNewCat] = useState<boolean>(false);
@@ -33,7 +33,7 @@ export default function CriarEvento() {
         if(nomeCat !== undefined && numCat !== undefined){
             var cat : Categoria = {
                 nome : nomeCat,
-                numeroMáximoParticipante : numCat
+                maxParticipante : numCat
             }
 
             setCategorias(categorias => [...categorias, cat])
@@ -56,17 +56,19 @@ export default function CriarEvento() {
                     <input type="text" placeholder="Nome do Evento" id="nomeEvento" name="nomeEvento" />
 
                     <label htmlFor="horario">Horário:</label>
-                    <input type="number" placeholder="Horário" id="horario" name="horario" />
+                    <input type="time" placeholder="Horário" id="horario" name="horario" />
 
                     <label htmlFor="data">Data:</label>
                     <input type="date" placeholder="Data" id="data" name="data" />
 
                     <label htmlFor="">Categorias:</label>
+                    <input type="text" id="categorias" name="categorias" hidden value={JSON.stringify(categorias)}/>
+                    <input type="number" id="status" name="status" hidden value={0}/>
                     
                     <div className={categorias.length?"":"hidden"}>
                         {
                             categorias.map((elem)=>{
-                                    return <div key={elem.nome} className="labelCategoria"><p>{elem.nome +" - "+ elem.numeroMáximoParticipante}<span onClick={()=>deleteCategoria(elem.nome)} className="deleteCategorias">X</span></p></ div>
+                                    return <div key={elem.nome} className="labelCategoria"><p>{elem.nome +" - "+ elem.maxParticipante}<span onClick={()=>deleteCategoria(elem.nome)} className="deleteCategorias">X</span></p></ div>
                             })
                         }
                     </div>
