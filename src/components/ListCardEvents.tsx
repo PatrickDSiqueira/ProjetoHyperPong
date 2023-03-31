@@ -15,7 +15,7 @@ function ListCardEvents() {
         data : string,
         horario : string,
         descricao : string,
-        status : number,
+        status : number|string,
         categoriasObj : object[]
     }
 
@@ -33,12 +33,18 @@ function ListCardEvents() {
     }
 
     useEffect(()=>{
-        const fetchTasks = async () => {
-    
-          const {data} = await axios.get('http://localhost:4000/api/admin/eventos');
-        //   setCategorias(categorias => [...categorias, cat])
+        console.log("teste");
+        
 
-          
+        const fetchTasks = async () => {
+
+          const {data} = await axios.get('http://localhost:4000/api/admin/events');
+        //   setCategorias(categorias => [...categorias, cat])
+        console.log(data);
+        setEventosLista(data)
+        
+
+    
           
         };
           fetchTasks();
@@ -49,7 +55,7 @@ function ListCardEvents() {
     return (
         <>{visible && <Message msg="Evento Encerrado !" type="error" />}
 
-            {eventosLista}
+            {JSON.stringify(eventosLista)}
             <ListCard>
                 <ContainerCard active={1} onClick={() => handleClickCardEvent(database.CardEvento[0])}>
                     <CardImage>
