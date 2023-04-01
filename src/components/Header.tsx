@@ -5,7 +5,7 @@ import { Container } from "./styles/Header";
 
 
 interface Props {
-    titulo : string
+    titulo : string | undefined
 }
 
 export default function Header(props : Props) {
