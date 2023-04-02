@@ -23,7 +23,7 @@ export const ContainerPageInscricao = styled.div`
   }
 
 
-  #inputDtaNascimento, #inputTelefone, #inputNomeSobrenome {
+  #dtaNascimento, #telefone, #nomeSobrenome {
     padding-left: 12px;
     height: 50px;
   }

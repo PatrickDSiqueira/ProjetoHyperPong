@@ -22,11 +22,8 @@ export default function CriarEvento() {
     }
 
     function deleteCategoria(nome: string) {
-
         const cats: Categoria[] = categorias.filter((categoria) => categoria.nome !== nome);
-
         setCategorias(cats);
-
     }
 
     function createNewCat() {

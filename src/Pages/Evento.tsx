@@ -3,15 +3,16 @@ import {Link, useParams} from "react-router-dom";
 import React, {useEffect, useState} from "react";
 import CategoriaComponent from "../components/CategoriaComponent";
 import {ContainerEvento} from "./styles/Evento";
-import EventType from "../types/eventType";
 import axios from "axios";
+import moment from "moment";
+import {EventType} from "../types/types";
 
 
 export const Evento = () => {
-    type eventParams = {
+    type params = {
         id: string
     }
-    const params = useParams<eventParams>();
+    const params = useParams<params>();
 
     const [event, setEvent] = useState<EventType>()
 
@@ -21,16 +22,16 @@ export const Evento = () => {
             setEvent(data);
         };
         fetchTasks();
-    }, [])
+    },[])
 
     return <>
         <Header titulo={event?.nomeEvento}/>
         <ContainerEvento>
-            <p>Data : {event?.data}</p>
+            <p>{"Data : " + moment(event?.data).format("DD/MM/YY") + " ás " + event?.horario}</p>
             <Link to={"/"}>Mais Informações</Link>
-            {event?.categoriasObj.map((category) => {
-                return <CategoriaComponent category={category}/>
-            })}
+            {event?.categoriasObj ? (event?.categoriasObj.map((category, index) => {
+                return <CategoriaComponent category={category} index={index}/>
+            })) : "Nenhuma categoria cadastrada :-("}
         </ContainerEvento>
     </>;
 }

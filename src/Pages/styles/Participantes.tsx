@@ -48,8 +48,8 @@ export const ListaParticipante = styled.div`
 `;
 
 interface PropsTagParticipante {
-    statuscolor : "#6AF367" | "#F1F367"
-
+    // statuscolor : "#6AF367" | "#F1F367"
+    status : string
 }
 
 export const TagParticipante = styled.div<PropsTagParticipante>`
@@ -60,7 +60,7 @@ export const TagParticipante = styled.div<PropsTagParticipante>`
     border-radius: 32px;
     padding: 12px 12px 12px 12px;
     width: 300px;
-    background-color: ${props => props.statuscolor};
+    background-color: ${props => (props.status === "0")?"#F1F367":"#6AF367"};
     margin-top: 20px;
 `;
 

@@ -5,7 +5,6 @@ interface PropsContainerCard {
 }
 
 export const ContainerCard = styled.div<PropsContainerCard>`
-    /* background-image: url('http://rededoesporte.gov.br/pt-br/megaeventos/olimpiadas/modalidades/tenisdemesa1.jpeg/image'); */
     background-color: black;
     color: whitesmoke;
     margin-top: 12px;
@@ -17,7 +16,7 @@ export const ContainerCard = styled.div<PropsContainerCard>`
     border-radius: 31px;
     flex-direction: column;
     align-items: center;
-    /* opacity: ${props=>props.active}; */
+    opacity: ${props=>props.active}; 
     cursor: pointer;
 `;
 
