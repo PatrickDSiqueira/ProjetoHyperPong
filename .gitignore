@@ -27,4 +27,6 @@ FirebaseService.tsx
 
 .firebase/
 
+.env
+
 

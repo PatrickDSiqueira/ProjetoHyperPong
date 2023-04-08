@@ -8,6 +8,7 @@ import {Evento} from "./Pages/Evento";
 import Categoria from "./Pages/Categoria";
 import Inscricao from "./Pages/Inscricao";
 import CriarEvento from "./Pages/CriarEvento";
+import {MaisInformacoes} from "./Pages/MaisInformacoes";
 
 function App() {
     return (
@@ -19,6 +20,7 @@ function App() {
                 <Route path="/contato" element={<Home/>}/>
                 <Route path="/evento/criar" element={<CriarEvento/>}/>
                 <Route path="/evento/:id" element={<Evento/>}/>
+                <Route path="/evento/:id/informacoes" element={<MaisInformacoes />}/>
                 <Route path="/evento/:id/categoria/:idcat" element={<Categoria/>}/>
                 <Route path="/evento/:id/categoria/:idcat/inscricao" element={<Inscricao/>}/>
             </Routes>

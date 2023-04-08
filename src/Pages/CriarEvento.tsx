@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import GroupButtonCancelSave from "../components/GroupButtonCancelSave";
 import Header from "../components/Header";
 import {ButtonCancel, ButtonSave} from "../components/styles/GroupButtonCancelSave";
@@ -16,6 +16,8 @@ export default function CriarEvento() {
     const [showNewCat, setShowNewCat] = useState<boolean>(false);
     const [nomeCat, setNomeCat] = useState<string>();
     const [numCat, setNumCat] = useState<number>();
+    const [local, setLocal] = useState('R. Maria Francisca, 915 - Boa Vista, BH - MG')
+    const [descricao, setDescricao] = useState('')
 
     function seeNewCat() {
         setShowNewCat(!showNewCat)
@@ -41,7 +43,6 @@ export default function CriarEvento() {
         seeNewCat()
     }
 
-
     return <>
         <Header titulo="Criar Evento"/>
 
@@ -57,6 +58,13 @@ export default function CriarEvento() {
 
                 <label htmlFor="data">Data:</label>
                 <input type="date" placeholder="Data" id="data" name="data"/>
+
+                <label htmlFor="prazo">Inscrições até:</label>
+                <input type="date" id="prazo" name="prazo"/>
+
+                <label htmlFor="local">Local:</label>
+                <input type="text" placeholder="Endereço" id="local" name="local" value={local}
+                       onChange={(e) => setLocal(e.target.value)}/>
 
                 <label htmlFor="">Categorias:</label>
                 <input type="text" id="categorias" name="categorias" hidden value={JSON.stringify(categorias)}/>
@@ -88,7 +96,10 @@ export default function CriarEvento() {
                 </button>
 
                 <label htmlFor="descricao">Descrição:</label>
-                <textarea name="descricao" id="descricao" cols={20} rows={10}></textarea>
+                <textarea id="descricao" cols={20} rows={10} value={descricao}
+                          onChange={(e) => setDescricao(e.target.value)}/>
+                <br/>
+                <textarea hidden name="descricao" cols={20} rows={10} value={JSON.stringify(descricao)}/>
 
                 <GroupButtonCancelSave/>
             </form>

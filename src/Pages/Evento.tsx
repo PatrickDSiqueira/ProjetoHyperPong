@@ -28,7 +28,7 @@ export const Evento = () => {
         <Header titulo={event?.nomeEvento}/>
         <ContainerEvento>
             <p>{"Data : " + moment(event?.data).format("DD/MM/YY") + " ás " + event?.horario}</p>
-            <Link to={"/"}>Mais Informações</Link>
+            <Link to={`/evento/${event?.id}/informacoes`}>Mais Informações</Link>
             {event?.categoriasObj ? (event?.categoriasObj.map((category, index) => {
                 return <CategoriaComponent category={category} index={index}/>
             })) : "Nenhuma categoria cadastrada :-("}

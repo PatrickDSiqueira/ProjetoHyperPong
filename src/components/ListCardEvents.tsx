@@ -34,8 +34,8 @@ function ListCardEvents() {
     return (
         <>{visible && <Message msg="Evento Encerrado !" type="error"/>}
             <ListCard>
-                {eventsLista.map((events) => {
-                    return <ContainerCard active={events.status === "2" ? 0.6 : 1}
+                {eventsLista.map((events, index) => {
+                    return <ContainerCard key={index} active={events.status === "2" ? 0.6 : 1}
                                           onClick={() => handleClickCardEvent(events.status, events.id)}>
                         <CardImage>
                             <img

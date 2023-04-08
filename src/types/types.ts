@@ -13,6 +13,9 @@
     horario: string,
     descricao: string,
     status: string,
+     prazo: string,
+     local: string,
+
     categoriasObj: CategoryType[]
 }
  export interface CategoryType {

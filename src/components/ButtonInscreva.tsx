@@ -3,7 +3,11 @@ import {ContainerButton} from "./styles/ButtonInscreva";
 import {useNavigate, useParams} from "react-router-dom";
 
 
-const ButtonInscreva = ()=>{
+interface  Props {
+    link :string
+}
+const ButtonInscreva = (props: Props)=>{
+    const {link} = props;
 
 
     type eventParams = {
@@ -15,7 +19,7 @@ const ButtonInscreva = ()=>{
 
     const navigate = useNavigate();
     const handleClickButtonInscricao = ()=>{
-        navigate(`/evento/${params.id}/categoria/${params.idcat}/inscricao`);
+        navigate(link);
     }
 
     return <>

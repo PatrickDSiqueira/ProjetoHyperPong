@@ -8,4 +8,5 @@ export const ContainerButton = styled.button`
     border-radius: 32px;
     width: 222px;
     margin-top: 12px ;
+    margin-bottom: 12px ;
 `;

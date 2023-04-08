@@ -68,7 +68,7 @@ export default function Categoria() {
                     </>
                 })}
             </ ListaParticipante>
-            <ButtonInscreva/>
+            <ButtonInscreva link={`/evento/${params.id}/categoria/${params.idcat}/inscricao`} />
         </ContainerParticipantes>
     </>
 }
