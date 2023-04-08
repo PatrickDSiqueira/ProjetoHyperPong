@@ -21,18 +21,23 @@ const CategoriaComponent = (props : PropsComponetCategory) => {
     const {category, index} = props;
     const navigate = useNavigate();
 
-    const [contador, setContador] = useState(0);
+    const [couter, setCouter] = useState(0);
 
     useEffect(()=>{
-     var size = Object.keys(category.participantes).length
-        setContador(size)
+        if(category.participantes === undefined || category.participantes === null){
+            setCouter(0)
+        } else {
+
+         var size = Object.keys(category.participantes).length
+                setCouter(size)
+        }
     },[])
 
 
     return <>
         <ContainerCategoria onClick={() => navigate(`/evento/${params.id}/categoria/${index}`)}>
             <IconPerson size={35}/>
-            <Capacidade>{contador}/{category.maxParticipante}</Capacidade>
+            <Capacidade>{couter}/{category.maxParticipante}</Capacidade>
             <TituloCategoria>{category.nome}</TituloCategoria>
             <IconPlus color={'#036537'} size={35}/>
         </ContainerCategoria>
