@@ -15,6 +15,7 @@ import {useEffect, useState} from "react";
 import axios from "axios";
 import moment from "moment/moment";
 import {EventType, StatusEvents} from "../types/types";
+import LoadingPage from "../Pages/LoadingPage";
 
 
 interface Props {
@@ -23,6 +24,7 @@ interface Props {
 function ListCardEvents({filterEvents}:Props) {
     const [eventsLista, setEventsLista] = useState<EventType[]>([])
     const [visible, setVisible] = useState(false)
+    const [visibleLoading, setVisibleLoading] = useState(true)
     const navigate = useNavigate();
 
     const handleClickCardEvent = (statusEvent: string, eventId: string) => {
@@ -39,12 +41,14 @@ function ListCardEvents({filterEvents}:Props) {
             setEventsLista(data)
         };
         fetchTasks();
+        setVisibleLoading(false)
     }, [])
 
 
-    return (
-        <>{visible && <Message msg="Evento Encerrado !" type="error"/>}
-            <ListCard>
+    return <>
+        {visible && <Message msg="Evento Encerrado !" type="error"/>}
+        {visibleLoading && <LoadingPage/>}
+        {!visibleLoading && <ListCard>
 
                 <ContainerButtonADDEvent onClick={()=>navigate("/evento/criar")}>
                     <IconPlus color={"green"} size={50}/>
@@ -78,9 +82,8 @@ function ListCardEvents({filterEvents}:Props) {
                     </ContainerCard>
                 })}
 
-            </ListCard>
+        </ListCard>}
         </>
-    );
 }
 
 export default ListCardEvents;

@@ -13,6 +13,7 @@ import {
 } from "react-icons/bs";
 import CardInfo from "../components/CardInfo";
 import ButtonInscreva from "../components/ButtonInscreva";
+import LoadingPage from "./LoadingPage";
 
 
 export const MaisInformacoes = () => {
@@ -22,6 +23,7 @@ export const MaisInformacoes = () => {
     const params = useParams<params>();
 
     const [event, setEvent] = useState<EventType>()
+    const [visibleLoading, setVisibleLoading] = useState(true)
 
     useEffect(() => {
         const fetchTasks = async () => {
@@ -29,6 +31,7 @@ export const MaisInformacoes = () => {
             setEvent(data);
         };
         fetchTasks();
+        setVisibleLoading(false)
     }, [])
 
     const styleDiv = {
@@ -39,7 +42,8 @@ export const MaisInformacoes = () => {
 
     return <>
         <Header titulo={event?.nomeEvento}/>
-        <ContainerMaisInformacoesPage>
+        {visibleLoading && <LoadingPage/>}
+        {!visibleLoading && <ContainerMaisInformacoesPage>
             <CardInfo
                 Icon={<IconLocal/>}
                 title={"Local"}
@@ -65,6 +69,6 @@ export const MaisInformacoes = () => {
 
             <ButtonInscreva link={`/evento/${params.id}`}/>
 
-        </ContainerMaisInformacoesPage>
+        </ContainerMaisInformacoesPage>}
     </>;
 }
