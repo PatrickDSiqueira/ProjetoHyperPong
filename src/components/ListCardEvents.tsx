@@ -8,7 +8,11 @@ import axios from "axios";
 import moment from "moment/moment";
 import {EventType, StatusEvents} from "../types/types";
 
-function ListCardEvents() {
+
+interface Props {
+    filterEvents ?: string
+}
+function ListCardEvents({filterEvents}:Props) {
     const [eventsLista, setEventsLista] = useState<EventType[]>([])
     const [visible, setVisible] = useState(false)
     const navigate = useNavigate();
@@ -34,6 +38,9 @@ function ListCardEvents() {
         <>{visible && <Message msg="Evento Encerrado !" type="error"/>}
             <ListCard>
                 {eventsLista.map((events, index) => {
+                    if(filterEvents && filterEvents !== events.tipo){
+                        return;
+                    }
                     return <ContainerCard key={index} active={events.status === "2" ? 0.6 : 1}
                                           onClick={() => handleClickCardEvent(events.status, events.id)}>
                         <CardImage>

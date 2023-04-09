@@ -13,6 +13,7 @@
     horario: string,
     descricao: string,
     status: string,
+     tipo : string,
      prazo: string,
      local: string,
 
@@ -33,4 +34,10 @@ export const StatusEvents = [
  export const StatusPartipante = [
     "Aguardando",
      "Confirmado"
+ ]
+
+ export const TypeCompetitions =  [
+     "Rachão",
+     "Copa",
+     "Outras"
  ]

@@ -15,8 +15,9 @@ function App() {
         <BrowserRouter>
             <Routes>
                 <Route index element={<Home/>}/>
-                <Route path="/copas" element={<Home/>}/>
-                <Route path="/rachoes" element={<Home/>}/>
+                <Route path="/copas" element={<Home filterEvents={"1"}/>}/>
+                <Route path="/rachoes" element={<Home filterEvents={"0"}/>}/>
+                <Route path="/todos" element={<Home/>}/>
                 <Route path="/contato" element={<Home/>}/>
                 <Route path="/evento/criar" element={<CriarEvento/>}/>
                 <Route path="/evento/:id" element={<Evento/>}/>

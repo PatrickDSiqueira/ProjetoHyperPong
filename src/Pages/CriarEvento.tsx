@@ -3,6 +3,7 @@ import GroupButtonCancelSave from "../components/GroupButtonCancelSave";
 import Header from "../components/Header";
 import {ButtonCancel, ButtonSave} from "../components/styles/GroupButtonCancelSave";
 import {ContainerPageCriarEvento} from "./styles/CriarEvento";
+import {TypeCompetitions} from "../types/types";
 
 
 export default function CriarEvento() {
@@ -18,6 +19,7 @@ export default function CriarEvento() {
     const [numCat, setNumCat] = useState<number>();
     const [local, setLocal] = useState('R. Maria Francisca, 915 - Boa Vista, BH - MG')
     const [descricao, setDescricao] = useState('')
+    const [tipo, setTipo] = useState();
 
     function seeNewCat() {
         setShowNewCat(!showNewCat)
@@ -41,6 +43,11 @@ export default function CriarEvento() {
         }
 
         seeNewCat()
+    }
+
+    const handleSaveOptionTypeCompetition = (event:any)=>{
+        console.log(event.target.value)
+        setTipo(event.target.value)
     }
 
     return <>
@@ -94,6 +101,13 @@ export default function CriarEvento() {
 
                 <button onClick={seeNewCat} type="button" className={!showNewCat ? "" : "hidden"}>Criar Categorias
                 </button>
+
+                <label htmlFor="tipo">Tipo de Torneio :</label>
+                    <select name="tipo" id="tipo" value={tipo} onChange={handleSaveOptionTypeCompetition}>
+                        {TypeCompetitions.map((value, index)=>{
+                            return<option value={index}>{value}</option>
+                        })}
+                    </select>
 
                 <label htmlFor="descricao">Descrição:</label>
                 <textarea id="descricao" cols={20} rows={10} value={descricao}

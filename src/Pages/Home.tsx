@@ -1,11 +1,14 @@
 import Header from "../components/Header";
 import ListCardEvents from "../components/ListCardEvents";
 
-export default function Home() {
+interface Props {
+    filterEvents ?: string
+}
+export default function Home({filterEvents}:Props) {
 
 
     return <>
         <Header titulo="Lista de Eventos Hyper"/>
-        <ListCardEvents />
+        <ListCardEvents  filterEvents={filterEvents} />
     </>
 }

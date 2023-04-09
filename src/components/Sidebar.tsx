@@ -21,11 +21,14 @@ const Sidebar = (props: Props) => {
             <h1>Menu</h1>
             </ContinerHeader>
             <Content>
-                <Link to={'/rachoes'} onClick={closeSidebar}>
-                    <p>Rachões</p>
+                <Link to={'/todos'} onClick={closeSidebar}>
+                    <p>Todos</p>
                 </Link>
                 <Link to={'/copas'} onClick={closeSidebar}>
                     <p>Copas Hyper</p>
+                </Link>
+                <Link to={'/rachoes'} onClick={closeSidebar}>
+                    <p>Rachões</p>
                 </Link>
                 <Link to={'/contato'} onClick={closeSidebar}>
                     <p>Contato</p>
