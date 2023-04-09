@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 interface PropsContainerCard {
-    active : 1 | 0.6
+    active ?: 1 | 0.6
 }
 
 export const ContainerCard = styled.div<PropsContainerCard>`
@@ -66,6 +66,9 @@ export const LabelStatusEvent = styled.div<PropsLabelStatus>`
     padding-left: 12px;
     padding-right: 12px;
     background-color: ${props =>props.color}
+`;
 
-
+export const ContainerButtonADDEvent = styled(ContainerCard)`
+  justify-content: center;
+  align-items: center;
 `;

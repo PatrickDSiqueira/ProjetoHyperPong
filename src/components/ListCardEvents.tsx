@@ -1,5 +1,13 @@
-import {CardDesc, CardImage, ContainerCard, LabelStatusEvent, ListCard, TituloCard} from "./styles/ListCardEvents";
-import {BsFillCalendarFill as IconCalendar} from "react-icons/bs";
+import {
+    CardDesc,
+    CardImage,
+    ContainerButtonADDEvent,
+    ContainerCard,
+    LabelStatusEvent,
+    ListCard,
+    TituloCard
+} from "./styles/ListCardEvents";
+import {BsFillCalendarFill as IconCalendar, BsPlusLg as IconPlus} from "react-icons/bs";
 import 'bootstrap/dist/css/bootstrap.min.css'
 import {useNavigate} from "react-router-dom";
 import {Message} from "./Message";
@@ -37,6 +45,12 @@ function ListCardEvents({filterEvents}:Props) {
     return (
         <>{visible && <Message msg="Evento Encerrado !" type="error"/>}
             <ListCard>
+
+                <ContainerButtonADDEvent onClick={()=>navigate("/evento/criar")}>
+                    <IconPlus color={"green"} size={50}/>
+                    <TituloCard>Novo Evento</TituloCard>
+                </ContainerButtonADDEvent>
+
                 {eventsLista.map((events, index) => {
                     if(filterEvents && filterEvents !== events.tipo){
                         return;
@@ -63,6 +77,7 @@ function ListCardEvents({filterEvents}:Props) {
                         </CardDesc>
                     </ContainerCard>
                 })}
+
             </ListCard>
         </>
     );
