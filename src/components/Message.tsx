@@ -7,7 +7,7 @@ interface Props{
 } 
 
 export const Message =  (props: Props)=>{
-    const [viseble, setVisible] = useState<boolean>(true)
+    const [visible, setVisible] = useState<boolean>(true)
     const {msg, type} = props;
 
     useEffect(()=>{
@@ -23,6 +23,6 @@ export const Message =  (props: Props)=>{
         return () => clearTimeout(timer)
     }, [msg]);
 
-    return <>{viseble && (<ContainerMessage type={type}>{msg}</ContainerMessage>)}
+    return <>{visible && (<ContainerMessage type={type}>{msg}</ContainerMessage>)}
     </>
 }

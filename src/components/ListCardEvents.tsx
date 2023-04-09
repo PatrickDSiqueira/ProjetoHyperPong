@@ -1,6 +1,5 @@
 import {CardDesc, CardImage, ContainerCard, LabelStatusEvent, ListCard, TituloCard} from "./styles/ListCardEvents";
 import {BsFillCalendarFill as IconCalendar} from "react-icons/bs";
-import database from "../Database";
 import 'bootstrap/dist/css/bootstrap.min.css'
 import {useNavigate} from "react-router-dom";
 import {Message} from "./Message";
@@ -24,7 +23,7 @@ function ListCardEvents() {
 
     useEffect(() => {
         const fetchTasks = async () => {
-            const {data} = await axios.get('http://localhost:4000/api/admin/events');
+            const {data} = await axios.get(`${process.env.REACT_APP_BACKEND}api/admin/events`);
             setEventsLista(data)
         };
         fetchTasks();

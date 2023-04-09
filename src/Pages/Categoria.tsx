@@ -6,6 +6,7 @@ import axios from "axios";
 import {useEffect, useState} from "react";
 import {ParticipantType} from "../types/types";
 import {BsCheckCircleFill as IconCheck, BsXCircleFill as IconClose} from "react-icons/bs";
+import {log} from "util";
 
 export default function Categoria() {
 
@@ -17,11 +18,11 @@ export default function Categoria() {
     const params = useParams<eventParams>();
     const [participants, setParticipants] = useState<ParticipantType[]>([]);
     const [nameCategory, setNameCategory] = useState('');
-    const [check, setCheck] = useState(false);
+
 
     useEffect(() => {
         const fecthTasks = async () => {
-            const {data} = await axios.get(`http://localhost:4000/api/admin/events/${params.id}/category/${params.idcat}/participants`);
+            const {data} = await axios.get(`${process.env.REACT_APP_BACKEND}api/admin/events/${params.id}/category/${params.idcat}/participants`);
             setParticipants(data);
         }
         fecthTasks();
@@ -29,20 +30,20 @@ export default function Categoria() {
 
     useEffect(() => {
         const fecthTasks = async () => {
-            const {data} = await axios.get(`http://localhost:4000/api/admin/events/${params.id}/category/${params.idcat}/name`)
+            const {data} = await axios.get(`${process.env.REACT_APP_BACKEND}api/admin/events/${params.id}/category/${params.idcat}/name`)
             setNameCategory(data)
         }
         fecthTasks();
     }, []);
 
     const handleDeleteParticipants =  async (idParticipants: string)=> {
-            const data = await axios.delete(`http://localhost:4000/api/admin/events/${params.id}/category/${params.idcat}/participants/${idParticipants}`);
+            const data = await axios.delete(`${process.env.REACT_APP_BACKEND}api/admin/events/${params.id}/category/${params.idcat}/participants/${idParticipants}`);
             console.log(data)
             return;
     }
 
     const handleConfirmParticipants = async (idParticipants: string) => {
-            const data = await axios.post(`http://localhost:4000/api/admin/events/${params.id}/category/${params.idcat}/participants/${idParticipants}`);
+            const data = await axios.post(`${process.env.REACT_APP_BACKEND}api/admin/events/${params.id}/category/${params.idcat}/participants/${idParticipants}`);
             console.log(data)
             return;
         }

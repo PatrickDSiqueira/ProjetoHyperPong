@@ -49,7 +49,7 @@ export default function CriarEvento() {
 
         <ContainerPageCriarEvento>
 
-            <form action="http://localhost:4000/api/admin/events" method="post">
+            <form action={`${process.env.REACT_APP_BACKEND}api/admin/events`} method="post">
                 <label htmlFor="nomeEvento">Nome:</label>
                 <input type="text" placeholder="Nome do Evento" id="nomeEvento" name="nomeEvento"/>
 

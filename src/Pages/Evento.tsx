@@ -18,7 +18,7 @@ export const Evento = () => {
 
     useEffect(() => {
         const fetchTasks = async () => {
-            const {data} = await axios.get(`http://localhost:4000/api/admin/events/${params.id}`);
+            const {data} = await axios.get(`${process.env.REACT_APP_BACKEND}api/admin/events/${params.id}`);
             setEvent(data);
         };
         fetchTasks();

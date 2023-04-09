@@ -15,7 +15,7 @@ const Inscricao = () => {
         <Header titulo="Inscrição" />
         <ContainerPageInscricao>
 
-            <form action={`http://localhost:4000/api/admin/events/${params.id}/category/${params.idcat}/participants`} method="post">
+            <form action={`${process.env.REACT_APP_BACKEND}api/admin/events/${params.id}/category/${params.idcat}/participants`} method="post">
 
                 <label htmlFor="nomeSobrenome" >Nome Sobrenome:</label>
                 <input type="text" id="nomeSobrenome" name="nomeSobrenome" placeholder="Nome e Sobrenome"/>
