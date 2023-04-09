@@ -6,6 +6,7 @@ import {ContainerEvento} from "./styles/Evento";
 import axios from "axios";
 import moment from "moment";
 import {EventType} from "../types/types";
+import ButtonChangeStatusEvent from "../components/ButtonChangeStatusEvent";
 
 
 export const Evento = () => {
@@ -32,6 +33,7 @@ export const Evento = () => {
             {event?.categoriasObj ? (event?.categoriasObj.map((category, index) => {
                 return <CategoriaComponent category={category} index={index}/>
             })) : "Nenhuma categoria cadastrada :-("}
+            <ButtonChangeStatusEvent/>
         </ContainerEvento>
     </>;
 }

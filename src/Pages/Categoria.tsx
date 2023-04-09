@@ -38,7 +38,6 @@ export default function Categoria() {
 
     const handleDeleteParticipants =  async (idParticipants: string)=> {
             const data = await axios.delete(`${process.env.REACT_APP_BACKEND}api/admin/events/${params.id}/category/${params.idcat}/participants/${idParticipants}`);
-            console.log(data)
             return;
     }
 
