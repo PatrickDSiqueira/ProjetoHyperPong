@@ -37,7 +37,7 @@ export const Evento = () => {
             {event?.categoriasObj ? (event?.categoriasObj.map((category, index) => {
                 return <CategoriaComponent category={category} index={index}/>
             })) : "Nenhuma categoria cadastrada :-("}
-            <ButtonChangeStatusEvent/>
+            <ButtonChangeStatusEvent statusSelected={(event?.status != undefined)?parseInt(event.status):0}/>
         </ContainerEvento>}
     </>;
 }

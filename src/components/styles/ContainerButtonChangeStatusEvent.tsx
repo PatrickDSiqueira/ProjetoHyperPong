@@ -13,15 +13,20 @@ export const ContainerButtonChangeStatusEvent = styled.div`
   > .show {
     font-size: 12px;
   }
+  
+  .selection {
+    color: #000000;
+  }
 `;
 
 interface PropsButton {
     status: number
+    selected: number
 }
 
-export const Button = styled.button<{ status: number }>`
+export const Button = styled.button<{ status: number}>`
   background-color: ${props => (props.status === 0) ? "#198754" : (props.status === 1) ? "#727775" : "#ef2020"};
-  color: ${props => (props.status == 3) ? '#000000' : '#fff'};
+  color: #fff;
   font-weight: bolder;
   padding: 10px;
   border: none;
