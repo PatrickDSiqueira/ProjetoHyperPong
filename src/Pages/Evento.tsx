@@ -1,6 +1,6 @@
 import Header from "../components/Header";
 import {Link, useParams} from "react-router-dom";
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import CategoriaComponent from "../components/CategoriaComponent";
 import {ContainerEvento} from "./styles/Evento";
 import axios from "axios";
@@ -8,9 +8,13 @@ import moment from "moment";
 import {EventType} from "../types/types";
 import ButtonChangeStatusEvent from "../components/ButtonChangeStatusEvent";
 import LoadingPage from "./LoadingPage";
+import {AuthContext} from "../context/AuthContext";
 
 
 export const Evento = () => {
+
+    const {userLogin} = useContext(AuthContext);
+
     type params = {
         id: string
     }
@@ -37,7 +41,7 @@ export const Evento = () => {
             {event?.categoriasObj ? (event?.categoriasObj.map((category, index) => {
                 return <CategoriaComponent category={category} index={index}/>
             })) : "Nenhuma categoria cadastrada :-("}
-            <ButtonChangeStatusEvent statusSelected={(event?.status != undefined)?parseInt(event.status):0}/>
+            {userLogin && <ButtonChangeStatusEvent statusSelected={(event?.status != undefined)?parseInt(event.status):0}/>}
         </ContainerEvento>}
     </>;
 }

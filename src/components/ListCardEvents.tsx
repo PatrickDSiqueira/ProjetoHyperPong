@@ -11,17 +11,19 @@ import {BsFillCalendarFill as IconCalendar, BsPlusLg as IconPlus} from "react-ic
 import 'bootstrap/dist/css/bootstrap.min.css'
 import {useNavigate} from "react-router-dom";
 import {Message} from "./Message";
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import axios from "axios";
 import moment from "moment/moment";
 import {EventType, StatusEvents} from "../types/types";
 import LoadingPage from "../Pages/LoadingPage";
+import {AuthContext} from "../context/AuthContext";
 
 
 interface Props {
     filterEvents ?: string
 }
 function ListCardEvents({filterEvents}:Props) {
+    const {userLogin} = useContext(AuthContext);
     const [eventsLista, setEventsLista] = useState<EventType[]>([])
     const [visible, setVisible] = useState(false)
     const [visibleLoading, setVisibleLoading] = useState(true)
@@ -50,10 +52,10 @@ function ListCardEvents({filterEvents}:Props) {
         {visibleLoading && <LoadingPage/>}
         {!visibleLoading && <ListCard>
 
-                <ContainerButtonADDEvent onClick={()=>navigate("/evento/criar")}>
+            {userLogin && <ContainerButtonADDEvent onClick={()=>navigate("/evento/criar")}>
                     <IconPlus color={"green"} size={50}/>
                     <TituloCard>Novo Evento</TituloCard>
-                </ContainerButtonADDEvent>
+                </ContainerButtonADDEvent>}
 
                 {eventsLista.map((events, index) => {
                     if(filterEvents && filterEvents !== events.tipo){

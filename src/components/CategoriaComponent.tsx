@@ -13,6 +13,7 @@ interface PropsComponetCategory {
 
 const CategoriaComponent = (props : PropsComponetCategory) => {
 
+
     type eventParams = {
         id: string
     }

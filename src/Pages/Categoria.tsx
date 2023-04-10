@@ -3,12 +3,15 @@ import {ContainerParticipantes, ListaParticipante, TagParticipante} from "./styl
 import ButtonInscreva from "../components/ButtonInscreva";
 import {useParams} from "react-router-dom";
 import axios from "axios";
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import {ParticipantType} from "../types/types";
 import {BsCheckCircleFill as IconCheck, BsXCircleFill as IconClose} from "react-icons/bs";
 import LoadingPage from "./LoadingPage";
+import {AuthContext} from "../context/AuthContext";
 
 export default function Categoria() {
+    const {userLogin} = useContext(AuthContext);
+
 
     type eventParams = {
         id: string,
@@ -71,8 +74,8 @@ export default function Categoria() {
             <ListaParticipante>
                 {participants?.map(participant => {
                     return <><TagParticipante status={participant.status}>{participant.nomeSobrenome}
-                        <IconCheck onClick={()=>handleConfirmParticipants(participant.idParticipants)}/>
-                        <IconClose onClick={()=>handleDeleteParticipants(participant.idParticipants)}/>
+                        {userLogin &&<><IconCheck onClick={() => handleConfirmParticipants(participant.idParticipants)}/>
+                            <IconClose onClick={()=>handleDeleteParticipants(participant.idParticipants)}/></>}
                     </TagParticipante>
                     </>
                 })}

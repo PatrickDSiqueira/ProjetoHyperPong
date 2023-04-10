@@ -33,6 +33,9 @@ const Sidebar = (props: Props) => {
                 <Link to={'/contato'} onClick={closeSidebar}>
                     <p>Contato</p>
                 </Link>
+                <Link to={'/login'} onClick={closeSidebar}>
+                    <p>Admin</p>
+                </Link>
             </Content>
         </Container>
     )
