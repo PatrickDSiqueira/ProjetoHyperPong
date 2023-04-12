@@ -40,7 +40,7 @@ function ListCardEvents({filterEvents}:Props) {
     useEffect(() => {
         const fetchTasks = async () => {
             const {data} = await axios.get(`${process.env.REACT_APP_BACKEND}api/admin/events`);
-            setEventsLista(data)
+            setEventsLista(getAllEvents())
         };
         fetchTasks();
         setVisibleLoading(false)
