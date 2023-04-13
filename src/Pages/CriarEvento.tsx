@@ -1,9 +1,11 @@
-import {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import GroupButtonCancelSave from "../components/GroupButtonCancelSave";
 import Header from "../components/Header";
 import {ButtonCancel, ButtonSave} from "../components/styles/GroupButtonCancelSave";
 import {ContainerPageCriarEvento} from "./styles/CriarEvento";
 import {TypeCompetitions} from "../types/types";
+import {child, database, push, ref, set} from "../FirebaseService";
+import {useNavigate} from "react-router-dom";
 
 
 export default function CriarEvento() {
@@ -20,6 +22,7 @@ export default function CriarEvento() {
     const [local, setLocal] = useState('R. Maria Francisca, 915 - Boa Vista, BH - MG')
     const [descricao, setDescricao] = useState('')
     const [tipo, setTipo] = useState();
+    const navigate = useNavigate();
 
     function seeNewCat() {
         setShowNewCat(!showNewCat)
@@ -28,6 +31,41 @@ export default function CriarEvento() {
     function deleteCategoria(nome: string) {
         const cats: Categoria[] = categorias.filter((categoria) => categoria.nome !== nome);
         setCategorias(cats);
+    }
+
+    const formRef = useRef<HTMLFormElement>(null);
+
+    async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+        event.preventDefault();
+
+        if (formRef.current) {
+            const formData = new FormData(formRef.current);
+            const values = Object.fromEntries(formData.entries());
+            
+            const {nomeEvento, horario, data, categorias, descricao, status, prazo, local, tipo} = values;
+
+            const categoriasObj = JSON.parse(categorias.toString());
+
+            const id = push(child(ref(database), 'eventos')).key;
+
+            await set(ref(database, "eventos/" + id), {
+                id,
+                nomeEvento,
+                data,
+                horario,
+                descricao,
+                status,
+                prazo,
+                tipo,
+                local,
+                categoriasObj
+            });
+            navigate(`/evento/${id}`)
+            return;
+
+        }
+
+
     }
 
     function createNewCat() {
@@ -45,7 +83,7 @@ export default function CriarEvento() {
         seeNewCat()
     }
 
-    const handleSaveOptionTypeCompetition = (event:any)=>{
+    const handleSaveOptionTypeCompetition = (event: any) => {
         console.log(event.target.value)
         setTipo(event.target.value)
     }
@@ -56,7 +94,7 @@ export default function CriarEvento() {
 
         <ContainerPageCriarEvento>
 
-            <form action={`${process.env.REACT_APP_BACKEND}api/admin/events`} method="post">
+            <form method="post" ref={formRef} onSubmit={handleSubmit}>
                 <label htmlFor="nomeEvento">Nome:</label>
                 <input type="text" placeholder="Nome do Evento" id="nomeEvento" name="nomeEvento"/>
 
@@ -103,11 +141,11 @@ export default function CriarEvento() {
                 </button>
 
                 <label htmlFor="tipo">Tipo de Torneio :</label>
-                    <select name="tipo" id="tipo" value={tipo} onChange={handleSaveOptionTypeCompetition}>
-                        {TypeCompetitions.map((value, index)=>{
-                            return<option value={index}>{value}</option>
-                        })}
-                    </select>
+                <select name="tipo" id="tipo" value={tipo} onChange={handleSaveOptionTypeCompetition}>
+                    {TypeCompetitions.map((value, index) => {
+                        return <option value={index}>{value}</option>
+                    })}
+                </select>
 
                 <label htmlFor="descricao">Descrição:</label>
                 <textarea id="descricao" cols={20} rows={10} value={descricao}

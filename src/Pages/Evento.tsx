@@ -3,12 +3,12 @@ import {Link, useParams} from "react-router-dom";
 import React, {useContext, useEffect, useState} from "react";
 import CategoriaComponent from "../components/CategoriaComponent";
 import {ContainerEvento} from "./styles/Evento";
-import axios from "axios";
 import moment from "moment";
 import {EventType} from "../types/types";
 import ButtonChangeStatusEvent from "../components/ButtonChangeStatusEvent";
 import LoadingPage from "./LoadingPage";
 import {AuthContext} from "../context/AuthContext";
+import {useOneEvent} from "../hooks/useOneEvent";
 
 
 export const Evento = () => {
@@ -20,17 +20,8 @@ export const Evento = () => {
     }
     const params = useParams<params>();
 
-    const [event, setEvent] = useState<EventType>()
     const [visibleLoading, setVisibleLoading] = useState(true)
-
-    useEffect(() => {
-        const fetchTasks = async () => {
-            const {data} = await axios.get(`${process.env.REACT_APP_BACKEND}api/admin/events/${params.id}`);
-            setEvent(data);
-            setVisibleLoading(false)
-        };
-        fetchTasks();
-    },[])
+    const event = useOneEvent(setVisibleLoading, params.id);
 
     return <>
         <Header titulo={event?.nomeEvento}/>

@@ -12,24 +12,8 @@ export function useOneEvent(setVisibleLoading: React.Dispatch<React.SetStateActi
                         if (snapshot.exists()) {
                             setEvent(snapshot.val())
                         }
+                        setVisibleLoading(false)
                     })
-
-
-
-                // const allEventsRef = ref(database, "eventos/");
-                //
-                // const allEvents: EventType[] = [];
-                //
-                // await onValue(allEventsRef, (snapshot) => {
-                //     snapshot.forEach((elem) => {
-                //         allEvents.push(elem.val())
-                //     });
-                //     setEvent(allEvents);
-                //     setVisibleLoading(false)
-                // });
-
-            // }
-
         },
         []);
     return event;

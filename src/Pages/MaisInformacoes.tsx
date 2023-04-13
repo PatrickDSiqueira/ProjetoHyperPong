@@ -14,6 +14,7 @@ import {
 import CardInfo from "../components/CardInfo";
 import ButtonInscreva from "../components/ButtonInscreva";
 import LoadingPage from "./LoadingPage";
+import {useOneEvent} from "../hooks/useOneEvent";
 
 
 export const MaisInformacoes = () => {
@@ -22,17 +23,8 @@ export const MaisInformacoes = () => {
     }
     const params = useParams<params>();
 
-    const [event, setEvent] = useState<EventType>()
     const [visibleLoading, setVisibleLoading] = useState(true)
-
-    useEffect(() => {
-        const fetchTasks = async () => {
-            const {data} = await axios.get(`${process.env.REACT_APP_BACKEND}api/admin/events/${params.id}`);
-            setEvent(data);
-        };
-        fetchTasks();
-        setVisibleLoading(false)
-    }, [])
+    const event = useOneEvent(setVisibleLoading, params.id);
 
     const styleDiv = {
         display: "flex",
