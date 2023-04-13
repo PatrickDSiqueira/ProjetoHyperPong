@@ -1,11 +1,11 @@
-import React, {useEffect, useRef, useState} from "react";
-import GroupButtonCancelSave from "../components/GroupButtonCancelSave";
+import React, { useRef, useState} from "react";
 import Header from "../components/Header";
-import {ButtonCancel, ButtonSave} from "../components/styles/GroupButtonCancelSave";
 import {ContainerPageCriarEvento} from "./styles/CriarEvento";
 import {TypeCompetitions} from "../types/types";
 import {child, database, push, ref, set} from "../FirebaseService";
 import {useNavigate} from "react-router-dom";
+import {ButtonCancel, ButtonSave, FormDefault, InputDefault, LabelDefault} from "../components/styles/Form";
+import GroupButtonCancelSubmit from "../components/Form";
 
 
 export default function CriarEvento() {
@@ -46,9 +46,9 @@ export default function CriarEvento() {
 
             const categoriasObj = JSON.parse(categorias.toString());
 
-            const id = push(child(ref(database), 'eventos')).key;
+            const id = push(child(ref(database), 'events')).key;
 
-            await set(ref(database, "eventos/" + id), {
+            await set(ref(database, "events/" + id), {
                 id,
                 nomeEvento,
                 data,
@@ -94,26 +94,26 @@ export default function CriarEvento() {
 
         <ContainerPageCriarEvento>
 
-            <form method="post" ref={formRef} onSubmit={handleSubmit}>
-                <label htmlFor="nomeEvento">Nome:</label>
-                <input type="text" placeholder="Nome do Evento" id="nomeEvento" name="nomeEvento"/>
+            <FormDefault method="post" ref={formRef} onSubmit={handleSubmit}>
+                <LabelDefault htmlFor="nomeEvento">Nome:</LabelDefault>
+                <InputDefault type="text" placeholder="Nome do Evento" id="nomeEvento" name="nomeEvento"/>
 
-                <label htmlFor="horario">Horário:</label>
-                <input type="time" placeholder="Horário" id="horario" name="horario"/>
+                <LabelDefault htmlFor="horario">Horário:</LabelDefault>
+                <InputDefault type="time" placeholder="Horário" id="horario" name="horario"/>
 
-                <label htmlFor="data">Data:</label>
-                <input type="date" placeholder="Data" id="data" name="data"/>
+                <LabelDefault htmlFor="data">Data:</LabelDefault>
+                <InputDefault type="date" placeholder="Data" id="data" name="data"/>
 
-                <label htmlFor="prazo">Inscrições até:</label>
-                <input type="date" id="prazo" name="prazo"/>
+                <LabelDefault htmlFor="prazo">Inscrições até:</LabelDefault>
+                <InputDefault type="date" id="prazo" name="prazo"/>
 
-                <label htmlFor="local">Local:</label>
-                <input type="text" placeholder="Endereço" id="local" name="local" value={local}
+                <LabelDefault htmlFor="local">Local:</LabelDefault>
+                <InputDefault type="text" placeholder="Endereço" id="local" name="local" value={local}
                        onChange={(e) => setLocal(e.target.value)}/>
 
-                <label htmlFor="">Categorias:</label>
-                <input type="text" id="categorias" name="categorias" hidden value={JSON.stringify(categorias)}/>
-                <input type="number" id="status" name="status" hidden value={0}/>
+                <LabelDefault htmlFor="">Categorias:</LabelDefault>
+                <InputDefault type="text" id="categorias" name="categorias" hidden value={JSON.stringify(categorias)}/>
+                <InputDefault type="number" id="status" name="status" hidden value={0}/>
 
                 <div className={categorias.length ? "" : "hidden"}>
                     {
@@ -128,9 +128,9 @@ export default function CriarEvento() {
 
 
                 <div className={showNewCat ? "" : "hidden"}>
-                    <input type="text" value={nomeCat} onChange={(e) => setNomeCat(e.target.value)}
+                    <InputDefault type="text" value={nomeCat} onChange={(e) => setNomeCat(e.target.value)}
                            placeholder="Nome da Categoria"/>
-                    <input type="number" value={numCat} onChange={(e) => setNumCat(parseInt(e.target.value))}
+                    <InputDefault type="number" value={numCat} onChange={(e) => setNumCat(parseInt(e.target.value))}
                            placeholder="Número de Participantes"/>
                     <ButtonCancel type="button" onClick={seeNewCat}>Cancel</ButtonCancel>
                     <ButtonSave type="button" onClick={createNewCat}>Criar</ButtonSave>
@@ -140,21 +140,20 @@ export default function CriarEvento() {
                 <button onClick={seeNewCat} type="button" className={!showNewCat ? "" : "hidden"}>Criar Categorias
                 </button>
 
-                <label htmlFor="tipo">Tipo de Torneio :</label>
+                <LabelDefault htmlFor="tipo">Tipo de Torneio :</LabelDefault>
                 <select name="tipo" id="tipo" value={tipo} onChange={handleSaveOptionTypeCompetition}>
                     {TypeCompetitions.map((value, index) => {
                         return <option value={index}>{value}</option>
                     })}
                 </select>
 
-                <label htmlFor="descricao">Descrição:</label>
+                <LabelDefault htmlFor="descricao">Descrição:</LabelDefault>
                 <textarea id="descricao" cols={20} rows={10} value={descricao}
                           onChange={(e) => setDescricao(e.target.value)}/>
-                <br/>
                 <textarea hidden name="descricao" cols={20} rows={10} value={JSON.stringify(descricao)}/>
 
-                <GroupButtonCancelSave/>
-            </form>
+                <GroupButtonCancelSubmit model={"Salvar"}/>
+            </FormDefault>
         </ContainerPageCriarEvento>
     </>
 }

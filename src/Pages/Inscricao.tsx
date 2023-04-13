@@ -1,11 +1,11 @@
 import {ContainerPageInscricao} from "./styles/Inscricao";
-import GroupButtonCancelSave from "../components/GroupButtonCancelSave";
 import RememberMe from "../components/RememberMe";
 import Header from "../components/Header";
 import {useNavigate, useParams} from "react-router-dom";
 import React, {useRef, useState} from "react";
 import {child, database, push, ref, set} from "../FirebaseService";
 import LoadingPage from "./LoadingPage";
+import GroupButtonCancelSubmit from "../components/Form";
 
 const Inscricao = () => {
 
@@ -33,9 +33,9 @@ const Inscricao = () => {
 
             const {nomeSobrenome, telefone, dtaNascimento, status} = values;
 
-            const idParticipants = push(child(ref(database), `eventos/${params.id}/categoriasObj/${params.idcat}/participantes`)).key;
+            const idParticipants = push(child(ref(database), `events/${params.id}/categoryObj/${params.idcat}/participants`)).key;
 
-            await set(ref(database, `eventos/${params.id}/categoriasObj/${params.idcat}/participantes/${idParticipants}`), {
+            await set(ref(database, `events/${params.id}/categoryObj/${params.idcat}/participants/${idParticipants}`), {
                     idParticipants,
                     nomeSobrenome,
                     telefone,
@@ -75,7 +75,7 @@ const Inscricao = () => {
 
                     <RememberMe/>
 
-                    <GroupButtonCancelSave/>
+                    <GroupButtonCancelSubmit model={"Salvar"}/>
                 </form>
             </ContainerPageInscricao>}
     </>

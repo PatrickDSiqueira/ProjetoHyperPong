@@ -7,7 +7,7 @@ export function useAllEvents(setVisibleLoading: React.Dispatch<React.SetStateAct
 
     useEffect(() => {
             async function fecthData() {
-                const allEventsRef = ref(database, "eventos/");
+                const allEventsRef = ref(database, "events/");
 
                 const allEvents: EventType[] = [];
 

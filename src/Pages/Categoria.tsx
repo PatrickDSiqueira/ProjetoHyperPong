@@ -29,7 +29,7 @@ export default function Categoria() {
 
     const handleDeleteParticipants = async (idParticipants: string) => {
         setVisibleLoading(true)
-        await remove(ref(database, `eventos/${params.id}/categoriasObj/${params.idcat}/participantes/${idParticipants}`)).then(() => {
+        await remove(ref(database, `events/${params.id}/categoryObj/${params.idcat}/participants/${idParticipants}`)).then(() => {
             setVisibleLoading(false)
         });
 
@@ -40,7 +40,7 @@ export default function Categoria() {
         setVisibleLoading(true)
         const actualization = {status: 1};
 
-        await update(ref(database, `eventos/${params.id}/categoriasObj/${params.idcat}/participantes/${idParticipants}`), actualization).then(() => {
+        await update(ref(database, `events/${params.id}/categoryObj/${params.idcat}/participants/${idParticipants}`), actualization).then(() => {
             setVisibleLoading(false)
         });
         return;

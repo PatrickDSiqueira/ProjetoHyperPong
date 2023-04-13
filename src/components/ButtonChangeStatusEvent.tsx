@@ -27,7 +27,7 @@ const ButtonChangeStatusEvent = ({statusSelected}: Props) => {
     const handleClickToChangeStatus = async (status: number) => {
         setVisibleLoading(true)
         setSelectedStatus(status)
-        await update(ref(database, `eventos/${id}`), {status: status}).then(() => {
+        await update(ref(database, `events/${id}`), {status: status}).then(() => {
             setVisibleLoading(false)
         });
 
@@ -36,7 +36,7 @@ const ButtonChangeStatusEvent = ({statusSelected}: Props) => {
 
     const handleClickToDeleteEvent = async () => {
         setVisibleLoading(true)
-        await remove(ref(database, `eventos/${id}/`));
+        await remove(ref(database, `events/${id}/`));
         navigate(`/`);
 
         return;

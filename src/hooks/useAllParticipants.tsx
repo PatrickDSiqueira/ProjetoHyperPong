@@ -9,7 +9,7 @@ export function useAllParticipants(setVisibleLoading: React.Dispatch<React.SetSt
             setVisibleLoading(true)
 
             const allParticipants: ParticipantType[] = [];
-            const participantsRef = ref(database, `eventos/${idEvent}/categoriasObj/${idCategory}/participantes`);
+            const participantsRef = ref(database, `events/${idEvent}/categoryObj/${idCategory}/participants`);
 
             onValue(participantsRef, (snapshot) => {
                 snapshot.forEach((elem) => {

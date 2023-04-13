@@ -7,7 +7,7 @@ export function useOneEvent(setVisibleLoading: React.Dispatch<React.SetStateActi
 
     useEffect(() => {
 
-                get(child(ref(database), `eventos/${idEvent}`))
+                get(child(ref(database), `events/${idEvent}`))
                     .then((snapshot) => {
                         if (snapshot.exists()) {
                             setEvent(snapshot.val())

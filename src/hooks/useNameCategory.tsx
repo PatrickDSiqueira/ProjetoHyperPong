@@ -9,7 +9,7 @@ export function useNameCategory(setVisibleLoading: React.Dispatch<React.SetState
             setVisibleLoading(true)
 
 
-            get(child(ref(database), `eventos/${idEvent}/categoriasObj/${idCategory}`))
+            get(child(ref(database), `events/${idEvent}/categoryObj/${idCategory}`))
                 .then((snapshot) => {
                     if (snapshot.exists()) {
                         const name = snapshot.val().nome

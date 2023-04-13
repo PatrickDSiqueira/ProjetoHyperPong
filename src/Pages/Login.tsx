@@ -1,20 +1,17 @@
-import {useContext, useState} from "react";
+import React, {useContext, useRef} from "react";
 import {useSignInWithEmailAndPassword} from "react-firebase-hooks/auth";
 import {auth} from "../FirebaseService";
 import LoadingPage from "./LoadingPage";
 import {Message} from "../components/Message";
 import Header from "../components/Header";
-import {useNavigate} from "react-router-dom";
-import {AuthContext, UserLogin} from "../context/AuthContext";
+import {AuthContext} from "../context/AuthContext";
 import {ContainerPageLogin} from "./styles/Login";
-
+import {FormDefault, InputDefault, LabelDefault} from "../components/styles/Form";
+import GroupButtonCancelSubmit from "../components/Form";
 
 const Login = () => {
-    const navigate = useNavigate();
 
     const {userLogin, setUser} = useContext(AuthContext);
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
 
     const [
         signInWithEmailAndPassword,
@@ -32,26 +29,38 @@ const Login = () => {
             setUser(userLogado)
         }
     }
+    const formRef = useRef<HTMLFormElement>(null);
 
+    async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+        event.preventDefault();
+
+        if (formRef.current) {
+            const formData = new FormData(formRef.current);
+            const values = Object.fromEntries(formData.entries());
+            const {email, password} = values;
+            signInWithEmailAndPassword(email.toString(), password.toString())
+            return;
+        }
+    }
 
     return <>
+
         <Header titulo={"Login Admin"}/>
         {error && <Message type={"error"} msg={"Ocorreu um erro"}/>}
+        {user && <Message type={"success"} msg={"Logado"} />}
         {loading && <LoadingPage/>}
         <ContainerPageLogin>
             {userLogin && <><p>Logado</p></>}
             {!loading && !userLogin && <>
 
-                <label htmlFor="email">Email:</label>
-                <input type="email" id="email" value={email} required onChange={(e) => setEmail(e.target.value)}/>
+        <FormDefault ref={formRef} onSubmit={handleSubmit}>
+                <LabelDefault htmlFor="email">Email:</LabelDefault>
+                <InputDefault type="email" id="email" name="email" required />
 
-                <label htmlFor="password">Password:</label>
-                <input type="password" id="password" value={password} required
-                       onChange={(e) => setPassword(e.target.value)}/>
-                <>
-                    <button onClick={() => navigate(-1)}>Cancel</button>
-                    <button onClick={() => signInWithEmailAndPassword(email, password)}>Login</button>
-                </>
+                <LabelDefault htmlFor="password">Password:</LabelDefault>
+                <InputDefault type="password" id="password" name="password" required />
+            <GroupButtonCancelSubmit model={"Login"}/>
+        </FormDefault>
             </>
             }
         </ContainerPageLogin>
