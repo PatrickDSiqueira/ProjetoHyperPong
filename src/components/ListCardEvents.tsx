@@ -12,22 +12,26 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import {useNavigate} from "react-router-dom";
 import {Message} from "./Message";
 import {useContext, useEffect, useState} from "react";
-import axios from "axios";
 import moment from "moment/moment";
 import {EventType, StatusEvents} from "../types/types";
 import LoadingPage from "../Pages/LoadingPage";
 import {AuthContext} from "../context/AuthContext";
+import {useAllEvents} from "../hooks/useAllEvents";
 
 
 interface Props {
     filterEvents ?: string
 }
 function ListCardEvents({filterEvents}:Props) {
+
+
     const {userLogin} = useContext(AuthContext);
-    const [eventsLista, setEventsLista] = useState<EventType[]>([])
     const [visible, setVisible] = useState(false)
     const [visibleLoading, setVisibleLoading] = useState(true)
     const navigate = useNavigate();
+    const eventsLista = useAllEvents(setVisibleLoading);
+
+
 
     const handleClickCardEvent = (statusEvent: string, eventId: string) => {
         if (statusEvent === "2") {
@@ -36,16 +40,6 @@ function ListCardEvents({filterEvents}:Props) {
             navigate(`/evento/${eventId}`);
         }
     }
-
-    useEffect(() => {
-        const fetchTasks = async () => {
-            const {data} = await axios.get(`${process.env.REACT_APP_BACKEND}api/admin/events`);
-            setEventsLista(getAllEvents())
-        };
-        fetchTasks();
-        setVisibleLoading(false)
-    }, [])
-
 
     return <>
         {visible && <Message msg="Evento Encerrado !" type="error"/>}
