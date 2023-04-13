@@ -42,7 +42,6 @@ export default function Categoria() {
 
         await update(ref(database, `eventos/${params.id}/categoriasObj/${params.idcat}/participantes/${idParticipants}`), actualization).then(() => {
             setVisibleLoading(false)
-
         });
         return;
     }

@@ -3,8 +3,10 @@ import GroupButtonCancelSave from "../components/GroupButtonCancelSave";
 import RememberMe from "../components/RememberMe";
 import Header from "../components/Header";
 import {useNavigate, useParams} from "react-router-dom";
-import React, {useRef} from "react";
+import React, {useRef, useState} from "react";
 import {child, database, push, ref, set} from "../FirebaseService";
+import LoadingPage from "./LoadingPage";
+
 const Inscricao = () => {
 
     type eventParams = {
@@ -16,7 +18,12 @@ const Inscricao = () => {
     const formRef = useRef<HTMLFormElement>(null);
     const navigate = useNavigate();
 
+    const [visibleLoading, setVisibleLoading] = useState(false)
+
+
     async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+
+        setVisibleLoading(true);
 
         event.preventDefault();
 
@@ -37,6 +44,7 @@ const Inscricao = () => {
                 }
             );
 
+
             navigate(`/evento/${params.id}/categoria/${params.idcat}`)
             return;
 
@@ -47,27 +55,29 @@ const Inscricao = () => {
 
 
     return <>
-        <Header titulo="Inscrição" />
-        <ContainerPageInscricao>
+        <Header titulo="Inscrição"/>
+        {visibleLoading && <LoadingPage/>}
+        {!visibleLoading &&
+            <ContainerPageInscricao>
 
-            <form ref={formRef} onSubmit={handleSubmit}>
+                <form ref={formRef} onSubmit={handleSubmit}>
 
-                <label htmlFor="nomeSobrenome" >Nome Sobrenome:</label>
-                <input type="text" id="nomeSobrenome" name="nomeSobrenome" placeholder="Nome e Sobrenome"/>
+                    <label htmlFor="nomeSobrenome">Nome Sobrenome:</label>
+                    <input type="text" id="nomeSobrenome" name="nomeSobrenome" placeholder="Nome e Sobrenome"/>
 
-                <label htmlFor="telefone">Telefone:</label>
-                <input type="tel" id="telefone" name="telefone" placeholder="31 98430-5054"/>
+                    <label htmlFor="telefone">Telefone:</label>
+                    <input type="tel" id="telefone" name="telefone" placeholder="31 98430-5054"/>
 
-                <label htmlFor="dtaNascimento">Data de Nasciemento:</label>
-                <input type="date" id="dtaNascimento" name="dtaNascimento"/>
+                    <label htmlFor="dtaNascimento">Data de Nasciemento:</label>
+                    <input type="date" id="dtaNascimento" name="dtaNascimento"/>
 
-                <input type="number" name="status" value={0} hidden/>
+                    <input type="number" name="status" value={0} hidden/>
 
-                <RememberMe/>
+                    <RememberMe/>
 
-                <GroupButtonCancelSave/>
-            </form>
-        </ContainerPageInscricao>
+                    <GroupButtonCancelSave/>
+                </form>
+            </ContainerPageInscricao>}
     </>
 }
 

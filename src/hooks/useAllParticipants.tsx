@@ -19,6 +19,6 @@ export function useAllParticipants(setVisibleLoading: React.Dispatch<React.SetSt
                 setVisibleLoading(false);
             });
         },
-        []);
+        [setVisibleLoading]);
     return participants;
 }
