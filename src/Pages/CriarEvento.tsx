@@ -4,7 +4,14 @@ import {ContainerPageCriarEvento} from "./styles/CriarEvento";
 import {TypeCompetitions} from "../types/types";
 import {child, database, push, ref, set} from "../FirebaseService";
 import {useNavigate} from "react-router-dom";
-import {ButtonCancel, ButtonSave, FormDefault, InputDefault, LabelDefault} from "../components/styles/Form";
+import {
+    ButtonCancel,
+    ButtonSave,
+    ContainerButtons,
+    FormDefault, FormInForm,
+    InputDefault,
+    LabelDefault, TextAreaDefault
+} from "../components/styles/Form";
 import GroupButtonCancelSubmit from "../components/Form";
 
 
@@ -91,25 +98,24 @@ export default function CriarEvento() {
     return <>
         <Header titulo="Criar Evento"/>
 
-
         <ContainerPageCriarEvento>
 
             <FormDefault method="post" ref={formRef} onSubmit={handleSubmit}>
                 <LabelDefault htmlFor="nomeEvento">Nome:</LabelDefault>
-                <InputDefault type="text" placeholder="Nome do Evento" id="nomeEvento" name="nomeEvento"/>
+                <InputDefault type="text" placeholder="Nome do Evento" id="nomeEvento" name="nomeEvento" required />
 
                 <LabelDefault htmlFor="horario">Horário:</LabelDefault>
-                <InputDefault type="time" placeholder="Horário" id="horario" name="horario"/>
+                <InputDefault type="time" placeholder="Horário" id="horario" name="horario" required />
 
                 <LabelDefault htmlFor="data">Data:</LabelDefault>
-                <InputDefault type="date" placeholder="Data" id="data" name="data"/>
+                <InputDefault type="date" placeholder="Data" id="data" name="data" required />
 
                 <LabelDefault htmlFor="prazo">Inscrições até:</LabelDefault>
-                <InputDefault type="date" id="prazo" name="prazo"/>
+                <InputDefault type="date" id="prazo" name="prazo" required />
 
                 <LabelDefault htmlFor="local">Local:</LabelDefault>
                 <InputDefault type="text" placeholder="Endereço" id="local" name="local" value={local}
-                       onChange={(e) => setLocal(e.target.value)}/>
+                       onChange={(e) => setLocal(e.target.value)} required />
 
                 <LabelDefault htmlFor="">Categorias:</LabelDefault>
                 <InputDefault type="text" id="categorias" name="categorias" hidden value={JSON.stringify(categorias)}/>
@@ -128,12 +134,20 @@ export default function CriarEvento() {
 
 
                 <div className={showNewCat ? "" : "hidden"}>
-                    <InputDefault type="text" value={nomeCat} onChange={(e) => setNomeCat(e.target.value)}
-                           placeholder="Nome da Categoria"/>
-                    <InputDefault type="number" value={numCat} onChange={(e) => setNumCat(parseInt(e.target.value))}
-                           placeholder="Número de Participantes"/>
-                    <ButtonCancel type="button" onClick={seeNewCat}>Cancel</ButtonCancel>
-                    <ButtonSave type="button" onClick={createNewCat}>Criar</ButtonSave>
+                    <FormInForm>
+                        <LabelDefault>Nome:</LabelDefault>
+                        <InputDefault type="text" value={nomeCat} onChange={(e) => setNomeCat(e.target.value)}
+                               placeholder="Nome da Categoria"/>
+
+                        <LabelDefault>Participantes:</LabelDefault>
+                        <InputDefault type="number" value={numCat} onChange={(e) => setNumCat(parseInt(e.target.value))}
+                               placeholder="Número de Participantes"/>
+
+                        <ContainerButtons>
+                            <ButtonCancel type="button" onClick={seeNewCat}>Cancel</ButtonCancel>
+                            <ButtonSave type="button" onClick={createNewCat}>Criar</ButtonSave>
+                        </ContainerButtons>
+                    </FormInForm>
 
                 </div>
 
@@ -148,7 +162,7 @@ export default function CriarEvento() {
                 </select>
 
                 <LabelDefault htmlFor="descricao">Descrição:</LabelDefault>
-                <textarea id="descricao" cols={20} rows={10} value={descricao}
+                <TextAreaDefault id="descricao" cols={20} rows={10} value={descricao}
                           onChange={(e) => setDescricao(e.target.value)}/>
                 <textarea hidden name="descricao" cols={20} rows={10} value={JSON.stringify(descricao)}/>
 

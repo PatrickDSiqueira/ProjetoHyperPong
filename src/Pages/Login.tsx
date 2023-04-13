@@ -6,8 +6,9 @@ import {Message} from "../components/Message";
 import Header from "../components/Header";
 import {AuthContext} from "../context/AuthContext";
 import {ContainerPageLogin} from "./styles/Login";
-import {FormDefault, InputDefault, LabelDefault} from "../components/styles/Form";
+import {FormDefault, ImageTitle, InputDefault, LabelDefault} from "../components/styles/Form";
 import GroupButtonCancelSubmit from "../components/Form";
+import logo from "../images/logo.png"
 
 const Login = () => {
 
@@ -47,20 +48,23 @@ const Login = () => {
 
         <Header titulo={"Login Admin"}/>
         {error && <Message type={"error"} msg={"Ocorreu um erro"}/>}
-        {user && <Message type={"success"} msg={"Logado"} />}
+        {user && <Message type={"success"} msg={"Logado"}/>}
         {loading && <LoadingPage/>}
         <ContainerPageLogin>
             {userLogin && <><p>Logado</p></>}
             {!loading && !userLogin && <>
 
-        <FormDefault ref={formRef} onSubmit={handleSubmit}>
-                <LabelDefault htmlFor="email">Email:</LabelDefault>
-                <InputDefault type="email" id="email" name="email" required />
+                <FormDefault ref={formRef} onSubmit={handleSubmit}>
+                    <div style={{display:"flex", justifyContent:"center"}}>
+                        <ImageTitle src={logo} alt=""/>
+                    </div>
+                    <LabelDefault htmlFor="email">Email:</LabelDefault>
+                    <InputDefault type="email" id="email" name="email" required/>
 
-                <LabelDefault htmlFor="password">Password:</LabelDefault>
-                <InputDefault type="password" id="password" name="password" required />
-            <GroupButtonCancelSubmit model={"Login"}/>
-        </FormDefault>
+                    <LabelDefault htmlFor="password">Password:</LabelDefault>
+                    <InputDefault type="password" id="password" name="password" required/>
+                    <GroupButtonCancelSubmit model={"Login"}/>
+                </FormDefault>
             </>
             }
         </ContainerPageLogin>

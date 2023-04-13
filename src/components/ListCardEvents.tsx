@@ -13,10 +13,11 @@ import {useNavigate} from "react-router-dom";
 import {Message} from "./Message";
 import {useContext, useEffect, useState} from "react";
 import moment from "moment/moment";
-import {EventType, StatusEvents} from "../types/types";
+import {StatusEvents} from "../types/types";
 import LoadingPage from "../Pages/LoadingPage";
 import {AuthContext} from "../context/AuthContext";
 import {useAllEvents} from "../hooks/useAllEvents";
+import  image from "../images/image.jpg"
 
 
 interface Props {
@@ -59,7 +60,7 @@ function ListCardEvents({filterEvents}:Props) {
                                           onClick={() => handleClickCardEvent(events.status, events.id)}>
                         <CardImage>
                             <img
-                                src="http://rededoesporte.gov.br/pt-br/megaeventos/olimpiadas/modalidades/tenisdemesa1.jpeg/image"
+                                src={image}
                                 alt=""/>
                         </CardImage>
                         <CardDesc>
