@@ -62,9 +62,10 @@ export default function Categoria() {
             <ListaParticipante>
                 {participants?.map(participant => {
                     return <><TagParticipante status={participant.status}>{participant.nomeSobrenome}
-                        {userLogin && <><IconCheck
-                            onClick={() => handleConfirmParticipants(participant.idParticipants)}/>
-                            <IconClose onClick={() => handleDeleteParticipants(participant.idParticipants)}/></>}
+                        {userLogin && <div id="icones">
+                            <IconCheck size={20} onClick={() => handleConfirmParticipants(participant.idParticipants)}/>
+                            <IconClose size={20} onClick={() => handleDeleteParticipants(participant.idParticipants)}/>
+                        </div>}
                     </TagParticipante>
                     </>
                 })}

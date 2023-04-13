@@ -53,8 +53,9 @@ interface PropsTagParticipante {
 }
 
 export const TagParticipante = styled.div<PropsTagParticipante>`
+  
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
     border: none;
     border-radius: 32px;
@@ -62,5 +63,13 @@ export const TagParticipante = styled.div<PropsTagParticipante>`
     width: 300px;
     background-color: ${props => (props.status === "0")?"#F1F367":"#6AF367"};
     margin-top: 20px;
+
+  #icones {
+    margin-left: auto;
+
+    svg {
+      margin-left: 10px;
+    }
+  }
 `;
 
