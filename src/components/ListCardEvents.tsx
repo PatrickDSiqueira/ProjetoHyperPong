@@ -30,7 +30,7 @@ function ListCardEvents({filterEvents}:Props) {
     const [visible, setVisible] = useState(false)
     const [visibleLoading, setVisibleLoading] = useState(true)
     const navigate = useNavigate();
-    const eventsLista = useAllEvents(setVisibleLoading);
+    const eventsList = useAllEvents(setVisibleLoading);
 
 
 
@@ -52,7 +52,7 @@ function ListCardEvents({filterEvents}:Props) {
                     <TituloCard>Novo Evento</TituloCard>
                 </ContainerButtonADDEvent>}
 
-                {eventsLista.map((events, index) => {
+            {eventsList.map((events, index) => {
                     if (filterEvents && filterEvents !== events.type) {
                         return;
                     }
@@ -60,7 +60,7 @@ function ListCardEvents({filterEvents}:Props) {
                                           onClick={() => handleClickCardEvent(events.status, events.id)}>
                         <CardImage>
                             <img
-                                src={image}
+                                src={events.wallpaper || image}
                                 alt=""/>
                         </CardImage>
                         <CardDesc>

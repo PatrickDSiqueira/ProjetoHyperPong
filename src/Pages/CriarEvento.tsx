@@ -1,8 +1,8 @@
-import React, { useRef, useState} from "react";
+import React, {useContext, useEffect, useRef, useState} from "react";
 import Header from "../components/Header";
 import {ContainerPageCriarEvento} from "./styles/CriarEvento";
 import {CategoryType, TypeCompetitions} from "../types/types";
-import {child, database, push, ref, set} from "../FirebaseService";
+import {child, database, push, ref, set, storage, refStorage, getDownloadURL} from "../FirebaseService";
 import {useNavigate} from "react-router-dom";
 import {
     ButtonCancel,
@@ -10,10 +10,12 @@ import {
     ContainerButtons,
     FormDefault, FormInForm,
     InputDefault,
-    LabelDefault, TextAreaDefault
+    LabelDefault, LabelImageDefault, TextAreaDefault
 } from "../components/styles/Form";
 import GroupButtonCancelSubmit from "../components/Form";
-
+import LoadingPage from "./LoadingPage";
+import {useUploadFile} from 'react-firebase-hooks/storage';
+import {AuthContext} from "../context/AuthContext";
 
 export default function CriarEvento() {
 
@@ -24,6 +26,11 @@ export default function CriarEvento() {
     const [address, setAddress] = useState('R. Maria Francisca, 915 - Boa Vista, BH - MG')
     const [description, setDescription] = useState('')
     const [type, setType] = useState();
+    const [visibleLoading, setVisibleLoading] = useState(false)
+    const [uploadFile] = useUploadFile()
+    const [imageSelected, setImageSelected] = useState<File>();
+
+    const {userLogin} = useContext(AuthContext);
 
     const navigate = useNavigate();
 
@@ -41,6 +48,8 @@ export default function CriarEvento() {
     async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
 
+        setVisibleLoading(true);
+
         if (formRef.current) {
             const formData = new FormData(formRef.current);
             const values = Object.fromEntries(formData.entries());
@@ -50,6 +59,8 @@ export default function CriarEvento() {
             const categories = JSON.parse(categoriesObj.toString());
 
             const id = push(child(ref(database), 'events')).key;
+
+            const wallpaper = await uploadImageEvent(`events/${id}`)
 
             await set(ref(database, "events/" + id), {
                 id,
@@ -61,7 +72,8 @@ export default function CriarEvento() {
                 end_date,
                 type,
                 address,
-                categories
+                categories,
+                wallpaper
             });
             navigate(`/evento/${id}`)
             return;
@@ -86,14 +98,32 @@ export default function CriarEvento() {
     }
 
     const handleSaveOptionTypeCompetition = (event: any) => {
-        console.log(event.target.value)
         setType(event.target.value)
+    }
+
+    useEffect(()=>{
+        if(userLogin){
+            return;
+        }
+        navigate("/login")
+    })
+    const uploadImageEvent = async (rota: string) => {
+
+        if (imageSelected) {
+
+            const ref = await refStorage(storage, `${rota}/wallpaper.jpg`)
+            await uploadFile(ref, imageSelected, {contentType: 'image/jpeg'})
+            return getDownloadURL(ref);
+        }
+        return false;
     }
 
     return <>
         <Header titulo="Criar Evento"/>
 
-        <ContainerPageCriarEvento>
+        {visibleLoading && <LoadingPage/>}
+
+        {!visibleLoading && userLogin && <ContainerPageCriarEvento>
 
             <FormDefault method="post" ref={formRef} onSubmit={handleSubmit}>
                 <LabelDefault htmlFor="name">Nome:</LabelDefault>
@@ -167,8 +197,20 @@ export default function CriarEvento() {
                                  onChange={(e) => setDescription(e.target.value)}/>
                 <textarea hidden name="description" cols={20} rows={10} value={JSON.stringify(description)}/>
 
+                <LabelImageDefault hasFile={imageSelected == undefined} htmlFor="image">
+                    {imageSelected ? "Capa Selecionada" : "Inserir Capa"}
+                </LabelImageDefault>
+
+                <InputDefault type="file" id="image" hidden onChange={(e) => {
+                    const file = e.target.files ? e.target.files[0] : undefined
+                    setImageSelected(file)
+                }
+                }/>
+
                 <GroupButtonCancelSubmit model={"Salvar"}/>
+
             </FormDefault>
         </ContainerPageCriarEvento>
+        }
     </>
 }

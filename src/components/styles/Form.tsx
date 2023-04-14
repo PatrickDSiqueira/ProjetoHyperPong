@@ -13,6 +13,25 @@ export const LabelDefault = styled.label`
   margin-bottom: 10px;
 `;
 
+interface PropsLabelImageDefault {
+    hasFile:boolean
+}
+export const LabelImageDefault = styled(LabelDefault)<PropsLabelImageDefault>`
+  display: flex;
+  justify-content: center;
+  background-color: ${props=>(!props.hasFile)?"#3498db":"#fff"};
+  border-radius: 5px;
+  color: ${props =>!props.hasFile?"#fff":"#3498db"};
+  border: 1px dashed #3498db ;
+  cursor: pointer;
+  margin: 10px;
+  padding: 6px 20px;
+
+
+  //background-color: ${props => (props.hasFile)?"#F1F367":""};
+
+`;
+
 export const FormDefault = styled.form`
   display: flex;
   flex-direction: column;
