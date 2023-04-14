@@ -13,6 +13,7 @@ export interface EventType {
     time: string,
     end_date: string
     description: string,
+    wallpaper: string,
     status: string,
     type: string,
     address: string,

@@ -32,10 +32,12 @@ export const TituloCard = styled.p`
     font-size: 20px; */
 `;
 export const CardImage = styled.div`
-    > img {
-        width: 100%;
-        border-radius: 32px 32px 0 0;
-    }
+  > img {
+    max-height: 300px;
+    width: 100%;
+    border-radius: 32px 32px 0 0;
+    object-fit: cover;
+  }
     /* padding: 12px; */
     /* border-radius: 31px; */
     overflow: hidden;
