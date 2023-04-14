@@ -11,7 +11,7 @@ interface PropsComponetCategory {
     index: number
 }
 
-const CategoriaComponent = (props : PropsComponetCategory) => {
+const CategoriaComponent = ({category, index}: PropsComponetCategory) => {
 
 
     type eventParams = {
@@ -19,18 +19,16 @@ const CategoriaComponent = (props : PropsComponetCategory) => {
     }
     const params = useParams<eventParams>();
 
-    const {category, index} = props;
     const navigate = useNavigate();
 
-    const [couter, setCouter] = useState(0);
+    const [counter, setCounter] = useState(0);
 
     useEffect(()=>{
-        if(category.participantes === undefined || category.participantes === null){
-            setCouter(0)
+        if (category.participants === undefined || category.participants === null) {
+            setCounter(0)
         } else {
-
-         var size = Object.keys(category.participantes).length
-                setCouter(size)
+            const size = Object.keys(category.participants).length
+            setCounter(size)
         }
     },[])
 
@@ -38,8 +36,8 @@ const CategoriaComponent = (props : PropsComponetCategory) => {
     return <>
         <ContainerCategoria onClick={() => navigate(`/evento/${params.id}/categoria/${index}`)}>
             <IconPerson size={35}/>
-            <Capacidade>{couter}/{category.maxParticipante}</Capacidade>
-            <TituloCategoria>{category.nome}</TituloCategoria>
+            <Capacidade>{counter}/{category.maxParticipants}</Capacidade>
+            <TituloCategoria>{category.name}</TituloCategoria>
             <IconPlus color={'#036537'} size={35}/>
         </ContainerCategoria>
     </>

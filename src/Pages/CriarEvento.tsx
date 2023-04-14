@@ -1,7 +1,7 @@
 import React, { useRef, useState} from "react";
 import Header from "../components/Header";
 import {ContainerPageCriarEvento} from "./styles/CriarEvento";
-import {TypeCompetitions} from "../types/types";
+import {CategoryType, TypeCompetitions} from "../types/types";
 import {child, database, push, ref, set} from "../FirebaseService";
 import {useNavigate} from "react-router-dom";
 import {
@@ -17,27 +17,23 @@ import GroupButtonCancelSubmit from "../components/Form";
 
 export default function CriarEvento() {
 
-    interface Categoria {
-        nome: string,
-        maxParticipante: number
-    }
-
-    const [categorias, setCategorias] = useState<Categoria[]>([]);
+    const [categories, setCategories] = useState<CategoryType[]>([]);
     const [showNewCat, setShowNewCat] = useState<boolean>(false);
-    const [nomeCat, setNomeCat] = useState<string>();
+    const [nameCat, setNameCat] = useState<string>();
     const [numCat, setNumCat] = useState<number>();
-    const [local, setLocal] = useState('R. Maria Francisca, 915 - Boa Vista, BH - MG')
-    const [descricao, setDescricao] = useState('')
-    const [tipo, setTipo] = useState();
+    const [address, setAddress] = useState('R. Maria Francisca, 915 - Boa Vista, BH - MG')
+    const [description, setDescription] = useState('')
+    const [type, setType] = useState();
+
     const navigate = useNavigate();
 
     function seeNewCat() {
         setShowNewCat(!showNewCat)
     }
 
-    function deleteCategoria(nome: string) {
-        const cats: Categoria[] = categorias.filter((categoria) => categoria.nome !== nome);
-        setCategorias(cats);
+    function deleteCategories(name: string) {
+        const cats: CategoryType[] = categories.filter((category) => category.name !== name);
+        setCategories(cats);
     }
 
     const formRef = useRef<HTMLFormElement>(null);
@@ -48,42 +44,41 @@ export default function CriarEvento() {
         if (formRef.current) {
             const formData = new FormData(formRef.current);
             const values = Object.fromEntries(formData.entries());
-            
-            const {nomeEvento, horario, data, categorias, descricao, status, prazo, local, tipo} = values;
 
-            const categoriasObj = JSON.parse(categorias.toString());
+            const {name, time, date, categoriesObj, description, status, end_date, address, type} = values;
+
+            const categories = JSON.parse(categoriesObj.toString());
 
             const id = push(child(ref(database), 'events')).key;
 
             await set(ref(database, "events/" + id), {
                 id,
-                nomeEvento,
-                data,
-                horario,
-                descricao,
+                name,
+                date,
+                time,
+                description,
                 status,
-                prazo,
-                tipo,
-                local,
-                categoriasObj
+                end_date,
+                type,
+                address,
+                categories
             });
             navigate(`/evento/${id}`)
             return;
 
         }
-
-
     }
 
     function createNewCat() {
-        if (nomeCat !== undefined && numCat !== undefined) {
-            var cat: Categoria = {
-                nome: nomeCat,
-                maxParticipante: numCat
+        if (nameCat !== undefined && numCat !== undefined) {
+            var cat: CategoryType = {
+                name: nameCat,
+                maxParticipants: numCat,
+                participants: []
             }
 
-            setCategorias(categorias => [...categorias, cat])
-            setNomeCat("");
+            setCategories(categories => [...categories, cat])
+            setNameCat("");
             setNumCat(0);
         }
 
@@ -92,7 +87,7 @@ export default function CriarEvento() {
 
     const handleSaveOptionTypeCompetition = (event: any) => {
         console.log(event.target.value)
-        setTipo(event.target.value)
+        setType(event.target.value)
     }
 
     return <>
@@ -101,32 +96,38 @@ export default function CriarEvento() {
         <ContainerPageCriarEvento>
 
             <FormDefault method="post" ref={formRef} onSubmit={handleSubmit}>
-                <LabelDefault htmlFor="nomeEvento">Nome:</LabelDefault>
-                <InputDefault type="text" placeholder="Nome do Evento" id="nomeEvento" name="nomeEvento" required />
+                <LabelDefault htmlFor="name">Nome:</LabelDefault>
+                <InputDefault type="text" placeholder="Nome do Evento" id="name" name="name" required/>
 
-                <LabelDefault htmlFor="horario">Horário:</LabelDefault>
-                <InputDefault type="time" placeholder="Horário" id="horario" name="horario" required />
+                <LabelDefault htmlFor="time">Horário:</LabelDefault>
+                <InputDefault type="time" placeholder="Horário" id="time" name="time" required/>
 
-                <LabelDefault htmlFor="data">Data:</LabelDefault>
-                <InputDefault type="date" placeholder="Data" id="data" name="data" required />
+                <LabelDefault htmlFor="date">Data:</LabelDefault>
+                <InputDefault type="date" placeholder="Data" id="date" name="date" required/>
 
-                <LabelDefault htmlFor="prazo">Inscrições até:</LabelDefault>
-                <InputDefault type="date" id="prazo" name="prazo" required />
+                <LabelDefault htmlFor="end_date">Inscrições até:</LabelDefault>
+                <InputDefault type="date" id="end_date" name="end_date" required/>
 
-                <LabelDefault htmlFor="local">Local:</LabelDefault>
-                <InputDefault type="text" placeholder="Endereço" id="local" name="local" value={local}
-                       onChange={(e) => setLocal(e.target.value)} required />
+                <LabelDefault htmlFor="address">Local:</LabelDefault>
+                <InputDefault type="text" placeholder="Endereço" id="address" name="address" value={address}
+                              onChange={(e) => setAddress(e.target.value)} required/>
 
-                <LabelDefault htmlFor="">Categorias:</LabelDefault>
-                <InputDefault type="text" id="categorias" name="categorias" hidden value={JSON.stringify(categorias)}/>
                 <InputDefault type="number" id="status" name="status" hidden value={0}/>
 
-                <div className={categorias.length ? "" : "hidden"}>
+                <LabelDefault htmlFor="">Categorias:</LabelDefault>
+                <InputDefault type="text" id="categoriesObj" name="categoriesObj" hidden
+                              value={JSON.stringify(categories)}/>
+
+                <div className={categories.length ? "" : "hidden"}>
                     {
-                        categorias.map((elem) => {
-                            return <div key={elem.nome} className="labelCategoria">
-                                <p>{elem.nome + " - " + elem.maxParticipante}<span
-                                    onClick={() => deleteCategoria(elem.nome)} className="deleteCategorias">X</span></p>
+                        categories.map((elem) => {
+                            return <div key={elem.name} className="labelCategoria">
+                                <p>
+                                    {elem.name + " - " + elem.maxParticipants}
+                                    <span onClick={() => deleteCategories(elem.name)} className="deleteCategories">
+                                        X
+                                    </span>
+                                </p>
                             </ div>
                         })
                     }
@@ -136,7 +137,7 @@ export default function CriarEvento() {
                 <div className={showNewCat ? "" : "hidden"}>
                     <FormInForm>
                         <LabelDefault>Nome:</LabelDefault>
-                        <InputDefault type="text" value={nomeCat} onChange={(e) => setNomeCat(e.target.value)}
+                        <InputDefault type="text" value={nameCat} onChange={(e) => setNameCat(e.target.value)}
                                placeholder="Nome da Categoria"/>
 
                         <LabelDefault>Participantes:</LabelDefault>
@@ -155,16 +156,16 @@ export default function CriarEvento() {
                 </button>
 
                 <LabelDefault htmlFor="tipo">Tipo de Torneio :</LabelDefault>
-                <select name="tipo" id="tipo" value={tipo} onChange={handleSaveOptionTypeCompetition}>
+                <select name="type" id="type" value={type} onChange={handleSaveOptionTypeCompetition}>
                     {TypeCompetitions.map((value, index) => {
                         return <option value={index}>{value}</option>
                     })}
                 </select>
 
-                <LabelDefault htmlFor="descricao">Descrição:</LabelDefault>
-                <TextAreaDefault id="descricao" cols={20} rows={10} value={descricao}
-                          onChange={(e) => setDescricao(e.target.value)}/>
-                <textarea hidden name="descricao" cols={20} rows={10} value={JSON.stringify(descricao)}/>
+                <LabelDefault htmlFor="descriptionArea">Descrição:</LabelDefault>
+                <TextAreaDefault id="descriptionArea" cols={20} rows={10} value={description}
+                                 onChange={(e) => setDescription(e.target.value)}/>
+                <textarea hidden name="description" cols={20} rows={10} value={JSON.stringify(description)}/>
 
                 <GroupButtonCancelSubmit model={"Salvar"}/>
             </FormDefault>

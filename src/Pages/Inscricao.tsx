@@ -35,7 +35,7 @@ const Inscricao = () => {
 
             const idParticipants = push(child(ref(database), `events/${params.id}/categoryObj/${params.idcat}/participants`)).key;
 
-            await set(ref(database, `events/${params.id}/categoryObj/${params.idcat}/participants/${idParticipants}`), {
+            await set(ref(database, `events/${params.id}/categories/${params.idcat}/participants/${idParticipants}`), {
                     idParticipants,
                     nomeSobrenome,
                     telefone,

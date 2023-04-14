@@ -1,9 +1,7 @@
 import Header from "../components/Header";
 import {useParams} from "react-router-dom";
-import React, {useEffect, useState} from "react";
-import axios from "axios";
+import React, {useState} from "react";
 import moment from "moment";
-import {EventType} from "../types/types";
 import {ContainerMaisInformacoesPage} from "./styles/MaisInformacoes";
 import {
     BsFillClockFill as IconClock,
@@ -33,30 +31,30 @@ export const MaisInformacoes = () => {
     }
 
     return <>
-        <Header titulo={event?.nomeEvento}/>
+        <Header titulo={event?.name}/>
         {visibleLoading && <LoadingPage/>}
-        {!visibleLoading && <ContainerMaisInformacoesPage>
+        {event && <ContainerMaisInformacoesPage>
             <CardInfo
                 Icon={<IconLocal/>}
                 title={"Local"}
-                containment={event?.local ? event.local : ""}
+                containment={event.address ? event.address : ""}
             />
             <div style={styleDiv}>
                 <CardInfo
                     Icon={<IconClock/>}
                     title={"Data"}
-                    containment={moment(event?.data).format("DD/MM/YY") + " ás " + event?.horario}
+                    containment={moment(event.date).format("DD/MM/YY") + " ás " + event?.time}
                 />
                 <CardInfo
                     Icon={<IconEnd/>}
-                    title={"inscrições Até"}
-                    containment={moment(event?.prazo).format("DD/MM/YY")}
+                    title={"Inscrições Até"}
+                    containment={moment(event.end_date).format("DD/MM/YY")}
                 />
             </div>
             <CardInfo
                 Icon={<IconInfo/>}
                 title={"Informações Adicionais"}
-                containment={event?.descricao ? event.descricao : ""}
+                containment={event.description ? event.description : ""}
             />
 
             <ButtonInscreva link={`/evento/${params.id}`}/>

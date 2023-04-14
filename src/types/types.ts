@@ -1,28 +1,29 @@
- export interface ParticipantType {
-    idParticipants : string,
-    nomeSobrenome : string,
-    telefone :string,
-    dtaNascimento : string,
-    status : string
+export interface ParticipantType {
+    idParticipants: string,
+    nomeSobrenome: string,
+    telefone: string,
+    dtaNascimento: string,
+    status: string
 }
 
- export interface EventType {
+export interface EventType {
     id: string,
-    nomeEvento: string,
-    data: string,
-    horario: string,
-    descricao: string,
+    name: string,
+    date: string,
+    time: string,
+    end_date: string
+    description: string,
     status: string,
-     tipo : string,
-     prazo: string,
-     local: string,
-
-    categoriasObj: CategoryType[]
+    type: string,
+    address: string,
+    local: string,
+    categories: CategoryType[]
 }
- export interface CategoryType {
-    maxParticipante: number,
-    nome: string,
-    participantes : ParticipantType[]
+
+export interface CategoryType {
+    maxParticipants: number,
+    name: string,
+    participants: ParticipantType[]
 }
 
 export const StatusEvents = [
@@ -31,13 +32,13 @@ export const StatusEvents = [
     "Encerrado"
 ]
 
- export const StatusPartipante = [
+export const StatusPartipants = [
     "Aguardando",
-     "Confirmado"
- ]
+    "Confirmado",
+]
 
- export const TypeCompetitions =  [
-     "Rachão",
-     "Copa",
-     "Outras"
- ]
+export const TypeCompetitions = [
+    "Rachão",
+    "Copa",
+    "Outras"
+]

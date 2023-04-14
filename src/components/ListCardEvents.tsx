@@ -11,7 +11,7 @@ import {BsFillCalendarFill as IconCalendar, BsPlusLg as IconPlus} from "react-ic
 import 'bootstrap/dist/css/bootstrap.min.css'
 import {useNavigate} from "react-router-dom";
 import {Message} from "./Message";
-import {useContext, useEffect, useState} from "react";
+import {useContext, useState} from "react";
 import moment from "moment/moment";
 import {StatusEvents} from "../types/types";
 import LoadingPage from "../Pages/LoadingPage";
@@ -53,7 +53,7 @@ function ListCardEvents({filterEvents}:Props) {
                 </ContainerButtonADDEvent>}
 
                 {eventsLista.map((events, index) => {
-                    if(filterEvents && filterEvents !== events.tipo){
+                    if (filterEvents && filterEvents !== events.type) {
                         return;
                     }
                     return <ContainerCard key={index} active={events.status === "2" ? 0.6 : 1}
@@ -64,11 +64,11 @@ function ListCardEvents({filterEvents}:Props) {
                                 alt=""/>
                         </CardImage>
                         <CardDesc>
-                            <TituloCard>{events.nomeEvento}</TituloCard>
+                            <TituloCard>{events.name}</TituloCard>
                             <div style={{display: 'flex', flexDirection: "row", alignItems: "center"}}>
                                 <IconCalendar size={35}/>
                                 <div style={{paddingLeft: "15px"}}>
-                                    <span>{moment(events?.data).format("DD/MM/YY") + " - " + events.horario}</span>
+                                    <span>{moment(events?.date).format("DD/MM/YY") + " - " + events.time}</span>
                                     <div style={{display: "flex", justifyContent: "center"}}>
                                         <LabelStatusEvent
                                             color={events.status === '2' ? "red" : events.status === "0" ? "green" : "gray"}>{StatusEvents[parseInt(events.status)]}</LabelStatusEvent>
