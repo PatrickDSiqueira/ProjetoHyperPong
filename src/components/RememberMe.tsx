@@ -1,16 +1,18 @@
 import {ContainerRememberMe} from "./styles/RememberMe";
-import firebase from "firebase/compat";
 
 interface  Props {
     setValue : React.Dispatch<React.SetStateAction<boolean>>
+    value: boolean
 
 }
 
-const RememberMe = ({setValue}:Props) => {
+const RememberMe = ({setValue, value}: Props) => {
 
     return <ContainerRememberMe>
         <label htmlFor="inputRememberMe">Lembrar de Mim</label>
-        <input type="checkbox" id="inputRememberMe" onChange={(e)=>{setValue(e.target.checked)}} />
+        <input type="checkbox" id="inputRememberMe" checked={value} onChange={(e) => {
+            setValue(e.target.checked)
+        }}/>
         </ContainerRememberMe>
         }
 
