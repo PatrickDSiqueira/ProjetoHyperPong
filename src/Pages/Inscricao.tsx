@@ -5,15 +5,11 @@ import {useNavigate, useParams} from "react-router-dom";
 import React, {useRef, useState} from "react";
 import {child, database, push, ref, set} from "../FirebaseService";
 import GroupButtonCancelSubmit from "../components/Form";
+import {routeParams} from "../types/types";
 
 const Inscricao = () => {
 
-    type eventParams = {
-        id: string,
-        idcat: string
-    }
-
-    const params = useParams<eventParams>();
+    const {idEvent, idCategory} = useParams<routeParams>();
 
     const formRef = useRef<HTMLFormElement>(null);
     const navigate = useNavigate();
@@ -42,9 +38,9 @@ const Inscricao = () => {
                 localStorage.removeItem('dtaNascimentoInscription');
             }
 
-            const idParticipants = push(child(ref(database), `events/${params.id}/categoryObj/${params.idcat}/participants`)).key;
+            const idParticipants = push(child(ref(database), `events/${idEvent}/categoryObj/${idCategory}/participants`)).key;
 
-            await set(ref(database, `events/${params.id}/categories/${params.idcat}/participants/${idParticipants}`), {
+            await set(ref(database, `events/${idEvent}/categories/${idCategory}/participants/${idParticipants}`), {
                     idParticipants,
                     nomeSobrenome,
                     telefone,
@@ -54,7 +50,7 @@ const Inscricao = () => {
             );
 
 
-            navigate(`/evento/${params.id}/categoria/${params.idcat}`)
+            navigate(`/evento/${idEvent}/categoria/${idCategory}`)
             return;
 
         }

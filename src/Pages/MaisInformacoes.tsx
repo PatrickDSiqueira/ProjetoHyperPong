@@ -13,16 +13,15 @@ import CardInfo from "../components/CardInfo";
 import ButtonInscreva from "../components/ButtonInscreva";
 import LoadingPage from "./LoadingPage";
 import {useOneEvent} from "../hooks/useOneEvent";
+import {routeParams} from "../types/types";
 
 
 export const MaisInformacoes = () => {
-    type params = {
-        id: string,
-    }
-    const params = useParams<params>();
+
+    const {idEvent} = useParams<routeParams>();
 
     const [visibleLoading, setVisibleLoading] = useState(true)
-    const event = useOneEvent(setVisibleLoading, params.id);
+    const event = useOneEvent(setVisibleLoading, idEvent);
 
     const styleDiv = {
         display: "flex",
@@ -57,7 +56,7 @@ export const MaisInformacoes = () => {
                 containment={event.description ? event.description : ""}
             />
 
-            <ButtonInscreva link={`/evento/${params.id}`}/>
+            <ButtonInscreva link={`/evento/${idEvent}`}/>
 
         </ContainerMaisInformacoesPage>}
     </>;

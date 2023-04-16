@@ -4,7 +4,7 @@ import ButtonInscreva from "../components/ButtonInscreva";
 import {useParams} from "react-router-dom";
 import axios from "axios";
 import {useContext, useEffect, useState} from "react";
-import {ParticipantType} from "../types/types";
+import {ParticipantType, routeParams} from "../types/types";
 import {BsCheckCircleFill as IconCheck, BsXCircleFill as IconClose} from "react-icons/bs";
 import LoadingPage from "./LoadingPage";
 import {AuthContext} from "../context/AuthContext";
@@ -15,21 +15,16 @@ import {database, ref, remove, update} from "../FirebaseService";
 export default function Categoria() {
     const {userLogin} = useContext(AuthContext);
 
+    const {idEvent,idCategory}= useParams<routeParams>();
 
-    type eventParams = {
-        id: string,
-        idcat: string
-    }
-
-    const params = useParams<eventParams>();
     const [visibleLoading, setVisibleLoading] = useState(true)
 
-    const participants = useAllParticipants(setVisibleLoading, params.id, params.idcat)
-    const nameCategory = useNameCategory(setVisibleLoading, params.id, params.idcat)
+    const participants = useAllParticipants(setVisibleLoading, idEvent, idCategory)
+    const nameCategory = useNameCategory(setVisibleLoading, idEvent, idCategory)
 
     const handleDeleteParticipants = async (idParticipants: string) => {
         setVisibleLoading(true)
-        await remove(ref(database, `events/${params.id}/categories/${params.idcat}/participants/${idParticipants}`)).then(() => {
+        await remove(ref(database, `events/${idEvent}/categories/${idCategory}/participants/${idParticipants}`)).then(() => {
             setVisibleLoading(false)
         });
 
@@ -40,7 +35,7 @@ export default function Categoria() {
         setVisibleLoading(true)
         const actualization = {status: 1};
 
-        await update(ref(database, `events/${params.id}/categories/${params.idcat}/participants/${idParticipants}`), actualization).then(() => {
+        await update(ref(database, `events/${idEvent}/categories/${idCategory}/participants/${idParticipants}`), actualization).then(() => {
             setVisibleLoading(false)
         });
         return;
@@ -70,7 +65,7 @@ export default function Categoria() {
                     </>
                 })}
             </ ListaParticipante>
-            <ButtonInscreva link={`/evento/${params.id}/categoria/${params.idcat}/inscricao`}/>
+            <ButtonInscreva link={`/evento/${idEvent}/categoria/${idCategory}/inscricao`}/>
         </ContainerParticipantes>}
     </>
 }

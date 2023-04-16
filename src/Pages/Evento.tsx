@@ -8,19 +8,17 @@ import ButtonChangeStatusEvent from "../components/ButtonChangeStatusEvent";
 import LoadingPage from "./LoadingPage";
 import {AuthContext} from "../context/AuthContext";
 import {useOneEvent} from "../hooks/useOneEvent";
+import {routeParams} from "../types/types";
 
 
 export const Evento = () => {
 
     const {userLogin} = useContext(AuthContext);
 
-    type params = {
-        id: string
-    }
-    const params = useParams<params>();
+    const {idEvent} = useParams<routeParams>();
 
     const [visibleLoading, setVisibleLoading] = useState(true)
-    const event = useOneEvent(setVisibleLoading, params.id);
+    const event = useOneEvent(setVisibleLoading, idEvent);
 
     return <>
         <Header titulo={event?.name}/>

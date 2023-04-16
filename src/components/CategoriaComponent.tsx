@@ -3,21 +3,11 @@ import {AiFillPlusCircle as IconPlus} from "react-icons/ai";
 import {Capacidade, ContainerCategoria, TituloCategoria} from "./styles/CategoriaComponent";
 import {useNavigate, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
-import {CategoryType} from "../types/types";
-
-
-interface PropsComponetCategory {
-    category: CategoryType,
-    index: number
-}
+import {PropsComponetCategory, routeParams} from "../types/types";
 
 const CategoriaComponent = ({category, index}: PropsComponetCategory) => {
 
-
-    type eventParams = {
-        id: string
-    }
-    const params = useParams<eventParams>();
+    const {idEvent} = useParams<routeParams>();
 
     const navigate = useNavigate();
 
@@ -34,7 +24,7 @@ const CategoriaComponent = ({category, index}: PropsComponetCategory) => {
 
 
     return <>
-        <ContainerCategoria onClick={() => navigate(`/evento/${params.id}/categoria/${index}`)}>
+        <ContainerCategoria onClick={() => navigate(`/evento/${idEvent}/categoria/${index}`)}>
             <IconPerson size={35}/>
             <Capacidade>{counter}/{category.maxParticipants}</Capacidade>
             <TituloCategoria>{category.name}</TituloCategoria>
