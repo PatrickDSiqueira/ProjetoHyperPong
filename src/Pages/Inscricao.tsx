@@ -65,14 +65,14 @@ const Inscricao = () => {
 
                     <label htmlFor="nomeSobrenome">Nome Sobrenome:</label>
                     <input type="text" id="nomeSobrenome" name="nomeSobrenome" defaultValue={nomeSobrenome}
-                           placeholder="Nome e Sobrenome"/>
+                           placeholder="Nome e Sobrenome" required />
 
                     <label htmlFor="telefone">Telefone:</label>
                     <input type="tel" id="telefone" name="telefone" defaultValue={telefone}
-                           placeholder="99 99999-9999"/>
+                           placeholder="99 99999-9999" required />
 
                     <label htmlFor="dtaNascimento">Data de Nasciemento:</label>
-                    <input type="date" id="dtaNascimento" defaultValue={dtaNascimento} name="dtaNascimento"/>
+                    <input type="date" id="dtaNascimento" defaultValue={dtaNascimento} name="dtaNascimento" required/>
 
                     <input type="number" name="status" value={0} hidden/>
 
