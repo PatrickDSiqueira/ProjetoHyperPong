@@ -27,8 +27,8 @@ const CategoriaComponent = ({category, index}: PropsComponetCategory) => {
         if (category.participants === undefined || category.participants === null) {
             setCounter(0)
         } else {
-            const size = Object.keys(category.participants).length
-            setCounter(size)
+            var filtrado = Object.values(category.participants).filter(obj => obj.status == "1");
+            setCounter(filtrado.length)
         }
     },[])
 
