@@ -11,16 +11,20 @@ export const ContainerWindowFooter = styled.div`
   background-color:#d4edda;
 `;
 
-export const TitleWindow = styled.div`
-    background-color: black;
-    color: white;
-`;
-
 export const DataParticipant = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-content: center;
   flex-wrap: nowrap;
   flex-direction: row;
   align-items: center;
-`
+`;
+
+export const ButtonSelect = styled.button<{ select?: boolean }>`
+  padding: 5px 12px 5px 12px;
+  border-radius: 12px;
+  color: ${props => (props.select) ? "#fff" : "#155724"};
+  font-weight: lighter;
+  border: #155724 1px solid;
+  background-color: ${props => (props.select) ? "#155724" : "rgba(0,0,0,0)"};
+`;
