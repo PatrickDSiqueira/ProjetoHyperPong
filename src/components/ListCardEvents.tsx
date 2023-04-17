@@ -71,7 +71,7 @@ function ListCardEvents({filterEvents}:Props) {
                                     <span>{moment(events?.date).format("DD/MM/YY") + " - " + events.time}</span>
                                     <div style={{display: "flex", justifyContent: "center"}}>
                                         <LabelStatusEvent
-                                            color={events.status === '2' ? "red" : events.status === "0" ? "green" : "gray"}>{StatusEvents[parseInt(events.status)]}</LabelStatusEvent>
+                                            color={events.status.toString() === '2' ? "red" : events.status.toString() === "0" ? "green" : "gray"}>{StatusEvents[parseInt(events.status)]}</LabelStatusEvent>
                                     </div>
                                 </div>
                             </div>
