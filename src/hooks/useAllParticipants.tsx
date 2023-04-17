@@ -2,7 +2,7 @@ import {useEffect, useState} from "react";
 import {ParticipantType} from "../types/types";
 import {database, onValue, ref} from "../FirebaseService";
 
-export function useAllParticipants(setVisibleLoading: React.Dispatch<React.SetStateAction<boolean>>, idEvent: string | undefined, idCategory: string | undefined) {
+export function useAllParticipants(setVisibleLoading: React.Dispatch<React.SetStateAction<boolean>>, idEvent: string | undefined, idCategory: string | undefined, controlador ?:any) {
     const [participants, setParticipants] = useState<ParticipantType[]>([]);
 
     useEffect(() => {
@@ -19,6 +19,6 @@ export function useAllParticipants(setVisibleLoading: React.Dispatch<React.SetSt
                 setVisibleLoading(false);
             });
         },
-        [setVisibleLoading]);
+        [setVisibleLoading, controlador]);
     return participants;
 }

@@ -163,24 +163,20 @@ export default function CriarEvento() {
                     }
                 </div>
 
+                {showNewCat && <FormInForm>
+                    <LabelDefault>Nome:</LabelDefault>
+                    <InputDefault type="text" value={nameCat} onChange={(e) => setNameCat(e.target.value)}
+                                  placeholder="Nome da Categoria"/>
 
-                <div className={showNewCat ? "" : "hidden"}>
-                    <FormInForm>
-                        <LabelDefault>Nome:</LabelDefault>
-                        <InputDefault type="text" value={nameCat} onChange={(e) => setNameCat(e.target.value)}
-                               placeholder="Nome da Categoria"/>
+                    <LabelDefault>Participantes:</LabelDefault>
+                    <InputDefault type="number" value={numCat} onChange={(e) => setNumCat(parseInt(e.target.value))}
+                                  placeholder="Número de Participantes"/>
 
-                        <LabelDefault>Participantes:</LabelDefault>
-                        <InputDefault type="number" value={numCat} onChange={(e) => setNumCat(parseInt(e.target.value))}
-                               placeholder="Número de Participantes"/>
-
-                        <ContainerButtons>
-                            <ButtonCancel type="button" onClick={seeNewCat}>Cancel</ButtonCancel>
-                            <ButtonSave type="button" onClick={createNewCat}>Criar</ButtonSave>
-                        </ContainerButtons>
-                    </FormInForm>
-
-                </div>
+                    <ContainerButtons>
+                        <ButtonCancel type="button" onClick={seeNewCat}>Cancel</ButtonCancel>
+                        <ButtonSave type="button" onClick={createNewCat}>Criar</ButtonSave>
+                    </ContainerButtons>
+                </FormInForm>}
 
                 <button onClick={seeNewCat} type="button" className={!showNewCat ? "" : "hidden"}>Criar Categorias
                 </button>

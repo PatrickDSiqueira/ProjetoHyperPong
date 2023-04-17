@@ -1,7 +1,6 @@
 import {useNavigate, useParams} from "react-router-dom";
-import {StatusEvents} from "../types/types";
+import {routeParams, StatusEvents} from "../types/types";
 import {ContainerButtonChangeStatusEvent, Button, ButtonConfirmation} from "./styles/ContainerButtonChangeStatusEvent";
-import axios from "axios";
 import {useState} from "react";
 import LoadingPage from "../Pages/LoadingPage";
 import {database, ref, remove, update} from "../FirebaseService";
@@ -12,22 +11,17 @@ interface Props {
 
 const ButtonChangeStatusEvent = ({statusSelected}: Props) => {
 
-    const {id} = useParams<eventParams>();
+    const {idEvent} = useParams<routeParams>();
     const navigate = useNavigate();
 
     const [clickDeleteEvent, setClickDeleteEvent] = useState(false);
     const [visibleLoading, setVisibleLoading] = useState(false)
     const [selectedStatus, setSelectedStatus] = useState(statusSelected);
 
-    type eventParams = {
-        id: string,
-    }
-
-
     const handleClickToChangeStatus = async (status: number) => {
         setVisibleLoading(true)
         setSelectedStatus(status)
-        await update(ref(database, `events/${id}`), {status: status}).then(() => {
+        await update(ref(database, `events/${idEvent}`), {status: status}).then(() => {
             setVisibleLoading(false)
         });
 
@@ -36,7 +30,7 @@ const ButtonChangeStatusEvent = ({statusSelected}: Props) => {
 
     const handleClickToDeleteEvent = async () => {
         setVisibleLoading(true)
-        await remove(ref(database, `events/${id}/`));
+        await remove(ref(database, `events/${idEvent}/`));
         navigate(`/`);
 
         return;

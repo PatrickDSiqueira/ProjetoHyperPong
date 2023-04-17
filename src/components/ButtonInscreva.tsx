@@ -1,6 +1,6 @@
 import React from "react";
 import {ContainerButton} from "./styles/ButtonInscreva";
-import {useNavigate, useParams} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 
 
 interface  Props {
@@ -8,14 +8,6 @@ interface  Props {
 }
 const ButtonInscreva = (props: Props)=>{
     const {link} = props;
-
-
-    type eventParams = {
-        id: string,
-        idcat: string
-    }
-
-    const params = useParams<eventParams>();
 
     const navigate = useNavigate();
     const handleClickButtonInscricao = ()=>{

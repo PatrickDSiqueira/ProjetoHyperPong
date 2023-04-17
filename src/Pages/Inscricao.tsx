@@ -4,26 +4,21 @@ import Header from "../components/Header";
 import {useNavigate, useParams} from "react-router-dom";
 import React, {useRef, useState} from "react";
 import {child, database, push, ref, set} from "../FirebaseService";
-import LoadingPage from "./LoadingPage";
 import GroupButtonCancelSubmit from "../components/Form";
+import {routeParams} from "../types/types";
 
 const Inscricao = () => {
 
-    type eventParams = {
-        id: string,
-        idcat: string
-    }
-    const params = useParams<eventParams>();
+    const {idEvent, idCategory} = useParams<routeParams>();
 
     const formRef = useRef<HTMLFormElement>(null);
     const navigate = useNavigate();
-
-    const [visibleLoading, setVisibleLoading] = useState(false)
-
+    const nomeSobrenome = localStorage.getItem('nameInscription') || "";
+    const telefone = localStorage.getItem('telefoneInscription') || "";
+    const dtaNascimento = localStorage.getItem('dtaNascimentoInscription') || "";
+    const [rememberMe, setRememberMe] = useState(nomeSobrenome !== "");
 
     async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
-
-        setVisibleLoading(true);
 
         event.preventDefault();
 
@@ -33,9 +28,19 @@ const Inscricao = () => {
 
             const {nomeSobrenome, telefone, dtaNascimento, status} = values;
 
-            const idParticipants = push(child(ref(database), `events/${params.id}/categoryObj/${params.idcat}/participants`)).key;
+            if (rememberMe){
+                localStorage.setItem('nameInscription', nomeSobrenome.toString())
+                localStorage.setItem('telefoneInscription', telefone.toString())
+                localStorage.setItem('dtaNascimentoInscription', dtaNascimento.toString())
+            } else {
+                localStorage.removeItem('nameInscription');
+                localStorage.removeItem('telefoneInscription');
+                localStorage.removeItem('dtaNascimentoInscription');
+            }
 
-            await set(ref(database, `events/${params.id}/categories/${params.idcat}/participants/${idParticipants}`), {
+            const idParticipants = push(child(ref(database), `events/${idEvent}/categoryObj/${idCategory}/participants`)).key;
+
+            await set(ref(database, `events/${idEvent}/categories/${idCategory}/participants/${idParticipants}`), {
                     idParticipants,
                     nomeSobrenome,
                     telefone,
@@ -45,39 +50,37 @@ const Inscricao = () => {
             );
 
 
-            navigate(`/evento/${params.id}/categoria/${params.idcat}`)
+            navigate(`/evento/${idEvent}/categoria/${idCategory}`)
             return;
 
         }
-
-
     }
 
 
     return <>
         <Header titulo="Inscrição"/>
-        {visibleLoading && <LoadingPage/>}
-        {!visibleLoading &&
             <ContainerPageInscricao>
 
                 <form ref={formRef} onSubmit={handleSubmit}>
 
                     <label htmlFor="nomeSobrenome">Nome Sobrenome:</label>
-                    <input type="text" id="nomeSobrenome" name="nomeSobrenome" placeholder="Nome e Sobrenome"/>
+                    <input type="text" id="nomeSobrenome" name="nomeSobrenome" defaultValue={nomeSobrenome}
+                           placeholder="Nome e Sobrenome" required />
 
                     <label htmlFor="telefone">Telefone:</label>
-                    <input type="tel" id="telefone" name="telefone" placeholder="31 98430-5054"/>
+                    <input type="tel" id="telefone" name="telefone" defaultValue={telefone}
+                           placeholder="99 99999-9999" required />
 
                     <label htmlFor="dtaNascimento">Data de Nasciemento:</label>
-                    <input type="date" id="dtaNascimento" name="dtaNascimento"/>
+                    <input type="date" id="dtaNascimento" defaultValue={dtaNascimento} name="dtaNascimento" required/>
 
                     <input type="number" name="status" value={0} hidden/>
 
-                    <RememberMe/>
+                    <RememberMe setValue={setRememberMe} value={rememberMe}/>
 
                     <GroupButtonCancelSubmit model={"Salvar"}/>
                 </form>
-            </ContainerPageInscricao>}
+            </ContainerPageInscricao>
     </>
 }
 

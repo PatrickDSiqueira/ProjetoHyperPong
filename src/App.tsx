@@ -24,10 +24,10 @@ function App() {
                     <Route path="/todos" element={<Home/>}/>
                     <Route path="/contato" element={<Home/>}/>
                     <Route path="/evento/criar" element={<CriarEvento/>}/>
-                    <Route path="/evento/:id" element={<Evento/>}/>
-                    <Route path="/evento/:id/informacoes" element={<MaisInformacoes/>}/>
-                    <Route path="/evento/:id/categoria/:idcat" element={<Categoria/>}/>
-                    <Route path="/evento/:id/categoria/:idcat/inscricao" element={<Inscricao/>}/>
+                    <Route path="/evento/:idEvent" element={<Evento/>}/>
+                    <Route path="/evento/:idEvent/informacoes" element={<MaisInformacoes/>}/>
+                    <Route path="/evento/:idEvent/categoria/:idCategory" element={<Categoria/>}/>
+                    <Route path="/evento/:idEvent/categoria/:idCategory/inscricao" element={<Inscricao/>}/>
                 </Routes>
             </BrowserRouter>
         </AuthContextProvider>

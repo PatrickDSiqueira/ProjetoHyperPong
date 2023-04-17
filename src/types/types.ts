@@ -42,4 +42,14 @@ export const TypeCompetitions = [
     "Rachão",
     "Copa",
     "Outras"
-]
+];
+
+export type routeParams = {
+    idEvent: string,
+    idCategory: string
+}
+
+export interface PropsComponetCategory {
+    category: CategoryType,
+    index: number
+}

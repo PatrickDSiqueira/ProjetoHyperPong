@@ -2,48 +2,29 @@ import Header from "../components/Header";
 import {ContainerParticipantes, ListaParticipante, TagParticipante} from "./styles/Participantes";
 import ButtonInscreva from "../components/ButtonInscreva";
 import {useParams} from "react-router-dom";
-import axios from "axios";
 import {useContext, useEffect, useState} from "react";
-import {ParticipantType} from "../types/types";
-import {BsCheckCircleFill as IconCheck, BsXCircleFill as IconClose} from "react-icons/bs";
+import {ParticipantType, routeParams} from "../types/types";
 import LoadingPage from "./LoadingPage";
 import {AuthContext} from "../context/AuthContext";
 import {useAllParticipants} from "../hooks/useAllParticipants";
 import {useNameCategory} from "../hooks/useNameCategory";
-import {database, ref, remove, update} from "../FirebaseService";
+import {FooterEdit} from "../components/FooterEdit";
 
 export default function Categoria() {
     const {userLogin} = useContext(AuthContext);
 
+    const {idEvent,idCategory}= useParams<routeParams>();
 
-    type eventParams = {
-        id: string,
-        idcat: string
-    }
+    const [visibleLoading, setVisibleLoading] = useState(true);
+    const [onEdit, setOnEdit] = useState(false);
+    const [participantEdit, setParticipantEdit] = useState<ParticipantType>();
 
-    const params = useParams<eventParams>();
-    const [visibleLoading, setVisibleLoading] = useState(true)
+    const participants = useAllParticipants(setVisibleLoading, idEvent, idCategory, onEdit);
+    const nameCategory = useNameCategory(setVisibleLoading, idEvent, idCategory);
 
-    const participants = useAllParticipants(setVisibleLoading, params.id, params.idcat)
-    const nameCategory = useNameCategory(setVisibleLoading, params.id, params.idcat)
-
-    const handleDeleteParticipants = async (idParticipants: string) => {
-        setVisibleLoading(true)
-        await remove(ref(database, `events/${params.id}/categories/${params.idcat}/participants/${idParticipants}`)).then(() => {
-            setVisibleLoading(false)
-        });
-
-        return;
-    }
-
-    const handleConfirmParticipants = async (idParticipants: string) => {
-        setVisibleLoading(true)
-        const actualization = {status: 1};
-
-        await update(ref(database, `events/${params.id}/categories/${params.idcat}/participants/${idParticipants}`), actualization).then(() => {
-            setVisibleLoading(false)
-        });
-        return;
+    const editParticipant = (participant : ParticipantType) => {
+        setOnEdit(!onEdit);
+        setParticipantEdit(participant);
     }
 
     return <>
@@ -61,16 +42,14 @@ export default function Categoria() {
             </span>
             <ListaParticipante>
                 {participants?.map(participant => {
-                    return <><TagParticipante status={participant.status}>{participant.nomeSobrenome}
-                        {userLogin && <div id="icones">
-                            <IconCheck size={20} onClick={() => handleConfirmParticipants(participant.idParticipants)}/>
-                            <IconClose size={20} onClick={() => handleDeleteParticipants(participant.idParticipants)}/>
-                        </div>}
+                    return <>
+                        <TagParticipante  onClick={()=>editParticipant(participant)} status={participant.status}>{participant.nomeSobrenome}
                     </TagParticipante>
                     </>
                 })}
             </ ListaParticipante>
-            <ButtonInscreva link={`/evento/${params.id}/categoria/${params.idcat}/inscricao`}/>
+            <ButtonInscreva link={`/evento/${idEvent}/categoria/${idCategory}/inscricao`}/>
         </ContainerParticipantes>}
+        {onEdit && userLogin && <FooterEdit participant={participantEdit} setVisible={setOnEdit}  />}
     </>
 }
