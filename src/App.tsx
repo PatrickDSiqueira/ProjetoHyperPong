@@ -11,6 +11,7 @@ import CriarEvento from "./Pages/CriarEvento";
 import {MaisInformacoes} from "./Pages/MaisInformacoes";
 import Login from "./Pages/Login";
 import AuthContextProvider from "./context/AuthContext";
+import {Contact} from "./Pages/Contact";
 
 function App() {
     return (
@@ -22,7 +23,7 @@ function App() {
                     <Route path="/login" element={<Login/>}/>
                     <Route path="/rachoes" element={<Home filterEvents={"0"}/>}/>
                     <Route path="/todos" element={<Home/>}/>
-                    <Route path="/contato" element={<Home/>}/>
+                    <Route path="/contato" element={<Contact />}/>
                     <Route path="/evento/criar" element={<CriarEvento/>}/>
                     <Route path="/evento/:idEvent" element={<Evento/>}/>
                     <Route path="/evento/:idEvent/informacoes" element={<MaisInformacoes/>}/>
