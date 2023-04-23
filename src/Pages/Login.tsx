@@ -62,8 +62,7 @@ const Login = () => {
         {user && <Message type={"success"} msg={"Logado"}/>}
         {loading && <LoadingPage/>}
         <ContainerPageLogin>
-            {userLogin && <><p>Olá, você está logado como {userLogin.email}</p>
-            <p><span style={{color:'blue', fontWeight:'bolder'}} onClick={handleLogout}>Clique Aqui</span> para finalizar a seção</p></>}
+            {userLogin && <><p style={{marginLeft:'12px'}}>Olá, você está logado como {userLogin.email} <span style={{color:'blue', fontWeight:'bolder'}} onClick={handleLogout}>Clique Aqui</span> para finalizar a seção</p></>}
             {!loading && !userLogin && <>
 
                 <FormDefault ref={formRef} onSubmit={handleSubmit}>
