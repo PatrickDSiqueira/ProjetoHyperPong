@@ -1,4 +1,4 @@
-import React, {createContext, ReactNode, useState} from "react";
+import React, {createContext, ReactNode, useEffect, useState} from "react";
 
 
 export interface UserLogin {
@@ -18,5 +18,14 @@ interface AuthContextProviderProps {
 export const AuthContext = createContext<AuthContextProps>({});
 export default function AuthContextProvider(props: AuthContextProviderProps) {
     const [userLogin, setUser] = useState<UserLogin>();
+
+    useEffect(() => {
+        const userFromLocalStorage = JSON.parse(localStorage.getItem('user') || '{}');
+    
+        if (userFromLocalStorage.uid && userFromLocalStorage.email && setUser) {
+            setUser(userFromLocalStorage);
+        }
+      }, []);
+
     return <AuthContext.Provider value={{userLogin, setUser}}>{props.children}</AuthContext.Provider>
 }

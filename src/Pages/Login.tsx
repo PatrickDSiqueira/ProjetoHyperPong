@@ -13,7 +13,7 @@ import logo from "../images/logo.png"
 const Login = () => {
 
     const {userLogin, setUser} = useContext(AuthContext);
-
+    
     const [
         signInWithEmailAndPassword,
         user,
@@ -26,6 +26,9 @@ const Login = () => {
             uid: user.user.uid,
             email: user.user.email || ""
         }
+
+        localStorage.setItem('user', JSON.stringify(userLogado));
+        
         if (setUser) {
             setUser(userLogado)
         }
@@ -44,6 +47,14 @@ const Login = () => {
         }
     }
 
+    const handleLogout = ()=>{
+
+        if(setUser){
+            setUser(undefined)
+            localStorage.removeItem('user')
+        }
+    }
+
     return <>
 
         <Header titulo={"Login Admin"}/>
@@ -51,7 +62,8 @@ const Login = () => {
         {user && <Message type={"success"} msg={"Logado"}/>}
         {loading && <LoadingPage/>}
         <ContainerPageLogin>
-            {userLogin && <><p>Logado</p></>}
+            {userLogin && <><p>Olá, você está logado como {userLogin.email}</p>
+            <p><span style={{color:'blue', fontWeight:'bolder'}} onClick={handleLogout}>Clique Aqui</span> para finalizar a seção</p></>}
             {!loading && !userLogin && <>
 
                 <FormDefault ref={formRef} onSubmit={handleSubmit}>
