@@ -16,18 +16,15 @@ export const ContainerButtonChangeStatusEvent = styled.div`
   
   .selection {
     color: #000000;
+    border: #000000 0.5px solid;
+    font-weight: bolder;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5), -2px -2px 5px rgba(0, 0, 0, 0.5);
   }
 `;
 
-interface PropsButton {
-    status: number
-    selected: number
-}
-
 export const Button = styled.button<{ status: number}>`
-  background-color: ${props => (props.status === 0) ? "#198754" : (props.status === 1) ? "#727775" : "#ef2020"};
+  background-color: ${props => (props.status === 0) ? "#198754" : (props.status === 1) ? "#727775" : (props.status === 2) ? "#ef2020" : "#f79103"};
   color: #fff;
-  font-weight: bolder;
   padding: 10px;
   border: none;
   border-radius: 32px;
