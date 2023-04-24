@@ -30,7 +30,8 @@ export interface CategoryType {
 export const StatusEvents = [
     "Disponível",
     "Espera",
-    "Encerrado"
+    "Encerrado",
+    "Em Breve"
 ]
 
 export const StatusPartipants = [
@@ -51,5 +52,13 @@ export type routeParams = {
 
 export interface PropsComponetCategory {
     category: CategoryType,
-    index: number
+    index: number,
+    statusEvent : typeof StatusEvents[number]
 }
+
+
+export interface TypesMessages  {
+    type : "success" | "error" | "Observation"
+}
+
+export type typeMessage = "success" | "error" | "Observation";

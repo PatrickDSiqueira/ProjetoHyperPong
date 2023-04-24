@@ -26,9 +26,14 @@ export const Evento = () => {
         {!visibleLoading && <ContainerEvento>
             <p>{"Data : " + moment(event?.date).format("DD/MM/YY") + " ás " + event?.time}</p>
             <Link to={`/evento/${event?.id}/informacoes`}>Mais Informações</Link>
-            {event?.categories ? (event?.categories.map((category, index) => {
-                return <CategoriaComponent category={category} index={index}/>
-            })) : "Nenhuma categoria cadastrada :-("}
+            {
+            event?.categories ? 
+            (event?.categories.map((category, index) => {
+
+                return <CategoriaComponent statusEvent={event.status} category={category} index={index}/>
+            })) 
+            : "Nenhuma categoria cadastrada :-("
+            }
             {userLogin && <ButtonChangeStatusEvent statusSelected={(event?.status != undefined)?parseInt(event.status):0}/>}
         </ContainerEvento>}
     </>;

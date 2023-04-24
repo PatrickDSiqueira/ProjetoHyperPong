@@ -13,7 +13,7 @@ import {useNavigate} from "react-router-dom";
 import {Message} from "./Message";
 import {useContext, useState} from "react";
 import moment from "moment/moment";
-import {StatusEvents} from "../types/types";
+import {StatusEvents, typeMessage} from "../types/types";
 import LoadingPage from "../Pages/LoadingPage";
 import {AuthContext} from "../context/AuthContext";
 import {useAllEvents} from "../hooks/useAllEvents";
@@ -27,23 +27,27 @@ function ListCardEvents({filterEvents}:Props) {
 
 
     const {userLogin} = useContext(AuthContext);
-    const [visible, setVisible] = useState(false)
+    const [visibleAlertMessage, setVisibleAlertMessage] = useState(false)
+    const [alertMessageText, setAlertMessageTExt] = useState('')
+    const [alertMessageType, setAlertMessageType] = useState<typeMessage>("error")
     const [visibleLoading, setVisibleLoading] = useState(true)
     const navigate = useNavigate();
     const eventsList = useAllEvents(setVisibleLoading);
 
 
 
-    const handleClickCardEvent = (statusEvent: string, eventId: string) => {
-        if (statusEvent === "2") {
-            setVisible(!visible);
+    const handleClickCardEvent = (statusEvent: number, eventId: string) => {
+        if (statusEvent === 2 && !userLogin) {
+            setAlertMessageTExt('Este evento está encerrado, experimente acessar outro evento!');
+            setAlertMessageType('error');
+            setVisibleAlertMessage(!visibleAlertMessage);
         } else {
             navigate(`/evento/${eventId}`);
         }
     }
 
     return <>
-        {visible && <Message msg="Evento Encerrado !" type="error"/>}
+        {visibleAlertMessage && <Message msg={alertMessageText} type={alertMessageType}/>}
         {visibleLoading && <LoadingPage/>}
         {!visibleLoading && <ListCard>
 
@@ -56,8 +60,8 @@ function ListCardEvents({filterEvents}:Props) {
                     if (filterEvents && filterEvents !== events.type) {
                         return;
                     }
-                    return <ContainerCard key={index} active={events.status === "2" ? 0.6 : 1}
-                                          onClick={() => handleClickCardEvent(events.status, events.id)}>
+                    return <ContainerCard key={index} active={parseInt(events.status) === 2 ? 0.6 : 1}
+                                          onClick={() => handleClickCardEvent(parseInt(events.status), events.id)}>
                         <CardImage>
                             <img
                                 src={events.wallpaper || image}
@@ -71,7 +75,7 @@ function ListCardEvents({filterEvents}:Props) {
                                     <span>{moment(events?.date).format("DD/MM/YY") + " - " + events.time}</span>
                                     <div style={{display: "flex", justifyContent: "center"}}>
                                         <LabelStatusEvent
-                                            color={events.status.toString() === '2' ? "red" : events.status.toString() === "0" ? "green" : "gray"}>{StatusEvents[parseInt(events.status)]}</LabelStatusEvent>
+                                            status={parseInt(events.status)}>{StatusEvents[parseInt(events.status)]}</LabelStatusEvent>
                                     </div>
                                 </div>
                             </div>

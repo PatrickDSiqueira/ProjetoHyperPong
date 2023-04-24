@@ -40,20 +40,22 @@ const ButtonChangeStatusEvent = ({statusSelected}: Props) => {
         {visibleLoading && <LoadingPage/>}
         {!visibleLoading && <ContainerButtonChangeStatusEvent>
             <p>Alterar Status Deste Evento ?</p>
-            <>
-                <Button className={(selectedStatus === 0) ? "selection" : ""} status={0}
-                        onClick={() => handleClickToChangeStatus(0)}>{StatusEvents[0]}</Button>
-                <Button className={(selectedStatus === 1) ? "selection" : ""} status={1}
-                        onClick={() => handleClickToChangeStatus(1)}>{StatusEvents[1]}</Button>
-                <Button className={(selectedStatus === 2) ? "selection" : ""} status={2}
-                        onClick={() => handleClickToChangeStatus(2)}>{StatusEvents[2]}</Button>
-                <Button status={3} onClick={() => setClickDeleteEvent(!clickDeleteEvent)}
-                        className={!clickDeleteEvent ? "" : "hidden"}>Apagar Evento</Button>
+            <>{StatusEvents.map((status, index) => {
+                return <Button
+                    className={(selectedStatus === index) ? "selection" : ""}
+                    status={index}
+                    onClick={() => handleClickToChangeStatus(index)}>{status}</Button>
+            })}
+                <Button
+                    status={2}
+                    onClick={() => setClickDeleteEvent(!clickDeleteEvent)}
+                    className={!clickDeleteEvent ? "" : "hidden"}>Apagar Este Evento
+                </Button>
             </>
             <div className={clickDeleteEvent ? "show" : "hidden"}>
                 <p>Deseja mesmo apagar este evento?</p>
                 <ButtonConfirmation status={1}
-                                    onClick={() => setClickDeleteEvent(!clickDeleteEvent)}>Cancelar</ButtonConfirmation>
+                    onClick={() => setClickDeleteEvent(!clickDeleteEvent)}>Cancelar</ButtonConfirmation>
                 <ButtonConfirmation status={2} onClick={handleClickToDeleteEvent}>Apagar</ButtonConfirmation>
             </div>
         </ContainerButtonChangeStatusEvent>}

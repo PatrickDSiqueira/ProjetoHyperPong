@@ -54,12 +54,7 @@ export const ListCard = styled.div`
     flex-wrap: wrap;
 `;
 
-interface PropsLabelStatus {
-    color:string
-}
-
-
-export const LabelStatusEvent = styled.div<PropsLabelStatus>`
+export const LabelStatusEvent = styled.div<{ status: number}>`
     display: flex;
     justify-content: center;
     width: max-content;
@@ -67,7 +62,7 @@ export const LabelStatusEvent = styled.div<PropsLabelStatus>`
     padding: 5px;
     padding-left: 12px;
     padding-right: 12px;
-    background-color: ${props =>props.color}
+    background-color: ${props => (props.status === 0) ? "#198754" : (props.status === 1) ? "#727775" : (props.status === 2) ? "#ef2020" : "#f79103"};
 `;
 
 export const ContainerButtonADDEvent = styled(ContainerCard)`

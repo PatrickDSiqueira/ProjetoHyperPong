@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
 import { ContainerMessage } from "./styles/Message";
+import { typeMessage } from "../types/types";
 
 interface Props{
-    type: "success" | "error",
-    msg: string
+    type: typeMessage,
+    msg: string,
 } 
 
-export const Message =  (props: Props)=>{
+export const Message =  ({msg, type}: Props)=>{
     const [visible, setVisible] = useState<boolean>(true)
-    const {msg, type} = props;
 
     useEffect(()=>{
         if(!msg){
