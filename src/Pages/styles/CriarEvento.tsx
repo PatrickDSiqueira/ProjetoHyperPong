@@ -1,8 +1,6 @@
 import styled from "styled-components";
 
 export const ContainerPageCriarEvento = styled.div`
-
-
   /* #inputDtaNascimento, #inputTelefone, #inputNomeSobrenome {
     padding-left: 12px;
     height: 50px;
