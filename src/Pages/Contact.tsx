@@ -12,7 +12,7 @@ export const Contact = () => {
     return <>
         <Header titulo={'Contato'}/>
         <ContactContainer> 
-        <h1>Entre em contato conosco</h1>
+            <h1>Entre em contato conosco</h1>
             <TextAreaDefault id="mensagem" name="mensagem" placeholder="Digite sua mensagem" value={message} onChange={(e)=>setMessage(e.target.value)} rows={5} cols={40} required></TextAreaDefault><br/><br/>
             {/*<ContainerButtons>*/}
                 <Link to={`https://wa.me/5531986191921?text=${encodeURI(message)}`}>
