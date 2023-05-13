@@ -1,12 +1,9 @@
 import {useEffect, useState} from "react";
 import {ParticipantType} from "../types/types";
 import {database, onValue, ref} from "../FirebaseService";
-import { useNavigate } from "react-router-dom";
 
 export function useAllParticipants(setVisibleLoading: React.Dispatch<React.SetStateAction<boolean>>, idEvent: string | undefined, idCategory: string | undefined, controlador ?:any) {
     const [participants, setParticipants] = useState<ParticipantType[]>([]);
-
-    const navigate = useNavigate()
 
     useEffect(() => {
             setVisibleLoading(true)
@@ -22,9 +19,6 @@ export function useAllParticipants(setVisibleLoading: React.Dispatch<React.SetSt
                     });
                     setParticipants(allParticipants);
                     setVisibleLoading(false);
-                }else{
-                    setVisibleLoading(false)
-                    navigate('/notfound')
                 }
             });
         },
