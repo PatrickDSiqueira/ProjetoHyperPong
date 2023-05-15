@@ -91,3 +91,33 @@ export const TextAreaDefault = styled.textarea`
 export const ImageTitle = styled.img`
   width: 200px;
 `;
+
+export const ContactContainer = styled.div`
+  display: flex;
+  align-Items: center; 
+  flex-direction: column; 
+  margin-top: 45px;
+  max-width: 600px;
+  border-radius: 15px;
+  padding: 0px 15px 15px 15px;
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px,
+              rgba(0, 0, 0, 0.3) 0px 7px 13px -3px,
+              rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+  background: #1A202C;
+
+  h1 {
+    margin-top: 45px;
+    color: aliceblue;
+  }
+  
+  #mensagem {
+    margin-top: 45px;
+    outline: none;
+    border: 0;
+    transition: all 0.5s;
+  }
+ 
+  p {
+    color: aliceblue;
+ }
+`;
