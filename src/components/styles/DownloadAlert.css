@@ -1,0 +1,17 @@
+  
+  .download-button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 17px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin-left: 16px;
+    cursor: pointer;
+    
+  }
+ 
+  
