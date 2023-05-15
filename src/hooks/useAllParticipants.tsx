@@ -12,11 +12,14 @@ export function useAllParticipants(setVisibleLoading: React.Dispatch<React.SetSt
             const participantsRef = ref(database, `events/${idEvent}/categories/${idCategory}/participants`);
 
             onValue(participantsRef, (snapshot) => {
-                snapshot.forEach((elem) => {
-                    allParticipants.push(elem.val())
-                });
-                setParticipants(allParticipants);
-                setVisibleLoading(false);
+                
+                if (snapshot.exists()) {
+                    snapshot.forEach((elem) => {
+                        allParticipants.push(elem.val())
+                    });
+                    setParticipants(allParticipants);
+                    setVisibleLoading(false);
+                }
             });
         },
         [setVisibleLoading, controlador]);
