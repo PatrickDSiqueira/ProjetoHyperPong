@@ -33,6 +33,7 @@ function App() {
             </BrowserRouter>
         </AuthContextProvider>
     );
+   
 }
 
 export default App;
