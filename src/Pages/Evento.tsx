@@ -1,6 +1,6 @@
 import Header from "../components/Header";
 import {Link, useParams} from "react-router-dom";
-import React, {useContext, useState} from "react";
+import {useContext, useState} from "react";
 import CategoriaComponent from "../components/CategoriaComponent";
 import {ContainerEvento} from "./styles/Evento";
 import moment from "moment";
