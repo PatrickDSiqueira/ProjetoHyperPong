@@ -7,6 +7,7 @@ import {useNavigate} from "react-router-dom";
 import {
     ButtonCancel,
     ButtonSave,
+    ButtonCategories,
     ContainerButtons,
     FormDefault, FormInForm,
     InputDefault,
@@ -178,8 +179,8 @@ export default function CriarEvento() {
                     </ContainerButtons>
                 </FormInForm>}
 
-                <button onClick={seeNewCat} type="button" className={!showNewCat ? "" : "hidden"}>Criar Categorias
-                </button>
+                <ButtonCategories onClick={seeNewCat} type="button" className={!showNewCat ? "" : "hidden"}>Criar Categorias
+                </ButtonCategories>
 
                 <LabelDefault htmlFor="tipo">Tipo de Torneio :</LabelDefault>
                 <select name="type" id="type" value={type} onChange={handleSaveOptionTypeCompetition}>

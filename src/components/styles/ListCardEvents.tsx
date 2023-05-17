@@ -13,7 +13,8 @@ export const ContainerCard = styled.div<PropsContainerCard>`
     background-color: #000000;
     width: 18rem;
     height: auto;
-    border-radius: 31px;
+    border-radius: 15px;
+    box-shadow: 10px 5px 5px grey;
     flex-direction: column;
     align-items: center;
     opacity: ${props=>props.active}; 
@@ -24,27 +25,27 @@ export const TituloCard = styled.p`
     color: #FFFFFF;
     font-size: 23px;
     font-weight: bold;
-    /* text-shadow:
-        -1px -1px 0px #000,
-        -1px -1px 0px #000,
-        -1px -1px 0px #000,
-        -1px -1px 0px #000;
-    font-size: 20px; */
 `;
+
 export const CardImage = styled.div`
-  > img {
-    max-height: 300px;
-    width: 100%;
-    border-radius: 32px 32px 0 0;
-    object-fit: cover;
-  }
-    /* padding: 12px; */
-    /* border-radius: 31px; */
+    > img {
+        max-height: 300px;
+        width: 100%;
+        border-radius: 15px 15px 0 0;
+        transition: all 100ms ease-in-out;
+        object-fit: cover;
+    }
+
+    img:hover{
+        transform:translate(-3%,3%) scale(1.2);
+    }
+    
+    border-radius: 15px 15px 0px 0px;
     overflow: hidden;
 `;
 
 export const CardDesc = styled.div`
-        padding: 16px;
+    padding: 16px;
 `;
 
 export const ListCard = styled.div`
@@ -66,6 +67,6 @@ export const LabelStatusEvent = styled.div<{ status: number}>`
 `;
 
 export const ContainerButtonADDEvent = styled(ContainerCard)`
-  justify-content: center;
-  align-items: center;
+    justify-content: center;
+    align-items: center;
 `;
