@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { ContainerMessage } from "./styles/Message";
 import { typeMessage } from "../types/types";
+import { GrFormClose as IconClose} from "react-icons/gr";
 
 interface Props{
     type: typeMessage,
@@ -18,11 +19,11 @@ export const Message =  ({msg, type}: Props)=>{
         setVisible(true)
         const timer = setTimeout(() => {
             setVisible(false)
-        }, 3000);
+        }, 7000);
 
         return () => clearTimeout(timer)
     }, [msg]);
 
-    return <>{visible && (<ContainerMessage type={type}>{msg}</ContainerMessage>)}
+    return <>{visible &&(<ContainerMessage type={type} >{msg} <IconClose onClick={()=>setVisible(false)} style={{cursor: "pointer"}}>x</IconClose></ContainerMessage>)}
     </>
 }
