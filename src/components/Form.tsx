@@ -2,7 +2,7 @@ import {useNavigate} from "react-router-dom";
 import {ButtonCancel, ButtonSave, ContainerButtons} from "./styles/Form";
 
 interface GroupButtonsProps {
-    model : "Login" | "Salvar"
+    model : "Login" | "Salvar" | "Continuar"
 }
 const GroupButtonCancelSubmit = ({model}: GroupButtonsProps) => {
 
