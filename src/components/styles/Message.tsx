@@ -4,8 +4,9 @@ import { typeMessage } from "../../types/types";
 
 export const ContainerMessage = styled.span<{type:typeMessage}>`
     position: fixed;
-    left: 12px;
+    left: 50%;
     top: 30px;
+    transform: translate(-50%, -50%);
     padding: 1em;
     border: 1px solid #000;
     text-align: center;
@@ -19,8 +20,8 @@ export const ContainerMessage = styled.span<{type:typeMessage}>`
 
     display: block;
     white-space: normal;
-    margin-left: 10px;
-    margin-right: 10px;
+    
+    margin-top: 30px;
     max-width: 80%;
 
     @keyframes alertMoviment {
