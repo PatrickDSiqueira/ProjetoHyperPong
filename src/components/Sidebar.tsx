@@ -1,6 +1,7 @@
 import { BsFillCaretLeftFill as IconeClose } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import { Container, Content, ContinerHeader } from "./styles/Sidebar";
+import { useLocation } from 'react-router-dom';
 
 interface Props {
     sidebar: boolean
@@ -9,6 +10,7 @@ interface Props {
 
 const Sidebar = (props: Props) => {
     const { sidebar, active } = props;
+    const location = useLocation();
 
     const closeSidebar = () => {
         active(false)
@@ -22,19 +24,19 @@ const Sidebar = (props: Props) => {
             </ContinerHeader>
             <Content>
                 <Link to={'/todos'} onClick={closeSidebar}>
-                    <p>Todos</p>
+                    <p className= {location.pathname == '/todos'?  "current" : ""}>Todos</p>
                 </Link>
                 <Link to={'/copas'} onClick={closeSidebar}>
-                    <p>Copas Hyper</p>
+                    <p className= {location.pathname == '/copas'?  "current" : ""} >Copas Hyper</p>
                 </Link>
                 <Link to={'/rachoes'} onClick={closeSidebar}>
-                    <p>Rachões</p>
+                    <p className= {location.pathname == '/rachoes'?  "current" : ""} >Rachões</p>
                 </Link>
                 <Link to={'/contato'} onClick={closeSidebar}>
-                    <p>Contato</p>
+                    <p className= {location.pathname == '/contato'?  "current" : ""} >Contato</p>
                 </Link>
                 <Link to={'/login'} onClick={closeSidebar}>
-                    <p>Admin</p>
+                    <p className= {location.pathname == '/login'?  "current" : ""} >Admin</p>
                 </Link>
             </Content>
         </Container>
