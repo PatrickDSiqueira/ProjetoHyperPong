@@ -24,7 +24,7 @@ const Sidebar = (props: Props) => {
             </ContinerHeader>
             <Content>
                 <Link to={'/todos'} onClick={closeSidebar}>
-                    <p className= {location.pathname == '/todos'?  "current" : ""}>Todos</p>
+                    <p className= {location.pathname == '/todos' || location.pathname == '/'?  "current" : ""}>Todos</p>
                 </Link>
                 <Link to={'/copas'} onClick={closeSidebar}>
                     <p className= {location.pathname == '/copas'?  "current" : ""} >Copas Hyper</p>
