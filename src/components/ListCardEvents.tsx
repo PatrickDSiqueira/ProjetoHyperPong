@@ -37,12 +37,16 @@ function ListCardEvents({filterEvents}:Props) {
 
 
     const handleClickCardEvent = (statusEvent: number, eventId: string) => {
+
         if (statusEvent === 2 && !userLogin) {
+
             setAlertMessageTExt('Este evento está encerrado, experimente acessar outro evento!');
             setAlertMessageType('error');
             setVisibleAlertMessage(!visibleAlertMessage);
+
         } else {
-            navigate(`/evento/${eventId}`);
+
+            navigate(`/evento/${eventId}/informacoes`);
         }
     }
 
