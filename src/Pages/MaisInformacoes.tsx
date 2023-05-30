@@ -1,5 +1,5 @@
 import Header from "../components/Header";
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import React, {useState} from "react";
 import moment from "moment";
 import {ContainerMaisInformacoesPage} from "./styles/MaisInformacoes";
@@ -14,11 +14,13 @@ import ButtonInscreva from "../components/ButtonInscreva";
 import LoadingPage from "./LoadingPage";
 import {useOneEvent} from "../hooks/useOneEvent";
 import {routeParams} from "../types/types";
-
+import {ButtonInscribe} from "../components/styles/ButtonInscreva";
 
 export const MaisInformacoes = () => {
 
     const {idEvent} = useParams<routeParams>();
+
+    const navigate = useNavigate();
 
     const [visibleLoading, setVisibleLoading] = useState(true)
     const event = useOneEvent(setVisibleLoading, idEvent);
@@ -56,7 +58,7 @@ export const MaisInformacoes = () => {
                 containment={event.description ? event.description : ""}
             />
 
-            <ButtonInscreva link={`/evento/${idEvent}`}/>
+            <ButtonInscribe onClick={() => {navigate(`/evento/${idEvent}`)}}>Inscreva-se</ButtonInscribe>
 
         </ContainerMaisInformacoesPage>}
     </>;

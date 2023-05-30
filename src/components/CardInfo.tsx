@@ -11,11 +11,6 @@ interface Props {
 const CardInfo = (props: Props) => {
 
     const {Icon, title, containment} = props;
-    useEffect(()=>{
-        if(containment.startsWith('"')){
-            console.log(JSON.parse(containment))
-        }
-    })
 
     return <ContainerCardInfo>
         <p className="titleCardInfo">{Icon}{title}</p>

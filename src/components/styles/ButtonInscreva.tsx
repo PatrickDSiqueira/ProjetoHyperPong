@@ -10,3 +10,14 @@ export const ContainerButton = styled.button`
     margin-top: 12px ;
     margin-bottom: 12px ;
 `;
+
+export const ButtonInscribe = styled.button`
+  position: fixed;
+  padding: 10px;
+  color: #FFF;
+  background-color: #198754;
+  border: none;
+  border-radius: 32px;
+  width: 222px;
+  bottom: 10px;
+`;
