@@ -12,7 +12,7 @@ import {
 import CardInfo from "../components/CardInfo";
 import ButtonInscreva from "../components/ButtonInscreva";
 import LoadingPage from "./LoadingPage";
-import {useOneEvent} from "../hooks/useOneEvent";
+import Event from "../hooks/Event";
 import {routeParams} from "../types/types";
 import {ButtonInscribe} from "../components/styles/ButtonInscreva";
 
@@ -23,7 +23,7 @@ export const MaisInformacoes = () => {
     const navigate = useNavigate();
 
     const [visibleLoading, setVisibleLoading] = useState(true)
-    const event = useOneEvent(setVisibleLoading, idEvent);
+    const event = Event.GetOne(setVisibleLoading, (idEvent));
 
     const styleDiv = {
         display: "flex",
