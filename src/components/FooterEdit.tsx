@@ -8,7 +8,11 @@ import {Link, useParams} from "react-router-dom";
 import LoadingPage from "../Pages/LoadingPage";
 import {ContainerButtons} from "./styles/Form";
 import {BsXCircleFill as IconClose} from "react-icons/bs";
-import {useState} from "react";
+import {useContext, useState} from "react";
+import Logs from "../hooks/Log";
+import {AuthContext} from "../context/AuthContext";
+import Category from "../hooks/Category";
+import Event from "../hooks/Event";
 
 
 interface Props {
@@ -18,7 +22,11 @@ interface Props {
 
 export const FooterEdit = ({participant, setVisible}: Props) => {
 
+    const {userLogin} = useContext(AuthContext);
+
     const {idEvent, idCategory} = useParams<routeParams>();
+    const categoryName = Category.GetCategoryName(idEvent, idCategory);
+    const eventName = Event.GetNameEvent(idEvent);
 
     const [visibleLoading, setVisibleLoading] = useState(false);
 
@@ -26,6 +34,12 @@ export const FooterEdit = ({participant, setVisible}: Props) => {
         setVisibleLoading(true)
         await remove(ref(database, `events/${idEvent}/categories/${idCategory}/participants/${idParticipants}`)).then(() => {
             setVisibleLoading(false)
+        })
+            .then(() => {
+                Logs.CreateLog(2, `<b>${eventName}</b> - <b>${userLogin?.email}</b> removeu ${participant?.nomeSobrenome} da categoria <b>${categoryName}</b>.`);
+            })
+            .catch(() => {
+                Logs.CreateLog(3, `<b>${eventName}</b> - Erro ao <b>${userLogin?.email}</b> tentar remover ${participant?.nomeSobrenome} da categoria <b>${categoryName}</b>.`);
         })
         setVisible(false);
 
@@ -36,9 +50,15 @@ export const FooterEdit = ({participant, setVisible}: Props) => {
         setVisibleLoading(true)
         const actualization = {status: 1};
 
-        await update(ref(database, `events/${idEvent}/categories/${idCategory}/participants/${idParticipants}`), actualization).then(() => {
-            setVisibleLoading(false)
-        });
+        await update(ref(database, `events/${idEvent}/categories/${idCategory}/participants/${idParticipants}`), actualization)
+            .then(() => {
+                Logs.CreateLog(1, `<b>${eventName}</b> - <b>${userLogin?.email}</b> confirmou ${participant?.nomeSobrenome} na categoria <b>${categoryName}</b>.`);
+                setVisibleLoading(false);
+            })
+            .catch(() => {
+                Logs.CreateLog(3, `<b>${eventName}</b> - Erro ao <b>${userLogin?.email}</b> tentar confirmar ${participant?.nomeSobrenome} na categoria <b>${categoryName}</b>.`);
+                setVisibleLoading(false);
+            });
         setVisible(false);
 
         return;
@@ -48,9 +68,15 @@ export const FooterEdit = ({participant, setVisible}: Props) => {
         setVisibleLoading(true)
         const actualization = {status: "0"};
 
-        await update(ref(database, `events/${idEvent}/categories/${idCategory}/participants/${idParticipants}`), actualization).then(() => {
-            setVisibleLoading(false)
-        });
+        await update(ref(database, `events/${idEvent}/categories/${idCategory}/participants/${idParticipants}`), actualization)
+            .then(() => {
+                Logs.CreateLog(2, `<b>${eventName}</b> - <b>${userLogin?.email}</b> colocou ${participant?.nomeSobrenome} em espera na categoria <b>${categoryName}</b>.`);
+                setVisibleLoading(false);
+            })
+            .catch(() => {
+                Logs.CreateLog(3, `<b>${eventName}</b> - Erro ao <b>${userLogin?.email}</b> tentar colocar ${participant?.nomeSobrenome} espera na categoria <b>${categoryName}</b>.`);
+                setVisibleLoading(false);
+            });
         setVisible(false);
 
         return;
