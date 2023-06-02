@@ -66,7 +66,7 @@ const Inscricao = () => {
                     Logs.CreateLog(3, `<b>${eventName}</b> - falha ao <b>${nomeSobrenome}</b> se inscrever na categoria ${categoryName}.`)
                 });
 
-            navigate(`/evento/${idEvent}/categoria/${idCategory}`)
+            navigate(`/evento/${idEvent}/categoria/${idCategory}/confirmacao`);
             return;
         }
     }
