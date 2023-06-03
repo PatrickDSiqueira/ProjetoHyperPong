@@ -31,7 +31,6 @@ export interface CategoryType {
 
 export const StatusEvents = [
     "Disponível",
-    "Espera",
     "Encerrado",
     "Em Breve"
 ]
@@ -57,7 +56,6 @@ export interface PropsComponetCategory {
     index: number,
     statusEvent : typeof StatusEvents[number]
 }
-
 
 export interface TypesMessages  {
     type : "success" | "error" | "Observation"
