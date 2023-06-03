@@ -80,6 +80,15 @@ export const ButtonCancel = styled(Button)`
   background-color: gray;
 `;
 
+export const ButtonShare = styled(Button)`
+  background-color: blue;
+  width: 200px;
+  margin-top: 20px;
+  padding: 10px;
+  border-radius: 20px;
+  color: #ffffff;
+  font-weight: bolder;
+`;
 
 export const TextAreaDefault = styled.textarea`
   padding-left: 12px;
