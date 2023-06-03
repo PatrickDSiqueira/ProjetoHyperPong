@@ -59,7 +59,7 @@ function ListCardEvents({filterEvents}:Props) {
                 {userLogin && <option value="1">{StatusEvents[1]}</option>}
                 <option value="2">{StatusEvents[2]}</option>
             </SelectDefault>
-        }0
+        }
         {!visibleLoading && <ListCard>
 
             {userLogin && <ContainerButtonADDEvent onClick={()=>navigate("/evento/criar")}>
