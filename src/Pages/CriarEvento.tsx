@@ -7,6 +7,7 @@ import {useNavigate} from "react-router-dom";
 import {
     ButtonCancel,
     ButtonSave,
+    ButtonCategories,
     ContainerButtons,
     FormDefault, FormInForm,
     InputDefault,
@@ -16,6 +17,7 @@ import GroupButtonCancelSubmit from "../components/Form";
 import LoadingPage from "./LoadingPage";
 import {useUploadFile} from 'react-firebase-hooks/storage';
 import {AuthContext} from "../context/AuthContext";
+import Logs from "../hooks/Log";
 
 export default function CriarEvento() {
 
@@ -74,6 +76,12 @@ export default function CriarEvento() {
                 address,
                 categories,
                 wallpaper
+            })
+                .then(() => {
+                Logs.CreateLog(1, `<b>${userLogin?.email}</b> -  criou o evento <b>${name}</b> .`);
+            })
+                .catch(() => {
+                Logs.CreateLog(3, `Erro ao <b>${userLogin?.email}</b> - criar o evento <b>${name}</b> .`);
             });
             navigate(`/evento/${id}`)
             return;
@@ -178,8 +186,8 @@ export default function CriarEvento() {
                     </ContainerButtons>
                 </FormInForm>}
 
-                <button onClick={seeNewCat} type="button" className={!showNewCat ? "" : "hidden"}>Criar Categorias
-                </button>
+                <ButtonCategories onClick={seeNewCat} type="button" className={!showNewCat ? "" : "hidden"}>Criar Categorias
+                </ButtonCategories>
 
                 <LabelDefault htmlFor="tipo">Tipo de Torneio :</LabelDefault>
                 <select name="type" id="type" value={type} onChange={handleSaveOptionTypeCompetition}>

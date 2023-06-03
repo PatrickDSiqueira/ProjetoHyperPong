@@ -73,7 +73,6 @@ export  const Button = styled.button`
 
 export  const ButtonSave = styled(Button)`
     background-color: green;
-
 `;
 
 export const ButtonCancel = styled(Button)`
@@ -88,6 +87,19 @@ export const ButtonShare = styled(Button)`
   border-radius: 20px;
   color: #ffffff;
   font-weight: bolder;
+  `;
+    
+export const ButtonCategories = styled(Button)`
+  width: 250px;
+  padding: 5px 12px 5px 12px;
+  border-radius: 12px;
+  border: none;
+  color: white;
+  font-weight: lighter;
+  background-color: blue;
+  display: flex;
+  align-self: center;
+  justify-content: center;
 `;
 
 export const TextAreaDefault = styled.textarea`

@@ -4,12 +4,20 @@ import Header from "../components/Header";
 import {useNavigate, useParams} from "react-router-dom";
 import React, {useRef, useState} from "react";
 import {child, database, push, ref, set} from "../FirebaseService";
-import GroupButtonCancelSubmit from "../components/Form";
 import {routeParams} from "../types/types";
+import {useMaxParticipantsCategory} from "../hooks/useMaxParticipantsCategory";
+import ModalConfirmation from "../components/ModalConfirmation";
+import {ButtonCancel, ButtonSave, ContainerButtons} from "../components/styles/Form";
+import Logs from "../hooks/Log";
+import Event from "../hooks/Event";
+import Category from "../hooks/Category";
 
 const Inscricao = () => {
 
     const {idEvent, idCategory} = useParams<routeParams>();
+    const [openModalConfirmation, setOpeModalConfirmation] = useState<boolean>(false);
+    const eventName = Event.GetNameEvent(idEvent);
+    const categoryName = Category.GetCategoryName(idEvent, idCategory);
 
     const formRef = useRef<HTMLFormElement>(null);
     const navigate = useNavigate();
@@ -17,6 +25,8 @@ const Inscricao = () => {
     const telefone = localStorage.getItem('telefoneInscription') || "";
     const dtaNascimento = localStorage.getItem('dtaNascimentoInscription') || "";
     const [rememberMe, setRememberMe] = useState(nomeSobrenome !== "");
+
+    const {maxParticipantsCategory, participantsConfirm} = useMaxParticipantsCategory(idEvent, idCategory);
 
     async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
 
@@ -47,40 +57,63 @@ const Inscricao = () => {
                     dtaNascimento,
                     status
                 }
-            );
+            )
+                .then(() => {
+                  Logs.CreateLog(2, `<b>${eventName}</b> - <b>${nomeSobrenome}</b> se inscreveu na categoria ${categoryName}.`);
+                })
+                .catch((e) => {
+                    console.log(e);
+                    Logs.CreateLog(3, `<b>${eventName}</b> - falha ao <b>${nomeSobrenome}</b> se inscrever na categoria ${categoryName}.`)
+                });
 
-
-            navigate(`/evento/${idEvent}/categoria/${idCategory}`)
+            navigate(`/evento/${idEvent}/categoria/${idCategory}/confirmacao`);
             return;
-
         }
     }
 
+    function checkParticipantsNumber() {
+        if (maxParticipantsCategory && participantsConfirm >= maxParticipantsCategory) {
+            setOpeModalConfirmation(true);
+        } else {
+            const button = document.getElementById('sendInscription');
+            if (button) {
+                button.click()
+            }
+        }
+    }
 
     return <>
         <Header titulo="Inscrição"/>
-            <ContainerPageInscricao>
+        <ContainerPageInscricao>
 
-                <form ref={formRef} onSubmit={handleSubmit}>
+            <form ref={formRef} onSubmit={handleSubmit}>
 
-                    <label htmlFor="nomeSobrenome">Nome Sobrenome:</label>
-                    <input type="text" id="nomeSobrenome" name="nomeSobrenome" defaultValue={nomeSobrenome}
-                           placeholder="Nome e Sobrenome" required />
+                <label htmlFor="nomeSobrenome">Nome Sobrenome:</label>
+                <input type="text" id="nomeSobrenome" name="nomeSobrenome" defaultValue={nomeSobrenome}
+                       placeholder="Nome e Sobrenome" required/>
 
-                    <label htmlFor="telefone">Telefone:</label>
-                    <input type="tel" id="telefone" name="telefone" defaultValue={telefone}
-                           placeholder="99 99999-9999" required />
+                <label htmlFor="telefone">Telefone:</label>
+                <input type="tel" id="telefone" name="telefone" defaultValue={telefone}
+                       placeholder="99 99999-9999" required/>
 
-                    <label htmlFor="dtaNascimento">Data de Nasciemento:</label>
-                    <input type="date" id="dtaNascimento" defaultValue={dtaNascimento} name="dtaNascimento" required/>
+                <label htmlFor="dtaNascimento">Data de Nascimento:</label>
+                <input type="date" id="dtaNascimento" defaultValue={dtaNascimento} name="dtaNascimento" required/>
 
-                    <input type="number" name="status" value={0} hidden/>
+                <input type="number" name="status" value={0} hidden/>
 
-                    <RememberMe setValue={setRememberMe} value={rememberMe}/>
+                <RememberMe setValue={setRememberMe} value={rememberMe}/>
 
-                    <GroupButtonCancelSubmit model={"Salvar"}/>
-                </form>
-            </ContainerPageInscricao>
+                <ModalConfirmation openModalConfirmation={openModalConfirmation}
+                                   setOpenModalConfirmation={setOpeModalConfirmation}/>
+
+                <button hidden type={'submit'} id="sendInscription"/>
+                <ContainerButtons>
+                    <ButtonCancel type="button"
+                                  onClick={() => navigate(`/evento/${idEvent}/categoria/${idCategory}`)}>Cancelar</ButtonCancel>
+                    <ButtonSave type="button" onClick={checkParticipantsNumber}>Salvar</ButtonSave>
+                </ContainerButtons>
+            </form>
+        </ContainerPageInscricao>
     </>
 }
 

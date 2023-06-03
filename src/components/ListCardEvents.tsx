@@ -16,7 +16,7 @@ import moment from "moment/moment";
 import {StatusEvents, typeMessage} from "../types/types";
 import LoadingPage from "../Pages/LoadingPage";
 import {AuthContext} from "../context/AuthContext";
-import {useAllEvents} from "../hooks/useAllEvents";
+import Event from "../hooks/Event";
 import  image from "../images/image.jpg"
 
 
@@ -32,17 +32,21 @@ function ListCardEvents({filterEvents}:Props) {
     const [alertMessageType, setAlertMessageType] = useState<typeMessage>("error")
     const [visibleLoading, setVisibleLoading] = useState(true)
     const navigate = useNavigate();
-    const eventsList = useAllEvents(setVisibleLoading);
+    const eventsList = Event.GetAll(setVisibleLoading);
 
 
 
     const handleClickCardEvent = (statusEvent: number, eventId: string) => {
+
         if (statusEvent === 2 && !userLogin) {
+
             setAlertMessageTExt('Este evento está encerrado, experimente acessar outro evento!');
             setAlertMessageType('error');
             setVisibleAlertMessage(!visibleAlertMessage);
+
         } else {
-            navigate(`/evento/${eventId}`);
+
+            navigate(`/evento/${eventId}/informacoes`);
         }
     }
 
