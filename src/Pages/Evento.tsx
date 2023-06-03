@@ -9,6 +9,7 @@ import LoadingPage from "./LoadingPage";
 import {AuthContext} from "../context/AuthContext";
 import Event from "../hooks/Event";
 import {routeParams} from "../types/types";
+import ButtonShareEvent from "../components/ButtonShareEvent";
 
 
 export const Evento = () => {
@@ -34,6 +35,7 @@ export const Evento = () => {
             })) 
             : "Nenhuma categoria cadastrada :-("
             }
+            <ButtonShareEvent/>
             {userLogin && <ButtonChangeStatusEvent statusSelected={(event?.status != undefined)?parseInt(event.status):0}/>}
         </ContainerEvento>}
     </>;
