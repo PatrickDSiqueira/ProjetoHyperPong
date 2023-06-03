@@ -7,8 +7,9 @@ import moment from "moment";
 import ButtonChangeStatusEvent from "../components/ButtonChangeStatusEvent";
 import LoadingPage from "./LoadingPage";
 import {AuthContext} from "../context/AuthContext";
-import {useOneEvent} from "../hooks/useOneEvent";
+import Event from "../hooks/Event";
 import {routeParams} from "../types/types";
+import ButtonShareEvent from "../components/ButtonShareEvent";
 
 
 export const Evento = () => {
@@ -18,7 +19,7 @@ export const Evento = () => {
     const {idEvent} = useParams<routeParams>();
 
     const [visibleLoading, setVisibleLoading] = useState(true)
-    const event = useOneEvent(setVisibleLoading, idEvent);
+    const event = Event.GetOne(setVisibleLoading, (idEvent));
 
     return <>
         <Header titulo={event?.name}/>
@@ -34,6 +35,7 @@ export const Evento = () => {
             })) 
             : "Nenhuma categoria cadastrada :-("
             }
+            <ButtonShareEvent/>
             {userLogin && <ButtonChangeStatusEvent statusSelected={(event?.status != undefined)?parseInt(event.status):0}/>}
         </ContainerEvento>}
     </>;

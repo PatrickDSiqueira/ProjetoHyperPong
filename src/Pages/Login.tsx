@@ -8,7 +8,8 @@ import {AuthContext} from "../context/AuthContext";
 import {ContainerPageLogin} from "./styles/Login";
 import {FormDefault, ImageTitle, InputDefault, LabelDefault} from "../components/styles/Form";
 import GroupButtonCancelSubmit from "../components/Form";
-import logo from "../images/logo.png"
+import logo from "../images/logo.png";
+import {ShowHistoryLogs} from "../components/ShowHistoryLogs";
 
 const Login = () => {
 
@@ -62,7 +63,12 @@ const Login = () => {
         {user && <Message type={"success"} msg={"Logado"}/>}
         {loading && <LoadingPage/>}
         <ContainerPageLogin>
-            {userLogin && <><p style={{marginLeft:'12px'}}>Olá, você está logado como {userLogin.email} <span style={{color:'blue', fontWeight:'bolder'}} onClick={handleLogout}>Clique Aqui</span> para finalizar a seção</p></>}
+            {userLogin && <>
+                <p style={{marginLeft: '12px', marginTop: '350px'}}>Olá, você está logado como {userLogin.email} <span
+                    style={{color: 'blue', fontWeight: 'bolder'}} onClick={handleLogout}>Clique Aqui</span> para
+                    finalizar a seção</p>
+                <ShowHistoryLogs/>
+            </>}
             {!loading && !userLogin && <>
 
                 <FormDefault ref={formRef} onSubmit={handleSubmit}>

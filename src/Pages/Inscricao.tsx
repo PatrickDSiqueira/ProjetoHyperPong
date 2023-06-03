@@ -8,11 +8,16 @@ import {routeParams} from "../types/types";
 import {useMaxParticipantsCategory} from "../hooks/useMaxParticipantsCategory";
 import ModalConfirmation from "../components/ModalConfirmation";
 import {ButtonCancel, ButtonSave, ContainerButtons} from "../components/styles/Form";
+import Logs from "../hooks/Log";
+import Event from "../hooks/Event";
+import Category from "../hooks/Category";
 
 const Inscricao = () => {
 
     const {idEvent, idCategory} = useParams<routeParams>();
-    const [openModalConfirmation, setOpeModalConfirmation] = useState<boolean>(false)
+    const [openModalConfirmation, setOpeModalConfirmation] = useState<boolean>(false);
+    const eventName = Event.GetNameEvent(idEvent);
+    const categoryName = Category.GetCategoryName(idEvent, idCategory);
 
     const formRef = useRef<HTMLFormElement>(null);
     const navigate = useNavigate();
@@ -52,9 +57,16 @@ const Inscricao = () => {
                     dtaNascimento,
                     status
                 }
-            );
+            )
+                .then(() => {
+                  Logs.CreateLog(2, `<b>${eventName}</b> - <b>${nomeSobrenome}</b> se inscreveu na categoria ${categoryName}.`);
+                })
+                .catch((e) => {
+                    console.log(e);
+                    Logs.CreateLog(3, `<b>${eventName}</b> - falha ao <b>${nomeSobrenome}</b> se inscrever na categoria ${categoryName}.`)
+                });
 
-            navigate(`/evento/${idEvent}/categoria/${idCategory}`)
+            navigate(`/evento/${idEvent}/categoria/${idCategory}/confirmacao`);
             return;
         }
     }

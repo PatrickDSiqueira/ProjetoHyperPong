@@ -78,6 +78,16 @@ export const ButtonCancel = styled(Button)`
   background-color: gray;
 `;
 
+export const ButtonShare = styled(Button)`
+  background-color: blue;
+  width: 200px;
+  margin-top: 20px;
+  padding: 10px;
+  border-radius: 20px;
+  color: #ffffff;
+  font-weight: bolder;
+  `;
+    
 export const ButtonCategories = styled(Button)`
   width: 250px;
   padding: 5px 12px 5px 12px;

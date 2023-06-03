@@ -13,6 +13,7 @@ import Login from "./Pages/Login";
 import AuthContextProvider from "./context/AuthContext";
 import {Contact} from "./Pages/Contact";
 import {NotFound } from "./Pages/NotFound";
+import ConfirmationInscription from "./Pages/ConfirmationInscription";
 
 function App() {
     return (
@@ -31,6 +32,7 @@ function App() {
                     <Route path="/evento/:idEvent" element={<Evento/>}/>
                     <Route path="/evento/:idEvent/informacoes" element={<MaisInformacoes/>}/>
                     <Route path="/evento/:idEvent/categoria/:idCategory" element={<Categoria/>}/>
+                    <Route path="/evento/:idEvent/categoria/:idCategory/confirmacao" element={<ConfirmationInscription/>}/>
                     <Route path="/evento/:idEvent/categoria/:idCategory/inscricao" element={<Inscricao/>}/>
                 </Routes>
             </BrowserRouter>

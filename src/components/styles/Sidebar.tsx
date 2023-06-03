@@ -24,6 +24,10 @@ export const Container  = styled.div<Props>`
         cursor: pointer;
     }
 
+    .current{
+        color: #c1ff00;
+    }
+
     @keyframes showSidebar {
         from {
             opacity: 0;

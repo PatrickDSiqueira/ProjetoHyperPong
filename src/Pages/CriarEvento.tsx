@@ -17,6 +17,7 @@ import GroupButtonCancelSubmit from "../components/Form";
 import LoadingPage from "./LoadingPage";
 import {useUploadFile} from 'react-firebase-hooks/storage';
 import {AuthContext} from "../context/AuthContext";
+import Logs from "../hooks/Log";
 
 export default function CriarEvento() {
 
@@ -75,6 +76,12 @@ export default function CriarEvento() {
                 address,
                 categories,
                 wallpaper
+            })
+                .then(() => {
+                Logs.CreateLog(1, `<b>${userLogin?.email}</b> -  criou o evento <b>${name}</b> .`);
+            })
+                .catch(() => {
+                Logs.CreateLog(3, `Erro ao <b>${userLogin?.email}</b> - criar o evento <b>${name}</b> .`);
             });
             navigate(`/evento/${id}`)
             return;
