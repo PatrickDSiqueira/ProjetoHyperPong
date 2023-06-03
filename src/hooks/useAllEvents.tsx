@@ -18,7 +18,7 @@ export function useAllEvents(setVisibleLoading: React.Dispatch<React.SetStateAct
 
                     allEvents.sort((a: EventType, b: EventType) => {
                         if (a.date < b.date) {
-                            return -1;
+                            return -1; 
                           } else if (a.date > b.date) {
                             return 1;
                           } else {

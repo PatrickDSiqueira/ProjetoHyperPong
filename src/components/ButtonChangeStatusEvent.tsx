@@ -47,16 +47,16 @@ const ButtonChangeStatusEvent = ({statusSelected}: Props) => {
                     onClick={() => handleClickToChangeStatus(index)}>{status}</Button>
             })}
                 <Button
-                    status={2}
+                    status={3}
                     onClick={() => setClickDeleteEvent(!clickDeleteEvent)}
                     className={!clickDeleteEvent ? "" : "hidden"}>Apagar Este Evento
                 </Button>
             </>
             <div className={clickDeleteEvent ? "show" : "hidden"}>
                 <p>Deseja mesmo apagar este evento?</p>
-                <ButtonConfirmation status={1}
+                <ButtonConfirmation status={2}
                     onClick={() => setClickDeleteEvent(!clickDeleteEvent)}>Cancelar</ButtonConfirmation>
-                <ButtonConfirmation status={2} onClick={handleClickToDeleteEvent}>Apagar</ButtonConfirmation>
+                <ButtonConfirmation status={1} onClick={handleClickToDeleteEvent}>Apagar</ButtonConfirmation>
             </div>
         </ContainerButtonChangeStatusEvent>}
     </>

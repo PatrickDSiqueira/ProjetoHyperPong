@@ -12,6 +12,7 @@ export const Container  = styled.div<Props>`
     top: 0px;
     left: 0px;
     width: 300px;
+    z-index: 10;
     left: ${props => props.sidebar ? '0' : '-100%'};
     animation: showSidebar .4s;
 
@@ -35,6 +36,7 @@ export const Container  = styled.div<Props>`
 
     }
 `;
+
 export const ContinerHeader = styled.div`
     margin-left: 32px;
     margin-top: 32px;
@@ -51,7 +53,6 @@ export const ContinerHeader = styled.div`
     }
 `;
 
-
 export const Content  = styled.div`
     margin-top: 100px;
     padding-left: 32px;
@@ -64,7 +65,6 @@ export const Content  = styled.div`
             padding-top: 24px;
             font-size: 24px;
             color: #FFFFFF;
-
         }
     }
 `;
