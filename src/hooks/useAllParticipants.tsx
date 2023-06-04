@@ -1,27 +1,29 @@
 import {useEffect, useState} from "react";
 import {ParticipantType} from "../types/types";
 import {database, onValue, ref} from "../FirebaseService";
+import {loadingStart, loadingStop} from "../App";
 
-export function useAllParticipants(setVisibleLoading: React.Dispatch<React.SetStateAction<boolean>>, idEvent: string | undefined, idCategory: string | undefined, controlador ?:any) {
+export function useAllParticipants(idEvent: string | undefined, idCategory: string | undefined) {
+    loadingStart();
     const [participants, setParticipants] = useState<ParticipantType[]>([]);
 
     useEffect(() => {
-            setVisibleLoading(true)
 
             const allParticipants: ParticipantType[] = [];
             const participantsRef = ref(database, `events/${idEvent}/categories/${idCategory}/participants`);
 
             onValue(participantsRef, (snapshot) => {
-                
+
                 if (snapshot.exists()) {
                     snapshot.forEach((elem) => {
                         allParticipants.push(elem.val())
                     });
                     setParticipants(allParticipants);
-                    setVisibleLoading(false);
+                    loadingStop();
                 }
             });
         },
-        [setVisibleLoading, controlador]);
+        []);
+    loadingStop();
     return participants;
 }

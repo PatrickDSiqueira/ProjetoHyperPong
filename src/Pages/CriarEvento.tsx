@@ -14,10 +14,10 @@ import {
     LabelDefault, LabelImageDefault, TextAreaDefault
 } from "../components/styles/Form";
 import GroupButtonCancelSubmit from "../components/Form";
-import LoadingPage from "./LoadingPage";
 import {useUploadFile} from 'react-firebase-hooks/storage';
 import {AuthContext} from "../context/AuthContext";
 import Logs from "../hooks/Log";
+import {loadingStart, loadingStop} from "../App";
 
 export default function CriarEvento() {
 
@@ -28,7 +28,6 @@ export default function CriarEvento() {
     const [address, setAddress] = useState('R. Maria Francisca, 915 - Boa Vista, BH - MG')
     const [description, setDescription] = useState('')
     const [type, setType] = useState();
-    const [visibleLoading, setVisibleLoading] = useState(false)
     const [uploadFile] = useUploadFile()
     const [imageSelected, setImageSelected] = useState<File>();
 
@@ -50,7 +49,7 @@ export default function CriarEvento() {
     async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
 
-        setVisibleLoading(true);
+        loadingStart();
 
         if (formRef.current) {
             const formData = new FormData(formRef.current);
@@ -78,11 +77,13 @@ export default function CriarEvento() {
                 wallpaper
             })
                 .then(() => {
-                Logs.CreateLog(1, `<b>${userLogin?.email}</b> -  criou o evento <b>${name}</b> .`);
-            })
+                    Logs.CreateLog(1, `<b>${userLogin?.email}</b> -  criou o evento <b>${name}</b> .`);
+                })
                 .catch(() => {
-                Logs.CreateLog(3, `Erro ao <b>${userLogin?.email}</b> - criar o evento <b>${name}</b> .`);
-            });
+                    Logs.CreateLog(3, `Erro ao <b>${userLogin?.email}</b> - criar o evento <b>${name}</b> .`);
+                });
+
+            loadingStop();
             navigate(`/evento/${id}`)
             return;
 
@@ -109,8 +110,8 @@ export default function CriarEvento() {
         setType(event.target.value)
     }
 
-    useEffect(()=>{
-        if(userLogin){
+    useEffect(() => {
+        if (userLogin) {
             return;
         }
         navigate("/login")
@@ -129,9 +130,7 @@ export default function CriarEvento() {
     return <>
         <Header titulo="Criar Evento"/>
 
-        {visibleLoading && <LoadingPage/>}
-
-        {!visibleLoading && userLogin && <ContainerPageCriarEvento>
+        {userLogin && <ContainerPageCriarEvento>
 
             <FormDefault method="post" ref={formRef} onSubmit={handleSubmit}>
                 <LabelDefault htmlFor="name">Nome:</LabelDefault>
@@ -150,16 +149,16 @@ export default function CriarEvento() {
                 <InputDefault type="text" placeholder="Endereço" id="address" name="address" value={address}
                               onChange={(e) => setAddress(e.target.value)} required/>
 
-                <InputDefault type="number" id="status" name="status" hidden value={0}/>
+                <InputDefault readOnly type="number" id="status" name="status" hidden value={0}/>
 
                 <LabelDefault htmlFor="">Categorias:</LabelDefault>
-                <InputDefault type="text" id="categoriesObj" name="categoriesObj" hidden
+                <InputDefault readOnly type="text" id="categoriesObj" name="categoriesObj" hidden
                               value={JSON.stringify(categories)}/>
 
                 <div className={categories.length ? "" : "hidden"}>
                     {
-                        categories.map((elem) => {
-                            return <div key={elem.name} className="labelCategoria">
+                        categories.map((elem, key) => {
+                            return <div key={key} className="labelCategoria">
                                 <p>
                                     {elem.name + " - " + elem.maxParticipants}
                                     <span onClick={() => deleteCategories(elem.name)} className="deleteCategories">
@@ -186,20 +185,21 @@ export default function CriarEvento() {
                     </ContainerButtons>
                 </FormInForm>}
 
-                <ButtonCategories onClick={seeNewCat} type="button" className={!showNewCat ? "" : "hidden"}>Criar Categorias
+                <ButtonCategories onClick={seeNewCat} type="button" className={!showNewCat ? "" : "hidden"}>Criar
+                    Categorias
                 </ButtonCategories>
 
                 <LabelDefault htmlFor="tipo">Tipo de Torneio :</LabelDefault>
                 <select name="type" id="type" value={type} onChange={handleSaveOptionTypeCompetition}>
                     {TypeCompetitions.map((value, index) => {
-                        return <option value={index}>{value}</option>
+                        return <option key={index} value={index}>{value}</option>
                     })}
                 </select>
 
                 <LabelDefault htmlFor="descriptionArea">Descrição:</LabelDefault>
                 <TextAreaDefault id="descriptionArea" cols={20} rows={10} value={description}
                                  onChange={(e) => setDescription(e.target.value)}/>
-                <textarea hidden name="description" cols={20} rows={10} value={JSON.stringify(description)}/>
+                <textarea hidden readOnly name="description" cols={20} rows={10} value={JSON.stringify(description)}/>
 
                 <LabelImageDefault hasFile={imageSelected == undefined} htmlFor="image">
                     {imageSelected ? "Capa Selecionada" : "Inserir Capa"}

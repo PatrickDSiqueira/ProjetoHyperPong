@@ -2,8 +2,12 @@ import {useEffect, useState} from "react";
 import {child, database, get, ref} from "../FirebaseService";
 import {useNavigate} from "react-router-dom";
 import {ParticipantType} from "../types/types";
+import {loadingStart, loadingStop} from "../App";
 
 export function useMaxParticipantsCategory(idEvent: string | undefined, idCategory: string | undefined) {
+
+    loadingStart();
+
     const [maxParticipantsCategory, setMaxParticipantsCategory] = useState<number>();
     const [participantsConfirm, setParticipantsConfirm] = useState<number>(0)
 
@@ -30,5 +34,6 @@ export function useMaxParticipantsCategory(idEvent: string | undefined, idCatego
                 })
         },
         []);
+    loadingStop();
     return {maxParticipantsCategory, participantsConfirm};
 }
