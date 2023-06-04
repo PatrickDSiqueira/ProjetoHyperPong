@@ -3,7 +3,7 @@ import {ContainerLoadingPage} from "./styles/LoadingPage";
 
 const LoadingPage = () => {
 
-    return <ContainerLoadingPage>
+    return <ContainerLoadingPage id='loading'>
         <ThunderCollor/>
     </ContainerLoadingPage>
 }
