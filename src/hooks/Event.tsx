@@ -2,14 +2,19 @@ import {useEffect, useState} from "react";
 import {EventType} from "../types/types";
 import {child, database, get, onValue, ref} from "../FirebaseService";
 import {useNavigate} from "react-router-dom";
+import {loadingStart, loadingStop} from "../App";
 
 
-function GetAll(setVisibleLoading: React.Dispatch<React.SetStateAction<boolean>>) {
+function GetAll() {
 
     const [eventsList, setEventsList] = useState<EventType[]>([]);
 
     useEffect(() => {
+
+            loadingStart();
+
             async function fecthData() {
+
                 const allEventsRef = ref(database, "events/");
 
                 const allEvents: EventType[] = [];
@@ -28,20 +33,19 @@ function GetAll(setVisibleLoading: React.Dispatch<React.SetStateAction<boolean>>
                             return 0;
                         }
                     });
-
                     setEventsList(allEvents);
-                    setVisibleLoading(false);
                 });
-
             }
-
             fecthData();
         },
         []);
+    loadingStop();
     return eventsList;
 }
 
-function GetOne(setVisibleLoading: React.Dispatch<React.SetStateAction<boolean>>, idEvent: string | undefined) {
+function GetOne(idEvent: string | undefined) {
+
+    loadingStart();
 
     const [event, setEvent] = useState<EventType>();
 
@@ -55,18 +59,20 @@ function GetOne(setVisibleLoading: React.Dispatch<React.SetStateAction<boolean>>
                     if (snapshot.exists()) {
                         setEvent(snapshot.val())
                     } else {
-                        setVisibleLoading(false);
+                        loadingStop();
                         navigate('/notfound');
                     }
 
-                    setVisibleLoading(false);
                 })
         },
         []);
+    loadingStop();
     return event;
 }
 
 function GetNameEvent(idEvent: string | undefined) {
+
+    loadingStart();
 
     const navigate = useNavigate();
 
@@ -84,9 +90,10 @@ function GetNameEvent(idEvent: string | undefined) {
                 })
         },
         []);
+    loadingStop();
     return eventName;
+}
 
-};
 export default {
     GetAll,
     GetOne,

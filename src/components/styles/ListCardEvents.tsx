@@ -29,7 +29,8 @@ export const TituloCard = styled.p`
 
 export const CardImage = styled.div`
     > img {
-        max-height: 300px;
+        max-height: 177px;
+        min-height: 162px;
         width: 100%;
         border-radius: 15px 15px 0 0;
         transition: all 100ms ease-in-out;

@@ -1,8 +1,11 @@
 import {useEffect, useState} from "react";
 import {child, database, get, ref} from "../FirebaseService";
 import {useNavigate} from "react-router-dom";
+import {loadingStart, loadingStop} from "../App";
 
 function GetCategoryName(idEvent: string | undefined, idCategory: string | undefined) {
+
+    loadingStart();
 
     const [nameCategory, setNameCategory] = useState('');
     const navigate = useNavigate();
@@ -18,6 +21,7 @@ function GetCategoryName(idEvent: string | undefined, idCategory: string | undef
                 })
         },
         []);
+    loadingStop();
     return nameCategory;
 }
 

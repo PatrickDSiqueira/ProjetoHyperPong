@@ -7,12 +7,17 @@ const spin = keyframes`
   }
 `;
 export const ContainerLoadingPage = styled.div`
-  height: 50vh;
-  width: 100%;
-  display: flex;
+  display: none;
   justify-content: center;
   align-items: center;
-  background-color: rgba(10, 88, 202, 0);
+  background-color: white;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+  pointer-events: none;
 
   > svg {
     animation: ${spin} 1s linear infinite;
