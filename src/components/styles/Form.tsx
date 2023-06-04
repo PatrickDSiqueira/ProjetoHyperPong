@@ -61,7 +61,6 @@ export const ContainerButtons = styled.div`
     margin-top: 16px;
 `;
 
-
 export  const Button = styled.button`
     width: 120px;
     padding: 5px 12px 5px 12px;
@@ -108,7 +107,6 @@ export const TextAreaDefault = styled.textarea`
   border: 0.1px solid black;
 `;
 
-
 export const ImageTitle = styled.img`
   width: 200px;
 `;
@@ -141,4 +139,9 @@ export const ContactContainer = styled.div`
   p {
     color: aliceblue;
  }
+`;
+
+export const SelectDefault = styled.select`
+  margin: 15px 50px;
+  border-radius: 4px;
 `;

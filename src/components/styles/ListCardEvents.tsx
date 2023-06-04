@@ -63,7 +63,7 @@ export const LabelStatusEvent = styled.div<{ status: number}>`
     padding: 5px;
     padding-left: 12px;
     padding-right: 12px;
-    background-color: ${props => (props.status === 0) ? "#198754" : (props.status === 1) ? "#727775" : (props.status === 2) ? "#ef2020" : "#f79103"};
+    background-color: ${props => (props.status === 0) ? "#198754" : (props.status === 1) ?  "#ef2020" : "#f79103"};
 `;
 
 export const ContainerButtonADDEvent = styled(ContainerCard)`

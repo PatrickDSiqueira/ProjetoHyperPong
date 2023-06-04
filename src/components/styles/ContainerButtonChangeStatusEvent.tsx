@@ -23,7 +23,7 @@ export const ContainerButtonChangeStatusEvent = styled.div`
 `;
 
 export const Button = styled.button<{ status: number}>`
-  background-color: ${props => (props.status === 0) ? "#198754" : (props.status === 1) ? "#727775" : (props.status === 2) ? "#ef2020" : "#f79103"};
+  background-color: ${props => (props.status === 0) ? "#198754" : (props.status === 1) ?  "#ef2020" : (props.status === 2) ?"#f79103" : "#727775"};
   color: #fff;
   padding: 10px;
   border: none;
