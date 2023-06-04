@@ -26,3 +26,14 @@ export const TableHistoryLog = styled.table`
     }
   }
 `;
+
+export const SelectFilter = styled.select`
+  background-color: transparent;
+  border: none;
+  color: #f0f0f0;
+
+  > option {
+    border: none;
+    color: black;
+  }
+`;

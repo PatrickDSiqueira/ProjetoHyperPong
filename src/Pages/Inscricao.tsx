@@ -99,7 +99,7 @@ const Inscricao = () => {
                 <label htmlFor="dtaNascimento">Data de Nascimento:</label>
                 <input type="date" id="dtaNascimento" defaultValue={dtaNascimento} name="dtaNascimento" required/>
 
-                <input type="number" name="status" value={0} hidden/>
+                <input type="number" name="status" value={0} readOnly hidden/>
 
                 <RememberMe setValue={setRememberMe} value={rememberMe}/>
 

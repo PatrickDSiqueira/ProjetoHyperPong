@@ -1,6 +1,6 @@
 import Header from "../components/Header";
 import {useNavigate, useParams} from "react-router-dom";
-import React, {useState} from "react";
+import React from "react";
 import moment from "moment";
 import {ContainerMaisInformacoesPage} from "./styles/MaisInformacoes";
 import {
@@ -10,8 +10,6 @@ import {
     BsFillInfoCircleFill as IconInfo
 } from "react-icons/bs";
 import CardInfo from "../components/CardInfo";
-import ButtonInscreva from "../components/ButtonInscreva";
-import LoadingPage from "./LoadingPage";
 import Event from "../hooks/Event";
 import {routeParams} from "../types/types";
 import {ButtonInscribe} from "../components/styles/ButtonInscreva";
@@ -19,11 +17,8 @@ import {ButtonInscribe} from "../components/styles/ButtonInscreva";
 export const MaisInformacoes = () => {
 
     const {idEvent} = useParams<routeParams>();
-
     const navigate = useNavigate();
-
-    const [visibleLoading, setVisibleLoading] = useState(true)
-    const event = Event.GetOne(setVisibleLoading, (idEvent));
+    const event = Event.GetOne((idEvent));
 
     const styleDiv = {
         display: "flex",
@@ -33,7 +28,6 @@ export const MaisInformacoes = () => {
 
     return <>
         <Header titulo={event?.name}/>
-        {visibleLoading && <LoadingPage/>}
         {event && <ContainerMaisInformacoesPage>
             <CardInfo
                 Icon={<IconLocal/>}
@@ -58,7 +52,9 @@ export const MaisInformacoes = () => {
                 containment={event.description ? event.description : ""}
             />
 
-            <ButtonInscribe onClick={() => {navigate(`/evento/${idEvent}`)}}>Inscreva-se</ButtonInscribe>
+            <ButtonInscribe onClick={() => {
+                navigate(`/evento/${idEvent}`)
+            }}>Inscreva-se</ButtonInscribe>
 
         </ContainerMaisInformacoesPage>}
     </>;

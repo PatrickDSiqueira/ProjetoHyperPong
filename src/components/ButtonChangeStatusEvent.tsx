@@ -2,11 +2,11 @@ import {useNavigate, useParams} from "react-router-dom";
 import {routeParams, StatusEvents} from "../types/types";
 import {ContainerButtonChangeStatusEvent, Button, ButtonConfirmation} from "./styles/ContainerButtonChangeStatusEvent";
 import {useContext, useState} from "react";
-import LoadingPage from "../Pages/LoadingPage";
 import {database, ref, remove, update} from "../FirebaseService";
 import Logs from "../hooks/Log";
 import Event from "../hooks/Event";
 import {AuthContext} from "../context/AuthContext";
+import {loadingStart, loadingStop} from "../App";
 
 interface Props {
     statusSelected: number
@@ -21,27 +21,26 @@ const ButtonChangeStatusEvent = ({statusSelected}: Props) => {
     const eventName = Event.GetNameEvent(idEvent);
 
     const [clickDeleteEvent, setClickDeleteEvent] = useState(false);
-    const [visibleLoading, setVisibleLoading] = useState(false)
     const [selectedStatus, setSelectedStatus] = useState(statusSelected);
 
     const handleClickToChangeStatus = async (status: number) => {
-        setVisibleLoading(true)
+        loadingStart();
         setSelectedStatus(status)
         await update(ref(database, `events/${idEvent}`), {status: status})
 
             .then(() => {
                 Logs.CreateLog(2, `<b>${eventName}</b> - <b>${userLogin?.email}</b> atualizou o status do evento para <b>${StatusEvents[status]}</b>.`);
-                setVisibleLoading(false);
             })
 
             .catch(() => {
                 Logs.CreateLog(3, `<b>${eventName}</b> - Erro ao <b>${userLogin?.email}</b> tentar atualizar o status para <b>${StatusEvents[status]}</b>.`);
-                setVisibleLoading(false);
             });
+
+        loadingStop();
     }
 
     const handleClickToDeleteEvent = async () => {
-        setVisibleLoading(true)
+        loadingStart();
         await remove(ref(database, `events/${idEvent}/`))
 
             .then(() => {
@@ -51,17 +50,18 @@ const ButtonChangeStatusEvent = ({statusSelected}: Props) => {
             .catch(() => {
                 Logs.CreateLog(3, `<b>${eventName}</b> - Erro ao <b>${userLogin?.email}</b> tentar apagar .`);
             });
-        navigate(`/`);
 
+        loadingStop();
+        navigate(`/`);
         return;
     }
 
     return <>
-        {visibleLoading && <LoadingPage/>}
-        {!visibleLoading && <ContainerButtonChangeStatusEvent>
+        <ContainerButtonChangeStatusEvent>
             <p>Alterar Status Deste Evento ?</p>
             <>{StatusEvents.map((status, index) => {
                 return <Button
+                    key={index}
                     className={(selectedStatus === index) ? "selection" : ""}
                     status={index}
                     onClick={() => handleClickToChangeStatus(index)}>{status}</Button>
@@ -75,10 +75,10 @@ const ButtonChangeStatusEvent = ({statusSelected}: Props) => {
             <div className={clickDeleteEvent ? "show" : "hidden"}>
                 <p>Deseja mesmo apagar este evento?</p>
                 <ButtonConfirmation status={2}
-                    onClick={() => setClickDeleteEvent(!clickDeleteEvent)}>Cancelar</ButtonConfirmation>
+                                    onClick={() => setClickDeleteEvent(!clickDeleteEvent)}>Cancelar</ButtonConfirmation>
                 <ButtonConfirmation status={1} onClick={handleClickToDeleteEvent}>Apagar</ButtonConfirmation>
             </div>
-        </ContainerButtonChangeStatusEvent>}
+        </ContainerButtonChangeStatusEvent>
     </>
 }
 export default ButtonChangeStatusEvent;

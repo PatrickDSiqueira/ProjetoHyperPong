@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getDatabase, set, ref, onValue, get, child, push, update, remove} from "firebase/database";
+import { getDatabase, set, ref, onValue, get, child, push, update, remove, limitToFirst, query, limitToLast} from "firebase/database";
 import { getAuth } from "firebase/auth";
 import { getStorage, ref as refStorage, getDownloadURL } from "firebase/storage"
 
@@ -19,4 +19,4 @@ const database = getDatabase(app);
 const storage = getStorage(app);
 const auth = getAuth(app);
 
-export {database, set, ref, onValue, get, child, push, update, remove, auth, storage, refStorage, getDownloadURL };
+export {database, set, ref, onValue, get, child, push, update, remove, auth, storage, refStorage, getDownloadURL, limitToFirst, query, limitToLast};
