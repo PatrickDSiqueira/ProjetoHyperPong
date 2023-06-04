@@ -35,18 +35,8 @@ function ListCardEvents({filterEvents}:Props) {
     const navigate = useNavigate();
     const eventsList = Event.GetAll(setVisibleLoading);
 
-    const handleClickCardEvent = (statusEvent: number, eventId: string) => {
-
-        if (statusEvent === 2 && !userLogin) {
-
-            setAlertMessageTExt('Este evento está encerrado, experimente acessar outro evento!');
-            setAlertMessageType('error');
-            setVisibleAlertMessage(!visibleAlertMessage);
-
-        } else {
-
-            navigate(`/evento/${eventId}/informacoes`);
-        }
+    const handleClickCardEvent = (eventId: string) => {
+        return navigate(`/evento/${eventId}/informacoes`);
     }
 
     return <>
@@ -68,14 +58,19 @@ function ListCardEvents({filterEvents}:Props) {
                 </ContainerButtonADDEvent>}
 
             {eventsList.map((events, index) => {
+                
                 if (filterEvents && filterEvents !== events.type) {
                     return;
                 }
-                
+
+                if (parseInt(events.status) === 1 && !userLogin){
+                    return;
+                }
+
                 if (parseInt(events.status) === filterStatus || filterStatus === 3) {
 
                     return <ContainerCard key={index} active={parseInt(events.status) === 2 ? 0.6 : 1}
-                        onClick={() => handleClickCardEvent(parseInt(events.status), events.id)}>
+                        onClick={() => handleClickCardEvent(events.id)}>
                         <CardImage>
                             <img
                                 src={events.wallpaper || image}
