@@ -201,7 +201,7 @@ export default function CriarEvento() {
                                  onChange={(e) => setDescription(e.target.value)}/>
                 <textarea hidden readOnly name="description" cols={20} rows={10} value={JSON.stringify(description)}/>
 
-                <LabelImageDefault hasFile={imageSelected == undefined} htmlFor="image">
+                <LabelImageDefault hasFile={imageSelected === undefined} htmlFor="image">
                     {imageSelected ? "Capa Selecionada" : "Inserir Capa"}
                 </LabelImageDefault>
 

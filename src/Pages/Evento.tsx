@@ -33,7 +33,7 @@ export const Evento = () => {
             }
             <ButtonShareEvent/>
             {userLogin &&
-                <ButtonChangeStatusEvent statusSelected={(event?.status != undefined) ? parseInt(event.status) : 0}/>}
+                <ButtonChangeStatusEvent statusSelected={(event?.status !== undefined) ? parseInt(event.status) : 0}/>}
         </ContainerEvento>
     </>;
 }
