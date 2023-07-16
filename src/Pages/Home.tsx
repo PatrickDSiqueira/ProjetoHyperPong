@@ -11,6 +11,9 @@ export default function Home({filterEvents}:Props) {
         <Header titulo="Eventos Hyper"/>
 
         <p>Teste de Deploy</p>
+        <p>Teste de Deploy</p>
+        <p>Teste de Deploy</p>
+        <p>Teste de Deploy</p>
         <ListCardEvents  filterEvents={filterEvents} />
     </>
 }
