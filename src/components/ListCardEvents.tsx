@@ -10,10 +10,9 @@ import {
 import {BsFillCalendarFill as IconCalendar, BsPlusLg as IconPlus} from "react-icons/bs";
 import 'bootstrap/dist/css/bootstrap.min.css'
 import {useNavigate} from "react-router-dom";
-import {Message} from "./Message";
 import {useContext, useState} from "react";
 import moment from "moment/moment";
-import {StatusEvents, typeMessage} from "../types/types";
+import {StatusEvents} from "../types/types";
 import {AuthContext} from "../context/AuthContext";
 import Event from "../hooks/Event";
 import image from "../images/image.jpg"
@@ -25,20 +24,17 @@ interface Props {
 
 function ListCardEvents({filterEvents}: Props) {
 
-    const {userLogin} = useContext(AuthContext)
-    const [visibleAlertMessage, setVisibleAlertMessage] = useState(false)
-    const [alertMessageText, setAlertMessageTExt] = useState('')
-    const [alertMessageType, setAlertMessageType] = useState<typeMessage>("error")
-    const [filterStatus, setFilterStatus] = useState(3)
+    const {userLogin} = useContext(AuthContext);
+    const [filterStatus, setFilterStatus] = useState(3);
     const navigate = useNavigate();
     const eventsList = Event.GetAll();
 
     const handleClickCardEvent = (eventId: string) => {
+
         return navigate(`/evento/${eventId}/informacoes`);
     }
 
     return <>
-        {visibleAlertMessage && <Message msg={alertMessageText} type={alertMessageType}/>}
 
         <SelectDefault id="SelectFilterStatusEvent" onChange={(e) => setFilterStatus(parseInt(e.target.value))}>
             <option value="3">Todos</option>
