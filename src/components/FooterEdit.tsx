@@ -8,11 +8,11 @@ import {Link, useParams} from "react-router-dom";
 import {ContainerButtons} from "./styles/Form";
 import {BsXCircleFill as IconClose} from "react-icons/bs";
 import {useContext} from "react";
-import Logs from "../hooks/Log";
 import {AuthContext} from "../context/AuthContext";
-import Category from "../hooks/Category";
-import Event from "../hooks/Event";
+import {GetCategoryName} from "../hooks/Category";
 import {loadingStart, loadingStop} from "../App";
+import {GetNameEvent} from "../hooks/Event";
+import {CreateLog} from "../hooks/Log";
 
 interface Props {
     participant: ParticipantType | undefined
@@ -24,17 +24,17 @@ export const FooterEdit = ({participant, setVisible}: Props) => {
     const {userLogin} = useContext(AuthContext);
 
     const {idEvent, idCategory} = useParams<routeParams>();
-    const categoryName = Category.GetCategoryName(idEvent, idCategory);
-    const eventName = Event.GetNameEvent(idEvent);
+    const categoryName = GetCategoryName(idEvent, idCategory);
+    const eventName = GetNameEvent(idEvent);
 
     const handleDeleteParticipants = async (idParticipants: string | undefined) => {
         loadingStart();
         await remove(ref(database, `events/${idEvent}/categories/${idCategory}/participants/${idParticipants}`))
             .then(() => {
-                Logs.CreateLog(2, `<b>${eventName}</b> - <b>${userLogin?.email}</b> removeu ${participant?.nomeSobrenome} da categoria <b>${categoryName}</b>.`);
+                CreateLog(2, `<b>${eventName}</b> - <b>${userLogin?.email}</b> removeu ${participant?.nomeSobrenome} da categoria <b>${categoryName}</b>.`);
             })
             .catch(() => {
-                Logs.CreateLog(3, `<b>${eventName}</b> - Erro ao <b>${userLogin?.email}</b> tentar remover ${participant?.nomeSobrenome} da categoria <b>${categoryName}</b>.`);
+                CreateLog(3, `<b>${eventName}</b> - Erro ao <b>${userLogin?.email}</b> tentar remover ${participant?.nomeSobrenome} da categoria <b>${categoryName}</b>.`);
             })
 
         loadingStop();
@@ -49,10 +49,10 @@ export const FooterEdit = ({participant, setVisible}: Props) => {
 
         await update(ref(database, `events/${idEvent}/categories/${idCategory}/participants/${idParticipants}`), actualization)
             .then(() => {
-                Logs.CreateLog(1, `<b>${eventName}</b> - <b>${userLogin?.email}</b> confirmou ${participant?.nomeSobrenome} na categoria <b>${categoryName}</b>.`);
+                CreateLog(1, `<b>${eventName}</b> - <b>${userLogin?.email}</b> confirmou ${participant?.nomeSobrenome} na categoria <b>${categoryName}</b>.`);
             })
             .catch(() => {
-                Logs.CreateLog(3, `<b>${eventName}</b> - Erro ao <b>${userLogin?.email}</b> tentar confirmar ${participant?.nomeSobrenome} na categoria <b>${categoryName}</b>.`);
+                CreateLog(3, `<b>${eventName}</b> - Erro ao <b>${userLogin?.email}</b> tentar confirmar ${participant?.nomeSobrenome} na categoria <b>${categoryName}</b>.`);
             });
 
         loadingStop();
@@ -67,10 +67,10 @@ export const FooterEdit = ({participant, setVisible}: Props) => {
 
         await update(ref(database, `events/${idEvent}/categories/${idCategory}/participants/${idParticipants}`), actualization)
             .then(() => {
-                Logs.CreateLog(2, `<b>${eventName}</b> - <b>${userLogin?.email}</b> colocou ${participant?.nomeSobrenome} em espera na categoria <b>${categoryName}</b>.`);
+                CreateLog(2, `<b>${eventName}</b> - <b>${userLogin?.email}</b> colocou ${participant?.nomeSobrenome} em espera na categoria <b>${categoryName}</b>.`);
             })
             .catch(() => {
-                Logs.CreateLog(3, `<b>${eventName}</b> - Erro ao <b>${userLogin?.email}</b> tentar colocar ${participant?.nomeSobrenome} espera na categoria <b>${categoryName}</b>.`);
+                CreateLog(3, `<b>${eventName}</b> - Erro ao <b>${userLogin?.email}</b> tentar colocar ${participant?.nomeSobrenome} espera na categoria <b>${categoryName}</b>.`);
             });
 
         loadingStop();

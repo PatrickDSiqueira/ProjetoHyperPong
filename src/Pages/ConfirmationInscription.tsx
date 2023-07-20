@@ -24,7 +24,7 @@ export default function ConfirmationInscription() {
     return <>
         <Container>
 
-            <img src={GifConfirmation} />
+            <img src={GifConfirmation} alt={'Imagem de confirmação'} />
             <h1>Inscrição Confirmada</h1>
 
         </Container>

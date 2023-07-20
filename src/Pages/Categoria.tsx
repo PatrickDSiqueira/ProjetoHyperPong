@@ -2,7 +2,7 @@ import Header from "../components/Header";
 import {ContainerParticipantes, ListaParticipante, TagParticipante} from "./styles/Participantes";
 import ButtonInscreva from "../components/ButtonInscreva";
 import {useParams} from "react-router-dom";
-import {useContext, useEffect, useState} from "react";
+import {useContext, useState} from "react";
 import {ParticipantType, routeParams} from "../types/types";
 import {AuthContext} from "../context/AuthContext";
 import {useAllParticipants} from "../hooks/useAllParticipants";

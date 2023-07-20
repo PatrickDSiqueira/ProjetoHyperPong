@@ -16,8 +16,8 @@ import {
 import GroupButtonCancelSubmit from "../components/Form";
 import {useUploadFile} from 'react-firebase-hooks/storage';
 import {AuthContext} from "../context/AuthContext";
-import Logs from "../hooks/Log";
 import {loadingStart, loadingStop} from "../App";
+import {CreateLog} from "../hooks/Log";
 
 export default function CriarEvento() {
 
@@ -77,10 +77,10 @@ export default function CriarEvento() {
                 wallpaper
             })
                 .then(() => {
-                    Logs.CreateLog(1, `<b>${userLogin?.email}</b> -  criou o evento <b>${name}</b> .`);
+                    CreateLog(1, `<b>${userLogin?.email}</b> -  criou o evento <b>${name}</b> .`);
                 })
                 .catch(() => {
-                    Logs.CreateLog(3, `Erro ao <b>${userLogin?.email}</b> - criar o evento <b>${name}</b> .`);
+                    CreateLog(3, `Erro ao <b>${userLogin?.email}</b> - criar o evento <b>${name}</b> .`);
                 });
 
             loadingStop();
@@ -201,7 +201,7 @@ export default function CriarEvento() {
                                  onChange={(e) => setDescription(e.target.value)}/>
                 <textarea hidden readOnly name="description" cols={20} rows={10} value={JSON.stringify(description)}/>
 
-                <LabelImageDefault hasFile={imageSelected == undefined} htmlFor="image">
+                <LabelImageDefault hasFile={imageSelected === undefined} htmlFor="image">
                     {imageSelected ? "Capa Selecionada" : "Inserir Capa"}
                 </LabelImageDefault>
 
