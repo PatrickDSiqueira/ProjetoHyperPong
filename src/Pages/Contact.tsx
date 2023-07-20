@@ -1,7 +1,7 @@
 import Header from "../components/Header";
 import {ButtonSave, ContactContainer, TextAreaDefault} from "../components/styles/Form";
 import {IoLogoWhatsapp as IconeWpp} from "react-icons/io";
-import {Link, useNavigate} from "react-router-dom";
+import {Link} from "react-router-dom";
 import {useState} from "react";
 import {BsInstagram as IconInstagram} from "react-icons/bs";
 export const Contact = () => {

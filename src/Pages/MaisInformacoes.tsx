@@ -10,7 +10,7 @@ import {
     BsFillInfoCircleFill as IconInfo
 } from "react-icons/bs";
 import CardInfo from "../components/CardInfo";
-import Event from "../hooks/Event";
+import {GetOne} from "../hooks/Event";
 import {routeParams} from "../types/types";
 import {ButtonInscribe} from "../components/styles/ButtonInscreva";
 
@@ -18,7 +18,7 @@ export const MaisInformacoes = () => {
 
     const {idEvent} = useParams<routeParams>();
     const navigate = useNavigate();
-    const event = Event.GetOne((idEvent));
+    const event = GetOne((idEvent));
 
     const styleDiv = {
         display: "flex",

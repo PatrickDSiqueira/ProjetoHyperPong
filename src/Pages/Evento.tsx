@@ -6,7 +6,7 @@ import {ContainerEvento} from "./styles/Evento";
 import moment from "moment";
 import ButtonChangeStatusEvent from "../components/ButtonChangeStatusEvent";
 import {AuthContext} from "../context/AuthContext";
-import Event from "../hooks/Event";
+import {GetOne} from "../hooks/Event";
 import {routeParams} from "../types/types";
 import ButtonShareEvent from "../components/ButtonShareEvent";
 
@@ -15,7 +15,7 @@ export const Evento = () => {
 
     const {userLogin} = useContext(AuthContext);
     const {idEvent} = useParams<routeParams>();
-    const event = Event.GetOne((idEvent));
+    const event = GetOne((idEvent));
 
     return <>
         <Header titulo={event?.name}/>

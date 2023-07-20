@@ -14,7 +14,7 @@ import {useContext, useState} from "react";
 import moment from "moment/moment";
 import {StatusEvents} from "../types/types";
 import {AuthContext} from "../context/AuthContext";
-import Event from "../hooks/Event";
+import {GetAll} from "../hooks/Event";
 import image from "../images/image.jpg"
 import {SelectDefault} from "./styles/Form";
 
@@ -27,7 +27,7 @@ function ListCardEvents({filterEvents}: Props) {
     const {userLogin} = useContext(AuthContext);
     const [filterStatus, setFilterStatus] = useState(3);
     const navigate = useNavigate();
-    const eventsList = Event.GetAll();
+    const eventsList = GetAll();
 
     const handleClickCardEvent = (eventId: string) => {
 
@@ -50,14 +50,6 @@ function ListCardEvents({filterEvents}: Props) {
             </ContainerButtonADDEvent>}
 
             {eventsList.map((events, index) => {
-
-                if (filterEvents && filterEvents !== events.type) {
-                    return;
-                }
-
-                if (parseInt(events.status) === 1 && !userLogin) {
-                    return;
-                }
 
                 if (parseInt(events.status) === filterStatus || filterStatus === 3) {
 
@@ -83,6 +75,8 @@ function ListCardEvents({filterEvents}: Props) {
                         </CardDesc>
                     </ContainerCard>
                 }
+
+                return null;
             })}
         </ListCard>
     </>

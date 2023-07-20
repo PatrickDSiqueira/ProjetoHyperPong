@@ -28,7 +28,7 @@ const CategoriaComponent = ({category, index, statusEvent}: PropsComponetCategor
             var filtrado = Object.values(category.participants).filter(obj => obj.status === "1");
             setCounter(filtrado.length)
         }
-    });
+    },[category.participants]);
 
     useEffect(() => {
         const timer = setTimeout(() => {
