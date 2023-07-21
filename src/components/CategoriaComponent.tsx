@@ -25,10 +25,10 @@ const CategoriaComponent = ({category, index, statusEvent}: PropsComponetCategor
         if (category.participants === undefined || category.participants === null) {
             setCounter(0)
         } else {
-            var filtrado = Object.values(category.participants).filter(obj => obj.status == "1");
+            var filtrado = Object.values(category.participants).filter(obj => obj.status === "1");
             setCounter(filtrado.length)
         }
-    }, []);
+    },[category.participants]);
 
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -39,7 +39,7 @@ const CategoriaComponent = ({category, index, statusEvent}: PropsComponetCategor
     });
 
     const handleClickCategory = () => {
-        if (statusEvent == "3" && !userLogin) {
+        if (statusEvent === "3" && !userLogin) {
             setAlertMessageText("As inscrições para este evento não estão abertas neste momento!");
             setAlertMessageType('Observation');
 

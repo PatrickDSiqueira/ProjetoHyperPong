@@ -1,5 +1,4 @@
 import React, {useState} from "react";
-import Logs from "../hooks/Log";
 import parse from 'html-react-parser';
 import {
     BsFillInfoCircleFill as IconInfo,
@@ -7,11 +6,12 @@ import {
     BsFillCheckCircleFill as IconConfirm
 } from "react-icons/bs";
 import {HistoryLogs, SelectFilter, TableHistoryLog} from "./styles/ShowHistoryLogs";
+import {GetAll} from "../hooks/Log";
 
 export const ShowHistoryLogs = () => {
 
     const [filterLogs, setFilterLogs] = useState(10);
-    const logsList = Logs.GetAll(20);
+    const logsList = GetAll(20);
 
     return <HistoryLogs>
         <TableHistoryLog>

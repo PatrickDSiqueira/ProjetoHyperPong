@@ -3,10 +3,10 @@ import {routeParams, StatusEvents} from "../types/types";
 import {ContainerButtonChangeStatusEvent, Button, ButtonConfirmation} from "./styles/ContainerButtonChangeStatusEvent";
 import {useContext, useState} from "react";
 import {database, ref, remove, update} from "../FirebaseService";
-import Logs from "../hooks/Log";
-import Event from "../hooks/Event";
 import {AuthContext} from "../context/AuthContext";
 import {loadingStart, loadingStop} from "../App";
+import {GetNameEvent} from "../hooks/Event";
+import {CreateLog} from "../hooks/Log";
 
 interface Props {
     statusSelected: number
@@ -18,7 +18,7 @@ const ButtonChangeStatusEvent = ({statusSelected}: Props) => {
 
     const {idEvent} = useParams<routeParams>();
     const navigate = useNavigate();
-    const eventName = Event.GetNameEvent(idEvent);
+    const eventName = GetNameEvent(idEvent);
 
     const [clickDeleteEvent, setClickDeleteEvent] = useState(false);
     const [selectedStatus, setSelectedStatus] = useState(statusSelected);
@@ -29,11 +29,11 @@ const ButtonChangeStatusEvent = ({statusSelected}: Props) => {
         await update(ref(database, `events/${idEvent}`), {status: status})
 
             .then(() => {
-                Logs.CreateLog(2, `<b>${eventName}</b> - <b>${userLogin?.email}</b> atualizou o status do evento para <b>${StatusEvents[status]}</b>.`);
+                CreateLog(2, `<b>${eventName}</b> - <b>${userLogin?.email}</b> atualizou o status do evento para <b>${StatusEvents[status]}</b>.`);
             })
 
             .catch(() => {
-                Logs.CreateLog(3, `<b>${eventName}</b> - Erro ao <b>${userLogin?.email}</b> tentar atualizar o status para <b>${StatusEvents[status]}</b>.`);
+                CreateLog(3, `<b>${eventName}</b> - Erro ao <b>${userLogin?.email}</b> tentar atualizar o status para <b>${StatusEvents[status]}</b>.`);
             });
 
         loadingStop();
@@ -44,11 +44,11 @@ const ButtonChangeStatusEvent = ({statusSelected}: Props) => {
         await remove(ref(database, `events/${idEvent}/`))
 
             .then(() => {
-                Logs.CreateLog(2, `<b>${eventName}</b> - evento apagado por <b>${userLogin?.email}</b>.`);
+                CreateLog(2, `<b>${eventName}</b> - evento apagado por <b>${userLogin?.email}</b>.`);
             })
 
             .catch(() => {
-                Logs.CreateLog(3, `<b>${eventName}</b> - Erro ao <b>${userLogin?.email}</b> tentar apagar .`);
+                CreateLog(3, `<b>${eventName}</b> - Erro ao <b>${userLogin?.email}</b> tentar apagar .`);
             });
 
         loadingStop();

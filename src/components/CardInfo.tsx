@@ -1,6 +1,4 @@
-import {IconType} from "react-icons";
 import {ContainerCardInfo} from "./styles/CardInfo";
-import {useEffect} from "react";
 
 interface Props {
     title: string,

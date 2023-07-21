@@ -24,19 +24,19 @@ const Sidebar = (props: Props) => {
             </ContinerHeader>
             <Content>
                 <Link to={'/todos'} onClick={closeSidebar}>
-                    <p className= {location.pathname == '/todos' || location.pathname == '/'?  "current" : ""}>Todos</p>
+                    <p className= {location.pathname === '/todos' || location.pathname === '/'?  "current" : ""}>Todos</p>
                 </Link>
                 <Link to={'/copas'} onClick={closeSidebar}>
-                    <p className= {location.pathname == '/copas'?  "current" : ""} >Copas Hyper</p>
+                    <p className= {location.pathname === '/copas'?  "current" : ""} >Copas Hyper</p>
                 </Link>
                 <Link to={'/rachoes'} onClick={closeSidebar}>
-                    <p className= {location.pathname == '/rachoes'?  "current" : ""} >Rachões</p>
+                    <p className= {location.pathname === '/rachoes'?  "current" : ""} >Rachões</p>
                 </Link>
                 <Link to={'/contato'} onClick={closeSidebar}>
-                    <p className= {location.pathname == '/contato'?  "current" : ""} >Contato</p>
+                    <p className= {location.pathname === '/contato'?  "current" : ""} >Contato</p>
                 </Link>
                 <Link to={'/login'} onClick={closeSidebar}>
-                    <p className= {location.pathname == '/login'?  "current" : ""} >Admin</p>
+                    <p className= {location.pathname === '/login'?  "current" : ""} >Admin</p>
                 </Link>
             </Content>
         </Container>
