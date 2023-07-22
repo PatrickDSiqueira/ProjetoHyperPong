@@ -8,6 +8,7 @@ interface Props {
 export default function Home({filterEvents}:Props) {
 
     return <>
+        <>teste</>
         <Header titulo="Eventos Hyper"/>
         <ListCardEvents  filterEvents={filterEvents} />
     </>
