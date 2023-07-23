@@ -11,9 +11,10 @@ jobs:
   build_and_deploy_test:
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/test'
+    environment: ${{ vars.ENVTEST }}
     steps:
       - uses: actions/checkout@v3
-      - run: npm install && npm run build
+      - run: echo $TESTE && npm install && npm run build
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
