@@ -35,7 +35,16 @@ jobs:
     if: github.ref == 'refs/heads/master'
     steps:
       - uses: actions/checkout@v3
-      - run: npm install && npm run build
+      - name: create .env file
+        run: |
+          echo "REACT_APP_API_KEY='${{ secrets.MASTER_API_KEY }}'" >> .env
+          echo "REACT_APP_AUTH_DOMAIN='${{ secrets.MASTER_AUTH_DOMAIN }}'" >> .env
+          echo "REACT_APP_PROJECT_ID='${{ secrets.MASTER_PROJECT_ID }}'" >> .env
+          echo "REACT_APP_STORAGE_BUCKET='${{ secrets.MASTER_STORAGE_BUCKET }}'" >> .env
+          echo "REACT_APP_MESSAGING_SENDER_ID='${{ secrets.MASTER_MESSAGING_SENDER_ID }}'" >> .env
+          echo "REACT_APP_APP_ID='${{ secrets.MASTER_APP_ID }}'" >> .env
+      - name: npm install and build
+        run: npm install && npm run build
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
