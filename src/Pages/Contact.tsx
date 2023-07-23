@@ -1,13 +1,12 @@
 import Header from "../components/Header";
-import {ButtonSave, ContactContainer, ContainerButtons, LabelDefault, TextAreaDefault} from "../components/styles/Form";
+import {ButtonSave, ContactContainer, TextAreaDefault} from "../components/styles/Form";
 import {IoLogoWhatsapp as IconeWpp} from "react-icons/io";
-import {Link, redirect, useNavigate} from "react-router-dom";
+import {Link} from "react-router-dom";
 import {useState} from "react";
 import {BsInstagram as IconInstagram} from "react-icons/bs";
 export const Contact = () => {
 
     const [message, setMessage] = useState('');
-    const navigate = useNavigate();
 
     return <>
         <Header titulo={'Contato'}/>

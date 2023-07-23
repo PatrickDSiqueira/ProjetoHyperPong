@@ -4,7 +4,7 @@ import {child, database, onValue, push, query, ref, set, limitToLast} from "../F
 import moment from "moment";
 import {loadingStart, loadingStop} from "../App";
 
-function GetAll(filter: number) {
+export function GetAll(filter: number) {
 
     const [logs, setLogs] = useState<Log[]>([]);
 
@@ -45,7 +45,7 @@ function GetAll(filter: number) {
 
         fecthData();
 
-    }, []);
+    });
 
     loadingStop();
     return logs;
@@ -66,9 +66,4 @@ export async function CreateLog(type: 1 | 2 | 3, text: string) {
 
     loadingStop();
     return;
-}
-
-export default {
-    GetAll,
-    CreateLog
 }

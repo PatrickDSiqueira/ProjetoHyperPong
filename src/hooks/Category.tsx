@@ -3,7 +3,7 @@ import {child, database, get, ref} from "../FirebaseService";
 import {useNavigate} from "react-router-dom";
 import {loadingStart, loadingStop} from "../App";
 
-function GetCategoryName(idEvent: string | undefined, idCategory: string | undefined) {
+export function GetCategoryName(idEvent: string | undefined, idCategory: string | undefined) {
 
     loadingStart();
 
@@ -19,12 +19,7 @@ function GetCategoryName(idEvent: string | undefined, idCategory: string | undef
                         navigate('/notfound');
                     }
                 })
-        },
-        []);
+        });
     loadingStop();
     return nameCategory;
-}
-
-export default {
-    GetCategoryName
 }
