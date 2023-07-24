@@ -16,7 +16,9 @@ import {StatusEvents} from "../types/types";
 import {AuthContext} from "../context/AuthContext";
 import {GetAll} from "../hooks/Event";
 import image from "../images/image.jpg"
-import {SelectDefault} from "./styles/Form";
+import React from 'react';
+import {Dropdown} from "primereact/dropdown";
+
 
 interface Props {
     filterEvents?: string
@@ -25,7 +27,7 @@ interface Props {
 function ListCardEvents({filterEvents}: Props) {
 
     const {userLogin} = useContext(AuthContext);
-    const [filterStatus, setFilterStatus] = useState(3);
+    const [filterStatus, setFilterStatus] = useState<"Disponível" |"Encerrado"|"Em Breve">("Disponível");
     const navigate = useNavigate();
     const eventsList = GetAll();
 
@@ -36,12 +38,12 @@ function ListCardEvents({filterEvents}: Props) {
 
     return <>
 
-        <SelectDefault id="SelectFilterStatusEvent" onChange={(e) => setFilterStatus(parseInt(e.target.value))}>
-            <option value="3">Todos</option>
-            <option value="0">{StatusEvents[0]}</option>
-            {userLogin && <option value="1">{StatusEvents[1]}</option>}
-            <option value="2">{StatusEvents[2]}</option>
-        </SelectDefault>
+        <Dropdown value={filterStatus}
+                  options={StatusEvents}
+                  onChange={(e)=>setFilterStatus(e.value)}
+                  placeholder={"Selecione uma Categoria"}
+                  className="w-full md:w-14rem"
+                  showClear />
         <ListCard>
 
             {userLogin && <ContainerButtonADDEvent onClick={() => navigate("/evento/criar")}>
@@ -51,7 +53,7 @@ function ListCardEvents({filterEvents}: Props) {
 
             {eventsList.map((events, index) => {
 
-                if (parseInt(events.status) === filterStatus || filterStatus === 3) {
+                if (StatusEvents[parseInt(events.status)] === filterStatus) {
 
                     return <ContainerCard key={index} active={parseInt(events.status) === 2 ? 0.6 : 1}
                                           onClick={() => handleClickCardEvent(events.id)}>

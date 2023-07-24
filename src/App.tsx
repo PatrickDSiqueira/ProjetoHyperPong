@@ -15,6 +15,8 @@ import {Contact} from "./Pages/Contact";
 import {NotFound} from "./Pages/NotFound";
 import ConfirmationInscription from "./Pages/ConfirmationInscription";
 import LoadingPage from "./Pages/LoadingPage";
+import "primereact/resources/primereact.min.css";
+import "primereact/resources/themes/lara-light-indigo/theme.css";
 
 export function loadingStop() {
 

@@ -11,3 +11,7 @@
     width: 100vw;
     height: 100vh;
  }
+
+  body {
+      font-family: var(--font-family);
+  }
