@@ -8,7 +8,7 @@ const ShareButton = () => {
     if (navigator.share) {
 
       navigator.share({
-        url: window.location.href.toString()
+        url: window.location.href.toString() + '/informacoes'
       })
         .then(() => console.log('Compartilhado com sucesso!'))
         .catch((error) => console.log('Erro ao compartilhar:', error));

@@ -5,12 +5,12 @@ name: Deploy to Firebase Hosting on merge
 'on':
   push:
     branches:
-      - test
+      - develop
       - master
 jobs:
-  build_and_deploy_test:
+  build_and_deploy_develop:
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/test'
+    if: github.ref == 'refs/heads/develop'
     steps:
       - uses: actions/checkout@v3
       - name: create .env file
