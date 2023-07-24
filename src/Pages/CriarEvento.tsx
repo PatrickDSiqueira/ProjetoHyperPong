@@ -111,11 +111,16 @@ export default function CriarEvento() {
     }
 
     useEffect(() => {
+
         if (userLogin) {
+
             return;
         }
+
         navigate("/login")
-    })
+
+    }, [navigate, userLogin])
+
     const uploadImageEvent = async (rota: string) => {
 
         if (imageSelected) {
