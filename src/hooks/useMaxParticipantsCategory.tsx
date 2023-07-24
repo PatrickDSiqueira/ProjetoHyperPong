@@ -32,7 +32,7 @@ export function useMaxParticipantsCategory(idEvent: string | undefined, idCatego
                         navigate('/notfound')
                     }
                 })
-        });
+        },[]);
     loadingStop();
     return {maxParticipantsCategory, participantsConfirm};
 }

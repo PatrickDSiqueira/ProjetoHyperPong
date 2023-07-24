@@ -115,7 +115,8 @@ export default function CriarEvento() {
             return;
         }
         navigate("/login")
-    })
+    },[])
+
     const uploadImageEvent = async (rota: string) => {
 
         if (imageSelected) {
