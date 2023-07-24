@@ -19,12 +19,12 @@ export default function ConfirmationInscription() {
         }, 2000);
 
         return () => clearTimeout(timer);
-    });
+    },[idCategory, idEvent, navigate]);
 
     return <>
         <Container>
 
-            <img src={GifConfirmation} />
+            <img src={GifConfirmation} alt={'Imagem de confirmação'} />
             <h1>Inscrição Confirmada</h1>
 
         </Container>

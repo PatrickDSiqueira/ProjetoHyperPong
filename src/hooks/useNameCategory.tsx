@@ -24,8 +24,9 @@ export function useNameCategory(idEvent: string | undefined, idCategory: string 
                         return;
                     }
                 })
-        },
-        []);
+
+        },[ idCategory, idEvent, navigate ]);
+
     loadingStop();
     return nameCategory;
 }

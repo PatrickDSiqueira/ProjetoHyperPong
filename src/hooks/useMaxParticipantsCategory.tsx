@@ -11,7 +11,7 @@ export function useMaxParticipantsCategory(idEvent: string | undefined, idCatego
     const [maxParticipantsCategory, setMaxParticipantsCategory] = useState<number>();
     const [participantsConfirm, setParticipantsConfirm] = useState<number>(0)
 
-    var counter = 0;
+    let counter = 0;
 
     const navigate = useNavigate();
 
@@ -32,8 +32,8 @@ export function useMaxParticipantsCategory(idEvent: string | undefined, idCatego
                         navigate('/notfound')
                     }
                 })
-        },
-        []);
+        // eslint-disable-next-line
+        },[]);
     loadingStop();
     return {maxParticipantsCategory, participantsConfirm};
 }
