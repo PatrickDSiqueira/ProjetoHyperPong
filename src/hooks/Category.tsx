@@ -19,7 +19,7 @@ export function GetCategoryName(idEvent: string | undefined, idCategory: string 
                         navigate('/notfound');
                     }
                 })
-        },[]);
+        },[idCategory, idEvent, navigate]);
     loadingStop();
     return nameCategory;
 }

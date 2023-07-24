@@ -63,7 +63,7 @@ export function GetOne(idEvent: string | undefined) {
                     }
 
                 })
-        },[]);
+        },[idEvent, navigate]);
     loadingStop();
     return event;
 }

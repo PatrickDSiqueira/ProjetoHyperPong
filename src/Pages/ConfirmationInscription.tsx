@@ -19,7 +19,7 @@ export default function ConfirmationInscription() {
         }, 2000);
 
         return () => clearTimeout(timer);
-    },[]);
+    },[idCategory, idEvent, navigate]);
 
     return <>
         <Container>

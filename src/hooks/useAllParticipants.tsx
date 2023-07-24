@@ -22,7 +22,7 @@ export function useAllParticipants(idEvent: string | undefined, idCategory: stri
                     loadingStop();
                 }
             });
-        },[]);
+        },[idCategory, idEvent]);
     loadingStop();
     return participants;
 }
