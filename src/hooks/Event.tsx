@@ -86,7 +86,7 @@ export function GetNameEvent(idEvent: string | undefined) {
                         navigate('/notfound');
                     }
                 })
-        },[]);
+        },[idEvent, navigate]);
     loadingStop();
     return eventName;
 }
