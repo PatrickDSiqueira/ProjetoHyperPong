@@ -45,7 +45,7 @@ export function GetAll(filter: number) {
 
         fecthData();
 
-    });
+    },[filter]);
 
     loadingStop();
     return logs;

@@ -36,7 +36,7 @@ const CategoriaComponent = ({category, index, statusEvent}: PropsComponetCategor
         }, 3000);
 
         return () => clearTimeout(timer)
-    });
+    },[]);
 
     const handleClickCategory = () => {
         if (statusEvent === "3" && !userLogin) {

@@ -37,7 +37,7 @@ export function GetAll() {
                 });
             }
             fecthData();
-        });
+        },[]);
     loadingStop();
     return eventsList;
 }
@@ -63,7 +63,7 @@ export function GetOne(idEvent: string | undefined) {
                     }
 
                 })
-        });
+        },[idEvent, navigate]);
     loadingStop();
     return event;
 }
@@ -86,7 +86,7 @@ export function GetNameEvent(idEvent: string | undefined) {
                         navigate('/notfound');
                     }
                 })
-        });
+        },[idEvent, navigate]);
     loadingStop();
     return eventName;
 }
