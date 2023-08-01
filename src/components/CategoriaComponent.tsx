@@ -22,11 +22,15 @@ const CategoriaComponent = ({category, index, statusEvent}: PropsComponetCategor
     const { userLogin } = useContext(AuthContext);
 
     useEffect(() => {
+
         if (category.participants === undefined || category.participants === null) {
+
             setCounter(0)
+
         } else {
-            var filtrado = Object.values(category.participants).filter(obj => obj.status === "1");
-            setCounter(filtrado.length)
+
+            // eslint-disable-next-line
+            setCounter(Object.values(category.participants).filter(obj => obj.status == '1').length)
         }
     },[category.participants]);
 
