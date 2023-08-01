@@ -54,11 +54,11 @@ function ListCardEvents({filterEvents}: Props) {
             {eventsList.map((events, index) => {
 
                 if (filterEvents && filterEvents !== events.type) {
-                    return;
+                    return null;
                 }
 
                 if (StatusEvents[parseInt(events.status)] === 'Encerrado' && !userLogin) {
-                    return;
+                    return null;
                 }
 
                 if (StatusEvents[parseInt(events.status)] === filterStatus || filterStatus === undefined) {
