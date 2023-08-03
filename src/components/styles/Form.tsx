@@ -128,20 +128,8 @@ export const ContactContainer = styled.div`
     margin-top: 45px;
     color: aliceblue;
   }
-  
-  #mensagem {
-    margin-top: 45px;
-    outline: none;
-    border: 0;
-    transition: all 0.5s;
-  }
  
   p {
     color: aliceblue;
  }
-`;
-
-export const SelectDefault = styled.select`
-  margin: 15px 50px;
-  border-radius: 4px;
 `;

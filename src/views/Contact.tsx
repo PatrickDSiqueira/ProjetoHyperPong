@@ -1,32 +1,36 @@
 import Header from "../components/Header";
-import {ButtonSave, ContactContainer, TextAreaDefault} from "../components/styles/Form";
-import {IoLogoWhatsapp as IconeWpp} from "react-icons/io";
+import {ContactContainer} from "../components/styles/Form";
 import {Link} from "react-router-dom";
 import {useState} from "react";
-import {BsInstagram as IconInstagram} from "react-icons/bs";
+import {InputTextarea} from "primereact/inputtextarea";
+import {Button} from "primereact/button";
+
 export const Contact = () => {
 
     const [message, setMessage] = useState('');
 
     return <>
         <Header titulo={'Contato'}/>
-        <ContactContainer> 
+        <ContactContainer className="flex justify-content-center">
             <h1>Entre em contato conosco</h1>
-            <TextAreaDefault id="mensagem" name="mensagem" placeholder="Digite sua mensagem" value={message} onChange={(e)=>setMessage(e.target.value)} rows={5} cols={40} required></TextAreaDefault><br/><br/>
-            {/*<ContainerButtons>*/}
+
+            <div className="flex justify-content-center">
+                <InputTextarea value={message} onChange={(e) => setMessage(e.target.value)} rows={5} cols={40}
+                               placeholder="Digite sua mensagem"/>
+            </div>
+
+            <div className="">
                 <Link to={`https://wa.me/5531986191921?text=${encodeURI(message)}`}>
-
-                <ButtonSave style={{width:'250px'}}  type="button"><IconeWpp/> Enviar Mensagem </ButtonSave>
+                    <Button icon="pi pi-whatsapp" severity="success" label="Enviar Mensagem" className="p-button-label"
+                            rounded/>
                 </Link>
-            {/*</ContainerButtons>*/}
 
-            <p style={{marginTop:'1rem'}}>OU</p>
-
-            <Link to={'https://www.instagram.com/hyperpongbh/'} >
-                <ButtonSave type="button" style={{width:'250px', background:'#993399'}}><IconInstagram/> Instagram</ButtonSave>
-            </Link>
-
-
+                <p>OU</p>
+                <Link to={'https://www.instagram.com/hyperpongbh/'}>
+                    <Button icon="pi pi-instagram" severity="help" label="Instagram" className="p-button-label"
+                            rounded/>
+                </Link>
+            </div>
         </ContactContainer>
 
 
