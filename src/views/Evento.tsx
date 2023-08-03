@@ -2,7 +2,7 @@ import Header from "../components/Header";
 import {Link, useParams} from "react-router-dom";
 import {useContext} from "react";
 import CategoriaComponent from "../components/CategoriaComponent";
-import {ContainerEvento} from "./styles/Evento";
+import {ContainerEvento} from "../Pages/styles/Evento";
 import moment from "moment";
 import ButtonChangeStatusEvent from "../components/ButtonChangeStatusEvent";
 import {AuthContext} from "../context/AuthContext";

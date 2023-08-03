@@ -1,4 +1,4 @@
-import {ContainerPageInscricao} from "./styles/Inscricao";
+import {ContainerPageInscricao} from "../Pages/styles/Inscricao";
 import RememberMe from "../components/RememberMe";
 import Header from "../components/Header";
 import {useNavigate, useParams} from "react-router-dom";

@@ -2,22 +2,24 @@ import {
     BrowserRouter,
     Route, Routes
 } from "react-router-dom";
-import Home from "./Pages/Home";
+import Home from "./views/Home";
 import './App.css';
-import {Evento} from "./Pages/Evento";
-import Categoria from "./Pages/Categoria";
-import Inscricao from "./Pages/Inscricao";
-import CriarEvento from "./Pages/CriarEvento";
-import {MaisInformacoes} from "./Pages/MaisInformacoes";
-import Login from "./Pages/Login";
+import {Evento} from "./views/Evento";
+import Categoria from "./views/Categoria";
+import Inscricao from "./views/Inscricao";
+import CriarEvento from "./views/CriarEvento";
+import {MaisInformacoes} from "./views/MaisInformacoes";
+import Login from "./views/Login";
 import AuthContextProvider from "./context/AuthContext";
-import {Contact} from "./Pages/Contact";
-import {NotFound} from "./Pages/NotFound";
-import ConfirmationInscription from "./Pages/ConfirmationInscription";
-import LoadingPage from "./Pages/LoadingPage";
+import {Contact} from "./views/Contact";
+import {NotFound} from "./views/NotFound";
+import ConfirmationInscription from "./views/ConfirmationInscription";
+import LoadingPage from "./views/LoadingPage";
 
 import "primereact/resources/primereact.min.css";
 import "primereact/resources/themes/lara-light-indigo/theme.css";
+import 'primeicons/primeicons.css';
+
 
 export function loadingStop() {
 

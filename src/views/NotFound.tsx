@@ -1,4 +1,4 @@
-import { ConteinerNotFound, ImageError} from "./styles/NotFound"
+import { ConteinerNotFound, ImageError} from "../Pages/styles/NotFound"
 import logo from "../images/logo.png"
 import error404 from "../images/error.jpg"
 import ButtonVoltar from "../components/ButtonVoltar"

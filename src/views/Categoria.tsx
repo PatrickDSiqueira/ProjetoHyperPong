@@ -1,5 +1,5 @@
 import Header from "../components/Header";
-import {ContainerParticipantes, ListaParticipante, TagParticipante} from "./styles/Participantes";
+import {ContainerParticipantes, ListaParticipante, TagParticipante} from "../Pages/styles/Participantes";
 import ButtonInscreva from "../components/ButtonInscreva";
 import {useParams} from "react-router-dom";
 import {useContext, useState} from "react";

@@ -2,7 +2,7 @@ import Header from "../components/Header";
 import {useNavigate, useParams} from "react-router-dom";
 import React from "react";
 import moment from "moment";
-import {ContainerMaisInformacoesPage} from "./styles/MaisInformacoes";
+import {ContainerMaisInformacoesPage} from "../Pages/styles/MaisInformacoes";
 import {
     BsFillClockFill as IconClock,
     BsHourglassSplit as IconEnd,

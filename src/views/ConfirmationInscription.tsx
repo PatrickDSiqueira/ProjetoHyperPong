@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import GifConfirmation from "../images/GifConfirmation.gif";
 import { useNavigate, useParams } from "react-router-dom";
 import { routeParams } from "../types/types";
-import { Container } from "./styles/ConfirmationInscription ";
+import { Container } from "../Pages/styles/ConfirmationInscription";
 
 export default function ConfirmationInscription() {
 
