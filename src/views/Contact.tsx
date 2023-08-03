@@ -18,7 +18,6 @@ export const Contact = () => {
                 <InputTextarea value={message} onChange={(e) => setMessage(e.target.value)} rows={5} cols={40}
                                placeholder="Digite sua mensagem"/>
             </div>
-
             <div className="">
                 <Link to={`https://wa.me/5531986191921?text=${encodeURI(message)}`}>
                     <Button icon="pi pi-whatsapp" severity="success" label="Enviar Mensagem" className="p-button-label"
@@ -32,7 +31,5 @@ export const Contact = () => {
                 </Link>
             </div>
         </ContactContainer>
-
-
     </>
 }
