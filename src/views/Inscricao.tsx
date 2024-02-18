@@ -38,7 +38,7 @@ const Inscricao = () => {
 
             const {nomeSobrenome, telefone, dtaNascimento, status} = values;
 
-            if (rememberMe){
+            if (rememberMe) {
                 localStorage.setItem('nameInscription', nomeSobrenome.toString())
                 localStorage.setItem('telefoneInscription', telefone.toString())
                 localStorage.setItem('dtaNascimentoInscription', dtaNascimento.toString())
@@ -59,7 +59,7 @@ const Inscricao = () => {
                 }
             )
                 .then(() => {
-                  CreateLog(2, `<b>${eventName}</b> - <b>${nomeSobrenome}</b> se inscreveu na categoria ${categoryName}.`);
+                    CreateLog(2, `<b>${eventName}</b> - <b>${nomeSobrenome}</b> se inscreveu na categoria ${categoryName}.`);
                 })
                 .catch((e) => {
                     console.log(e);
@@ -72,6 +72,7 @@ const Inscricao = () => {
     }
 
     function checkParticipantsNumber() {
+
         if (maxParticipantsCategory && participantsConfirm >= maxParticipantsCategory) {
             setOpeModalConfirmation(true);
         } else {

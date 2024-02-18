@@ -5,7 +5,7 @@ import {useNavigate} from "react-router-dom";
 import {loadingStart, loadingStop} from "../App";
 
 
-export function GetAll() {
+export function GetAll(listening = 0) {
 
     const [eventsList, setEventsList] = useState<EventType[]>([]);
 
@@ -13,7 +13,7 @@ export function GetAll() {
 
             loadingStart();
 
-            async function fecthData() {
+            async function fetchData() {
 
                 const allEventsRef = ref(database, "events/");
 
@@ -36,13 +36,13 @@ export function GetAll() {
                     setEventsList(allEvents);
                 });
             }
-            fecthData();
-        },[]);
+            fetchData();
+        },[listening]);
     loadingStop();
     return eventsList;
 }
 
-export function GetOne(idEvent: string | undefined) {
+export function GetOne(idEvent: string | undefined, listening:number = 0) {
 
     loadingStart();
 
@@ -63,7 +63,7 @@ export function GetOne(idEvent: string | undefined) {
                     }
 
                 })
-        },[idEvent, navigate]);
+        },[idEvent, navigate, listening]);
     loadingStop();
     return event;
 }

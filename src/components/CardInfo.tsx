@@ -1,4 +1,5 @@
 import {ContainerCardInfo} from "./styles/CardInfo";
+import parse from 'html-react-parser';
 
 interface Props {
     title: string,
@@ -12,7 +13,7 @@ const CardInfo = (props: Props) => {
 
     return <ContainerCardInfo>
         <p className="titleCardInfo">{Icon}{title}</p>
-        <span style={{whiteSpace:"pre-line"}}>{containment.startsWith('"')?JSON.parse(containment):containment}</span>
+        <span style={{whiteSpace:"pre-line"}}>{parse(containment.startsWith('"')?JSON.parse(containment):containment)}</span>
     </ContainerCardInfo>
 }
 

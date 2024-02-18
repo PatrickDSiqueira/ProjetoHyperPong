@@ -23,7 +23,7 @@ export function useMaxParticipantsCategory(idEvent: string | undefined, idCatego
                         setMaxParticipantsCategory(parseInt(snapshot.val().maxParticipants));
 
                         for (const participant of Object.values(snapshot.val().participants) as ParticipantType[]) {
-                            if (participant.status && parseInt(participant.status) === 1) { // Confirmados
+                            if (participant.status && parseInt(participant.status) !== 0) { // Confirmados
                                 counter++;
                             }
                         }

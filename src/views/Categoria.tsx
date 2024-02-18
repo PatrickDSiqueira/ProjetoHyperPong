@@ -2,28 +2,17 @@ import Header from "../components/Header";
 import {ContainerParticipantes, ListaParticipante, TagParticipante} from "../Pages/styles/Participantes";
 import ButtonInscreva from "../components/ButtonInscreva";
 import {useParams} from "react-router-dom";
-import {useContext, useState} from "react";
-import {ParticipantType, routeParams} from "../types/types";
-import {AuthContext} from "../context/AuthContext";
+import {routeParams} from "../types/types";
 import {useAllParticipants} from "../hooks/useAllParticipants";
 import {useNameCategory} from "../hooks/useNameCategory";
-import {FooterEdit} from "../components/FooterEdit";
 
 export default function Categoria() {
-    const {userLogin} = useContext(AuthContext);
 
     const {idEvent, idCategory} = useParams<routeParams>();
 
-    const [onEdit, setOnEdit] = useState(false);
-    const [participantEdit, setParticipantEdit] = useState<ParticipantType>();
-
     const participants = useAllParticipants(idEvent, idCategory);
-    const nameCategory = useNameCategory(idEvent, idCategory);
 
-    const editParticipant = (participant: ParticipantType) => {
-        setOnEdit(!onEdit);
-        setParticipantEdit(participant);
-    }
+    const nameCategory = useNameCategory(idEvent, idCategory);
 
     return <>
         <Header titulo={"Lista de Participantes"}/>
@@ -38,14 +27,12 @@ export default function Categoria() {
                 </div>
             </span>
             <ListaParticipante>
-                {participants?.map((participant, key) => {
-                    return <TagParticipante key={key} onClick={() => editParticipant(participant)}
-                                            status={participant.status}>{participant.nomeSobrenome}
+                {participants?.map(({status, nomeSobrenome}, key) => {
+                    return <TagParticipante key={key} status={status}>{nomeSobrenome}
                     </TagParticipante>
                 })}
             </ ListaParticipante>
             <ButtonInscreva link={`/evento/${idEvent}/categoria/${idCategory}/inscricao`}/>
         </ContainerParticipantes>
-        {onEdit && userLogin && <FooterEdit participant={participantEdit} setVisible={setOnEdit}/>}
     </>
 }

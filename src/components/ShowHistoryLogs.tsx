@@ -1,48 +1,40 @@
 import React, {useState} from "react";
 import parse from 'html-react-parser';
-import {
-    BsFillInfoCircleFill as IconInfo,
-    BsFillExclamationCircleFill as IconError,
-    BsFillCheckCircleFill as IconConfirm
-} from "react-icons/bs";
-import {HistoryLogs, SelectFilter, TableHistoryLog} from "./styles/ShowHistoryLogs";
+import {HistoryLogs} from "./styles/ShowHistoryLogs";
 import {GetAll} from "../hooks/Log";
+import {DataTable} from "primereact/datatable";
+import {Column} from "primereact/column";
+import {Log} from "../types/types";
+import {Accordion, AccordionTab} from "primereact/accordion";
+import {Dropdown} from "primereact/dropdown";
+import {FormEvent} from "primereact/ts-helpers";
 
 export const ShowHistoryLogs = () => {
 
     const [filterLogs, setFilterLogs] = useState(10);
-    const logsList = GetAll(20);
+
+    const logsList = GetAll(filterLogs);
+
+    const logTemplate = (log: Log) => <span style={{fontSize: '11px'}}>{parse(log.getText())}</span>
+
+    const diffTimeTemplate = (log: Log) => <span style={{fontSize: '11px'}}>{log.getDiffTime()}</span>;
+
+    const handleChangeRowsPerPage = (event: FormEvent) => setFilterLogs(event.target.value);
+    const headerColumn = () => <span style={{display: "flex", justifyContent: "flex-end"}}> <Dropdown
+        value={filterLogs}
+        options={[10, 20, 50]}
+        onChange={handleChangeRowsPerPage}
+    /></span>;
 
     return <HistoryLogs>
-        <TableHistoryLog>
-            <thead>
-            <tr>
-                <td style={{display: 'flex', justifyContent: "space-between"}}>Últimas Notícias
-                    <SelectFilter onChange={(e) => setFilterLogs(parseInt(e.target.value))}>
-                        <option defaultChecked value="10">10</option>
-                        <option value="15">15</option>
-                        <option value="20">20</option>
-                    </SelectFilter>
-                </td>
-            </tr>
-            </thead>
-            <tbody>
-            {logsList.map((log, key) => {
-
-                if (key < filterLogs) {
-
-                    return <tr key={key}>
-                        <td style={{whiteSpace: "nowrap"}}>{log.getDiffTime()}</td>
-                        <td style={{marginLeft: '5px', marginRight: '5px'}}>
-                            {log.getType() === 1 ? <IconConfirm color={'green'}/>
-                                : log.getType() === 2 ? <IconInfo color={'blue'}/>
-                                    : <IconError color={'orange'}/>}</td>
-                        <td>{parse(log.getText())}</td>
-                    </tr>;
-                }
-                return null;
-            })}
-            </tbody>
-        </TableHistoryLog>
+        <Accordion>
+            <AccordionTab header="Novidades">
+                <DataTable value={logsList} header={false} scrollable rows={7}
+                           scrollHeight='300px' size="small">
+                    <Column style={{padding: 0, whiteSpace: "nowrap"}} body={diffTimeTemplate}></Column>
+                    <Column header={headerColumn} body={logTemplate}></Column>
+                </DataTable>
+            </AccordionTab>
+        </Accordion>
     </HistoryLogs>
 }

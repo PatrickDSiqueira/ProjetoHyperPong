@@ -1,31 +1,30 @@
-import React, {createContext, ReactNode, useEffect, useState} from "react";
-
-
-export interface UserLogin {
-    uid: string
-    email: string
-}
-
-interface AuthContextProps {
-    userLogin?: UserLogin,
-    setUser?: React.Dispatch<React.SetStateAction<UserLogin | undefined>>;
-}
+import React, {createContext, ReactNode, useContext, useState} from "react";
+import {auth} from "../FirebaseService";
 
 interface AuthContextProviderProps {
     children: ReactNode;
 }
 
-export const AuthContext = createContext<AuthContextProps>({});
-export default function AuthContextProvider(props: AuthContextProviderProps) {
-    const [userLogin, setUser] = useState<UserLogin>();
+export const AuthContext = createContext<any | null>(null);
 
-    useEffect(() => {
-        const userFromLocalStorage = JSON.parse(localStorage.getItem('user') || '{}');
-    
-        if (userFromLocalStorage.uid && userFromLocalStorage.email && setUser) {
-            setUser(userFromLocalStorage);
+export const GetCurrentUser = () => {
+
+    return useContext(AuthContext)
+}
+export default function AuthContextProvider({children}: AuthContextProviderProps) {
+
+    const [user, setUser] = useState<any | null>(null);
+
+    auth.onAuthStateChanged((user) => {
+        if (user) {
+
+            setUser(user);
+
+        } else {
+
+            setUser(false)
         }
-      }, []);
+    });
 
-    return <AuthContext.Provider value={{userLogin, setUser}}>{props.children}</AuthContext.Provider>
+    return <AuthContext.Provider value={user}>{children}</AuthContext.Provider>
 }

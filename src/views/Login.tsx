@@ -1,42 +1,23 @@
-import React, {useContext, useRef} from "react";
-import {useSignInWithEmailAndPassword} from "react-firebase-hooks/auth";
-import {auth} from "../FirebaseService";
-import {Message} from "../components/Message";
+import React, {useRef} from "react";
+import {auth, browserLocalPersistence, setPersistence, signInWithEmailAndPassword} from "../FirebaseService";
 import Header from "../components/Header";
-import {AuthContext} from "../context/AuthContext";
 import {ContainerPageLogin} from "../Pages/styles/Login";
 import {FormDefault, ImageTitle, InputDefault, LabelDefault} from "../components/styles/Form";
 import GroupButtonCancelSubmit from "../components/Form";
 import logo from "../images/logo.png";
-import {ShowHistoryLogs} from "../components/ShowHistoryLogs";
-import {loadingStart, loadingStop} from "../App";
+import {loadingStart} from "../App";
+import {useNavigate} from "react-router-dom";
+import {routes} from "../routes/Routes";
 
 const Login = () => {
 
-    const {userLogin, setUser} = useContext(AuthContext);
+    const navigate = useNavigate();
 
-    const [
-        signInWithEmailAndPassword,
-        user,
-        loading,
-        error,
-    ] = useSignInWithEmailAndPassword(auth);
-
-    if (user) {
-        const userLogado = {
-            uid: user.user.uid,
-            email: user.user.email || ""
-        }
-
-        localStorage.setItem('user', JSON.stringify(userLogado));
-
-        if (setUser) {
-            setUser(userLogado);
-        }
-    }
     const formRef = useRef<HTMLFormElement>(null);
 
     async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+
+        loadingStart();
 
         event.preventDefault();
 
@@ -44,60 +25,31 @@ const Login = () => {
 
             const formData = new FormData(formRef.current);
             const values = Object.fromEntries(formData.entries());
+
             const {email, password} = values;
-            await signInWithEmailAndPassword(email.toString(), password.toString())
+            await setPersistence(auth, browserLocalPersistence).then(async () => await signInWithEmailAndPassword(auth, email.toString(), password.toString()))
+                .catch((e) => console.log(e.code, e.message))
 
-            return window.location.reload();
+            return navigate(routes.user.perfil);
         }
-
-        return;
-    }
-
-    async function handleLogout() {
-
-        if (setUser) {
-
-            setUser(undefined);
-            await localStorage.removeItem('user');
-        }
-
-        return;
-    }
-
-    if (loading) {
-        loadingStart();
-    } else {
-        loadingStop();
     }
 
     return <>
         <Header titulo={"Login Admin"}/>
-        {error && <Message type={"error"} msg={"Ocorreu um erro"}/>}
-        {user && <Message type={"success"} msg={"Logado"}/>}
-        <ContainerPageLogin style={!userLogin ? {alignItems: 'center', justifyContent: 'center'} : {display: 'flex'}}>
-            {userLogin && <>
-                <p style={{marginLeft: '12px'}}>Olá, você está logado como {userLogin.email} <span
-                    style={{color: 'blue', fontWeight: 'bolder'}} onClick={handleLogout}>Clique Aqui</span> para
-                    finalizar a seção</p>
-                <ShowHistoryLogs/>
-            </>}
-            {!loading && !userLogin && <>
-                <div>
-                    <FormDefault ref={formRef} onSubmit={handleSubmit}>
-                        <div style={{display: "flex", justifyContent: "center"}}>
-                            <ImageTitle src={logo} alt=""/>
-                        </div>
-                        <LabelDefault htmlFor="email">Email:</LabelDefault>
-                        <InputDefault type="email" id="email" name="email" required/>
+        <ContainerPageLogin style={{alignItems: 'center', justifyContent: 'center'}}>
+            <div>
+                <FormDefault ref={formRef} onSubmit={handleSubmit}>
+                    <div style={{display: "flex", justifyContent: "center"}}>
+                        <ImageTitle src={logo} alt=""/>
+                    </div>
+                    <LabelDefault htmlFor="email">Email:</LabelDefault>
+                    <InputDefault type="email" id="email" name="email" required/>
 
-                        <LabelDefault htmlFor="password">Password:</LabelDefault>
-                        <InputDefault type="password" id="password" name="password" required/>
-                        <GroupButtonCancelSubmit model={"Login"}/>
-                    </FormDefault>
-                </div>
-
-            </>
-            }
+                    <LabelDefault htmlFor="password">Password:</LabelDefault>
+                    <InputDefault type="password" id="password" name="password" required/>
+                    <GroupButtonCancelSubmit model={"Login"}/>
+                </FormDefault>
+            </div>
         </ContainerPageLogin>
     </>
 }

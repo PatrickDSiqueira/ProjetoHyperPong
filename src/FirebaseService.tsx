@@ -1,14 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getDatabase, set, ref, onValue, get, child, push, update, remove, limitToFirst, query, limitToLast} from "firebase/database";
-import { getAuth } from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword, browserLocalPersistence, setPersistence } from "firebase/auth";
 import { getStorage, ref as refStorage, getDownloadURL } from "firebase/storage";
-
-console.log(process.env.TESTE, process.env.REACT_APP_API_KEY,
-process.env.REACT_APP_AUTH_DOMAIN,
-process.env.REACT_APP_PROJECT_ID,
-process.env.REACT_APP_STORAGE_BUCKET,
-process.env.REACT_APP_MESSAGING_SENDER_ID,
-process.env.REACT_APP_APP_ID);
 
 const firebaseConfig = {
     apiKey: process.env.REACT_APP_API_KEY,
@@ -26,4 +19,4 @@ const database = getDatabase(app);
 const storage = getStorage(app);
 const auth = getAuth(app);
 
-export {database, set, ref, onValue, get, child, push, update, remove, auth, storage, refStorage, getDownloadURL, limitToFirst, query, limitToLast};
+export {database, set, ref, onValue, get, child, push, update, remove, auth, storage, refStorage, getDownloadURL, limitToFirst, query, limitToLast, signInWithEmailAndPassword, setPersistence, browserLocalPersistence};

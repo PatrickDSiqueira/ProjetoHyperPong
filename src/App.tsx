@@ -1,46 +1,54 @@
 import {
-    BrowserRouter,
-    Route, Routes
+    BrowserRouter, Route, Routes
 } from "react-router-dom";
+import React from "react";
+
+import LoadingPage from "./views/LoadingPage";
+import {NotFound} from "./views/NotFound";
 import Home from "./views/Home";
-import './App.css';
+import Login from "./views/Login";
+import {Contact} from "./views/Contact";
 import {Evento} from "./views/Evento";
+import {MaisInformacoes} from "./views/MaisInformacoes";
 import Categoria from "./views/Categoria";
+import ConfirmationInscription from "./views/ConfirmationInscription";
 import Inscricao from "./views/Inscricao";
 import CriarEvento from "./views/CriarEvento";
-import {MaisInformacoes} from "./views/MaisInformacoes";
-import Login from "./views/Login";
-import AuthContextProvider from "./context/AuthContext";
-import {Contact} from "./views/Contact";
-import {NotFound} from "./views/NotFound";
-import ConfirmationInscription from "./views/ConfirmationInscription";
-import LoadingPage from "./views/LoadingPage";
+import Admin from "./views/Admin";
+import {AdminEvento} from "./views/AdminEvento";
+import Perfil from "./views/Perfil";
 
+import AuthContextProvider from "./context/AuthContext";
+import {ProtectedRoute} from "./context/ProtectedRoute";
+
+import './App.css';
 import "primereact/resources/primereact.min.css";
 import "primereact/resources/themes/lara-light-indigo/theme.css";
 import 'primeicons/primeicons.css';
+import 'primeflex/primeflex.css'
 
+import {routes} from "./routes/Routes";
+import {auth} from "./FirebaseService";
+
+const loadingElement = document.getElementById('loading');
 
 export function loadingStop() {
-
-    const loadingElement = document.getElementById('loading');
 
     if (loadingElement) {
 
         return loadingElement.style.display = 'none';
     }
-
 }
 
 export function loadingStart() {
-
-    const loadingElement = document.getElementById('loading');
 
     if (loadingElement) {
 
         return loadingElement.style.display = 'flex';
     }
 }
+
+export const logoutUser = () => auth.signOut();
 
 function App() {
 
@@ -49,21 +57,37 @@ function App() {
             <AuthContextProvider>
                 <BrowserRouter>
                     <Routes>
-                        <Route index element={<Home/>}/>
-                        <Route path="*" element={<NotFound/>}/>
-                        <Route path="/copas" element={<Home filterEvents={"1"}/>}/>
-                        <Route path="/login" element={<Login/>}/>
-                        <Route path="/rachoes" element={<Home filterEvents={"0"}/>}/>
-                        <Route path="/todos" element={<Home/>}/>
-                        <Route path="/contato" element={<Contact/>}/>
-                        <Route path="/notfound" element={<NotFound/>}/>
-                        <Route path="/evento/criar" element={<CriarEvento/>}/>
-                        <Route path="/evento/:idEvent" element={<Evento/>}/>
-                        <Route path="/evento/:idEvent/informacoes" element={<MaisInformacoes/>}/>
-                        <Route path="/evento/:idEvent/categoria/:idCategory" element={<Categoria/>}/>
+                        <Route element={<ProtectedRoute/>}>
+                            <Route path={routes.user.admin} element={<Admin/>}/>
+                            <Route path={routes.event.create} element={<CriarEvento/>}/>
+                            <Route path="/evento/:idEvent/admin" element={<AdminEvento/>}/>
+                            <Route path={routes.user.perfil} element={<Perfil/>}/>
+                        </Route>
                         <Route path="/evento/:idEvent/categoria/:idCategory/confirmacao"
                                element={<ConfirmationInscription/>}/>
-                        <Route path="/evento/:idEvent/categoria/:idCategory/inscricao" element={<Inscricao/>}/>
+                        <Route path="/evento/:idEvent/categoria/:idCategory/inscricao"
+                               element={<Inscricao/>}/>
+                        <Route index
+                               element={<Home/>}/>
+                        <Route path="/login"
+                               element={<Login/>}/>
+                        <Route path="/todos"
+                               element={<Home/>}/>
+                        <Route path="/contato"
+                               element={<Contact/>}/>
+                        <Route path="/notfound"
+                               element={<NotFound/>}/>
+                        <Route path="/evento/:idEvent"
+                               element={<Evento/>}/>
+                        <Route path="/evento/:idEvent/informacoes"
+                               element={<MaisInformacoes/>}/>
+                        <Route path="/evento/:idEvent/categoria/:idCategory"
+                               element={<Categoria/>}/>
+                        <Route path="/evento/:idEvent/categoria/:idCategory/confirmacao"
+                               element={<ConfirmationInscription/>}/>
+                        <Route path="/evento/:idEvent/categoria/:idCategory/inscricao"
+                               element={<Inscricao/>}/>
+                        <Route path="*" element={<NotFound/>}/>
                     </Routes>
                 </BrowserRouter>
             </AuthContextProvider>

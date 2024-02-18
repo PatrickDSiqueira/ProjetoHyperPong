@@ -6,8 +6,7 @@ interface Props {
     titulo : string | undefined
 }
 
-export default function Header(props : Props) {
-    const {titulo} = props
+export default function Header({titulo} : Props) {
 
     return <Container>
         <Sidebar />

@@ -33,11 +33,23 @@ export const StatusEvents = [
     "Disponível",
     "Encerrado",
     "Em Breve"
+];
+
+export const severityStatusEvents: ('success' | 'info' | 'warning' | 'danger' | null | undefined)[] = [
+    'success',
+    'danger',
+    'warning',
 ]
 
 export const StatusPartipants = [
     "Aguardando",
     "Confirmado",
+    "Pago"
+]
+
+export const SeverityStatusParticipants: ('success' | 'info' | 'warning' | 'danger' | null | undefined)[] = [
+    'warning',
+    'success',
 ]
 
 export const TypeCompetitions = [
@@ -54,11 +66,11 @@ export type routeParams = {
 export interface PropsComponetCategory {
     category: CategoryType,
     index: number,
-    statusEvent : typeof StatusEvents[number]
+    statusEvent: typeof StatusEvents[number]
 }
 
-export interface TypesMessages  {
-    type : "success" | "error" | "Observation"
+export interface TypesMessages {
+    type: "success" | "error" | "Observation"
 }
 
 export type typeMessage = "success" | "error" | "Observation";

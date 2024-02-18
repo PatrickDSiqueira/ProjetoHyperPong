@@ -2,10 +2,10 @@ import {BsFillPersonFill as IconPerson} from "react-icons/bs";
 import {AiFillPlusCircle as IconPlus} from "react-icons/ai";
 import {Capacidade, ContainerCategoria, TituloCategoria} from "./styles/CategoriaComponent";
 import {useNavigate, useParams} from "react-router-dom";
-import {useEffect, useState, useContext} from "react";
+import {useEffect, useState} from "react";
 import {PropsComponetCategory, routeParams, typeMessage} from "../types/types";
-import {AuthContext} from "../context/AuthContext";
 import { Message } from "./Message";
+import {GetCurrentUser} from "../context/AuthContext";
 
 const CategoriaComponent = ({category, index, statusEvent}: PropsComponetCategory) => {
 
@@ -19,7 +19,7 @@ const CategoriaComponent = ({category, index, statusEvent}: PropsComponetCategor
     const [alertMessageText, setAlertMessageText] = useState('')
     const [alertMessageType, setAlertMessageType] = useState<typeMessage>("error")
 
-    const { userLogin } = useContext(AuthContext);
+    const userLogin = GetCurrentUser();
 
     useEffect(() => {
 

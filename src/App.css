@@ -19,3 +19,7 @@ body {
 .currentPage {
     color: #c1ff00;
 }
+
+.ck-powered-by {
+    display: none;
+}

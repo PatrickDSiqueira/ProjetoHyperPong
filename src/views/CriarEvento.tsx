@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useRef, useState} from "react";
+import React, {useRef, useState} from "react";
 import Header from "../components/Header";
 import {ContainerPageCriarEvento} from "../Pages/styles/CriarEvento";
 import {CategoryType, TypeCompetitions} from "../types/types";
@@ -15,9 +15,9 @@ import {
 } from "../components/styles/Form";
 import GroupButtonCancelSubmit from "../components/Form";
 import {useUploadFile} from 'react-firebase-hooks/storage';
-import {AuthContext} from "../context/AuthContext";
 import {loadingStart, loadingStop} from "../App";
 import {CreateLog} from "../hooks/Log";
+import {GetCurrentUser} from "../context/AuthContext";
 
 export default function CriarEvento() {
 
@@ -31,7 +31,7 @@ export default function CriarEvento() {
     const [uploadFile] = useUploadFile()
     const [imageSelected, setImageSelected] = useState<File>();
 
-    const {userLogin} = useContext(AuthContext);
+    const userLogin = GetCurrentUser();
 
     const navigate = useNavigate();
 
@@ -110,17 +110,6 @@ export default function CriarEvento() {
         setType(event.target.value)
     }
 
-    useEffect(() => {
-
-        if (userLogin) {
-
-            return;
-        }
-
-        navigate("/login")
-
-    }, [navigate, userLogin])
-
     const uploadImageEvent = async (rota: string) => {
 
         if (imageSelected) {
@@ -135,7 +124,7 @@ export default function CriarEvento() {
     return <>
         <Header titulo="Criar Evento"/>
 
-        {userLogin && <ContainerPageCriarEvento>
+        <ContainerPageCriarEvento>
 
             <FormDefault method="post" ref={formRef} onSubmit={handleSubmit}>
                 <LabelDefault htmlFor="name">Nome:</LabelDefault>
@@ -220,6 +209,5 @@ export default function CriarEvento() {
 
             </FormDefault>
         </ContainerPageCriarEvento>
-        }
     </>
 }

@@ -1,84 +1,80 @@
 import {
     CardDesc,
     CardImage,
-    ContainerButtonADDEvent,
     ContainerCard,
     LabelStatusEvent,
     ListCard,
     TituloCard
 } from "./styles/ListCardEvents";
-import {BsFillCalendarFill as IconCalendar, BsPlusLg as IconPlus} from "react-icons/bs";
+import {BsFillCalendarFill as IconCalendar} from "react-icons/bs";
 import 'bootstrap/dist/css/bootstrap.min.css'
 import {useNavigate} from "react-router-dom";
-import {useContext, useState} from "react";
+import {useState} from "react";
 import moment from "moment/moment";
 import {StatusEvents} from "../types/types";
-import {AuthContext} from "../context/AuthContext";
 import {GetAll} from "../hooks/Event";
-import image from "../images/image.jpg"
 import React from 'react';
-import {Dropdown} from "primereact/dropdown";
+import {Button} from "primereact/button";
+import {BsFilterSquare} from "react-icons/bs";
+import {Dialog} from "primereact/dialog";
+import CheckBoxFilter from "./CheckBoxFilter";
+import {useFilterEvents} from "../hooks/useFilterEvents";
 
-interface Props {
-    filterEvents?: string
-}
+function ListCardEvents() {
 
-function ListCardEvents({filterEvents}: Props) {
-
-    const {userLogin} = useContext(AuthContext);
-    const [filterStatus, setFilterStatus] = useState<"Disponível" | "Encerrado" | "Em Breve">("Disponível");
-    const navigate = useNavigate();
+    const [filterStatus, setFilterStatus] = useState([0, 2]);
+    const [showFilter, setShowFilter] = useState(false);
+    const [loading, setLoading] = useState(0);
     const eventsList = GetAll();
+    const navigate = useNavigate();
+    const filterEvents = useFilterEvents(loading);
 
-    const handleClickCardEvent = (eventId: string) => {
+    const handleClickCardEvent = (eventId: string) => navigate(`/evento/${eventId}/informacoes`);
 
-        return navigate(`/evento/${eventId}/informacoes`);
+    const handleClickStatus = (value: number) => {
+
+        if (filterStatus.includes(value)) {
+
+            setFilterStatus(filterStatus.filter(item => item !== value));
+
+        } else {
+
+            setFilterStatus(prevArray => [...prevArray, value]);
+        }
     }
 
     return <>
         <ListCard>
-
-            <div className={'flex justify-center'}>
-                <Dropdown value={filterStatus}
-                          options={userLogin ? StatusEvents : StatusEvents.filter(item => item !== 'Encerrado')}
-                          onChange={(e) => setFilterStatus(e.value)}
-                          placeholder={"Selecione"}
-                          showClear/>
+            <div>
+                <Button severity="info" className="p-button-sm" style={{margin: 10}} outlined icon={<BsFilterSquare/>}
+                        onClick={() => setShowFilter(true)}/>
+                <Button severity="info" className="p-button-sm" style={{margin: 10}}
+                        outlined={!filterStatus.includes(0)} label={StatusEvents[0]}
+                        onClick={() => handleClickStatus(0)}/>
+                <Button severity="info" className="p-button-sm" style={{margin: 10}}
+                        outlined={!filterStatus.includes(2)} label={StatusEvents[2]}
+                        onClick={() => handleClickStatus(2)}/>
             </div>
 
-            {userLogin && <ContainerButtonADDEvent onClick={() => navigate("/evento/criar")}>
-                <IconPlus color={"green"} size={50}/>
-                <TituloCard>Novo Evento</TituloCard>
-            </ContainerButtonADDEvent>}
 
-            {eventsList.map((events, index) => {
+            {eventsList.map((event, index) => {
 
-                if (filterEvents && filterEvents !== events.type) {
-                    return null;
-                }
+                if (filterEvents.includes(event.type) && filterStatus.includes(parseInt(event.status))) {
 
-                if (StatusEvents[parseInt(events.status)] === 'Encerrado' && !userLogin) {
-                    return null;
-                }
-
-                if (StatusEvents[parseInt(events.status)] === filterStatus || filterStatus === undefined) {
-
-                    return <ContainerCard key={index} active={parseInt(events.status) === 2 ? 0.6 : 1}
-                                          onClick={() => handleClickCardEvent(events.id)}>
+                    return <ContainerCard key={index} active={parseInt(event.status) === 2 ? 0.6 : 1}
+                                          onClick={() => handleClickCardEvent(event.id)}>
                         <CardImage>
-                            <img
-                                src={events.wallpaper || image}
-                                alt=""/>
+                            <img src={event.wallpaper} alt=""/>
                         </CardImage>
                         <CardDesc>
-                            <TituloCard>{events.name}</TituloCard>
+                            <TituloCard>{event.name}</TituloCard>
                             <div style={{display: 'flex', flexDirection: "row", alignItems: "center"}}>
                                 <IconCalendar size={35}/>
                                 <div style={{paddingLeft: "15px"}}>
-                                    <span>{moment(events?.date).format("DD/MM/YY") + " - " + events.time}</span>
+                                    <span>{moment(event?.date).format("DD/MM/YY") + " - " + event.time}</span>
                                     <div style={{display: "flex", justifyContent: "center"}}>
                                         <LabelStatusEvent
-                                            status={parseInt(events.status)}>{StatusEvents[parseInt(events.status)]}</LabelStatusEvent>
+                                            status={parseInt(event.status)}>{StatusEvents[parseInt(event.status)]}</LabelStatusEvent>
                                     </div>
                                 </div>
                             </div>
@@ -88,6 +84,21 @@ function ListCardEvents({filterEvents}: Props) {
 
                 return null;
             })}
+
+            <Dialog
+                header="Filtros"
+                visible={showFilter}
+                style={{width: '50vw'}}
+                onHide={() => setShowFilter(false)}
+                modal
+                dismissableMask={true}>
+                {['0', '1'].map((filter, i) => <CheckBoxFilter key={i} value={filter} setListeningFather={setLoading}/>)}
+                <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
+                    <div>
+                        <Button severity="info" onClick={() => setShowFilter(false)}>Ok</Button>
+                    </div>
+                </div>
+            </Dialog>
         </ListCard>
     </>
 }
