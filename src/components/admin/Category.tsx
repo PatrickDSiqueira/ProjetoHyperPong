@@ -140,7 +140,7 @@ export default function Category({categoryList, updateData}: Props) {
             <Dropdown
                 style={{fontSize: '10px'}}
                 optionLabel="label"
-                value={options.find(option => option.id == statusId)}
+                value={options.find(option => option.id === parseInt(statusId))}
                 options={options}
                 onChange={(e) => onEditorValueChange(props, e.target.value.id, categoryId, category)}
             />

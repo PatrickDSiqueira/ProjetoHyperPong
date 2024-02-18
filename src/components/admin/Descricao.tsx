@@ -2,7 +2,6 @@ import React, {useState} from "react";
 import {Button} from "primereact/button";
 import {CKEditor} from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-import {Fieldset} from "primereact/fieldset";
 import {EventType} from "../../types/types";
 import parse from 'html-react-parser';
 
