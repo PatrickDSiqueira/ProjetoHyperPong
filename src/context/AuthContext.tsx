@@ -1,5 +1,6 @@
 import React, {createContext, ReactNode, useContext, useState} from "react";
 import {auth} from "../FirebaseService";
+import {User} from "../Model/User";
 
 interface AuthContextProviderProps {
     children: ReactNode;

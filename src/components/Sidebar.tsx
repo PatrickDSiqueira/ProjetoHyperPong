@@ -52,7 +52,7 @@ const Sidebar = () => {
 
         const items = [
             {path: routes.event.all, label: 'Eventos'},
-            {path: routes.contact, label: 'Contato'},
+            {path: routes.client.contact, label: 'Contato'},
         ];
 
 

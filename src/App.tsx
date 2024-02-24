@@ -28,7 +28,9 @@ import 'primeicons/primeicons.css';
 import 'primeflex/primeflex.css'
 
 import {routes} from "./routes/Routes";
-import {auth} from "./FirebaseService";
+import SettingsUser from "./views/SettingsUser";
+import EditUser from "./views/EditUser";
+import Register from "./views/Register";
 
 const loadingElement = document.getElementById('loading');
 
@@ -48,8 +50,6 @@ export function loadingStart() {
     }
 }
 
-export const logoutUser = () => auth.signOut();
-
 function App() {
 
     return (<>
@@ -62,6 +62,9 @@ function App() {
                             <Route path={routes.event.create} element={<CriarEvento/>}/>
                             <Route path="/evento/:idEvent/admin" element={<AdminEvento/>}/>
                             <Route path={routes.user.perfil} element={<Perfil/>}/>
+                            <Route path={routes.user.setting} element={<SettingsUser />}/>
+                            <Route path={routes.user.edit} element={<EditUser />}/>
+                            {/*<Route path={routes.user.setting_reloaded} element={<SettingsUser />}/>*/}
                         </Route>
                         <Route path="/evento/:idEvent/categoria/:idCategory/confirmacao"
                                element={<ConfirmationInscription/>}/>
@@ -87,6 +90,7 @@ function App() {
                                element={<ConfirmationInscription/>}/>
                         <Route path="/evento/:idEvent/categoria/:idCategory/inscricao"
                                element={<Inscricao/>}/>
+                        <Route path={routes.auth.register} element={<Register />}/>
                         <Route path="*" element={<NotFound/>}/>
                     </Routes>
                 </BrowserRouter>
