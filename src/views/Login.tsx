@@ -11,7 +11,7 @@ import {ContainerPageLogin} from "../Pages/styles/Login";
 import {FormDefault, ImageTitle, InputDefault, LabelDefault} from "../components/styles/Form";
 import GroupButtonCancelSubmit from "../components/Form";
 import logo from "../images/logo.png";
-import {loadingStart} from "../App";
+import {loadingStart, loadingStop} from "../App";
 import {useNavigate} from "react-router-dom";
 import {routes} from "../routes/Routes";
 
@@ -40,6 +40,7 @@ const Login = () => {
                 .then(() => navigate(routes.user.admin))
                 .catch((e) => setLoginError(getFirebaseError(e)))
         }
+        loadingStop();
     }
 
     return <>
