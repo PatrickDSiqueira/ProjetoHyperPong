@@ -3,7 +3,6 @@ import {Outlet, Navigate} from "react-router-dom";
 import {AuthContext} from "./AuthContext";
 import {routes} from "../routes/Routes";
 import LoadingPage from "../views/LoadingPage";
-import {User} from "../Model/User";
 
 export const ProtectedRoute = () => {
 
@@ -16,8 +15,6 @@ export const ProtectedRoute = () => {
         if (user !== null && user !== undefined) {
             setContextLoaded(true);
         }
-
-        console.log(User.findOne(user.uuid))
 
     }, [user]);
 

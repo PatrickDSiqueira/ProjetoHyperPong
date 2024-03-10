@@ -1,21 +1,14 @@
 export const routes = {
-    event: {
-        create: "/evento/criar",
+    event:{
+        create : "/evento/criar",
         all: "/todos"
     },
     auth: {
-        login: "/login",
-        register: "/register",
+        login : "/login"
     },
-    client: {
-        contact: "/contato",
-        evaluate: "/avalie",
-        questions: "/duvidas",
-    },
+    contact : "/contato",
     user: {
         admin: "/admin",
         perfil: "/perfil",
-        setting: "/perfil/setting",
-        edit: "/user/edit"
     }
 }
