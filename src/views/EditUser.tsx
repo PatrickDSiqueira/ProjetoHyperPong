@@ -3,7 +3,6 @@ import {GetCurrentUser} from "../context/AuthContext";
 import {Button} from "primereact/button";
 import Sidebar from "../components/Sidebar";
 import {Image} from "primereact/image";
-import foto from "../images/image.jpg"
 import {getDownloadURL, refStorage, storage} from "../FirebaseService";
 import {useUploadFile} from "react-firebase-hooks/storage";
 import {InputText} from "primereact/inputtext";
@@ -12,10 +11,6 @@ import {InputMask} from "primereact/inputmask";
 const EditUser = () => {
 
     const userLogin = GetCurrentUser();
-
-    userLogin.name = "Patrick Siqueira"
-    userLogin.foto = foto;
-    userLogin.id = '2324';
     const [loading, setLoading] = useState(false);
     const [uploadFile] = useUploadFile()
 
@@ -26,9 +21,9 @@ const EditUser = () => {
 
         const file = e.target.files ? e.target.files[0] : undefined;
 
-        if (file) {
+        if (file && userLogin) {
 
-            userLogin.foto = await uploadImageEvent('users/profile/' , file);
+            userLogin.photo = await uploadImageEvent('users/profile/' , file);
         }
 
         setLoading(false)
@@ -50,7 +45,7 @@ const EditUser = () => {
         <div className="flex flex-column align-items-center gap-5">
             <div style={{position: "relative", width: 100, height: 100, margin: 16}}>
                 <div style={{overflow: "hidden", borderRadius: "50%"}}>
-                    <Image preview width="100" height="100" src={userLogin.foto}/>
+                    <Image preview width="100" height="100" src={userLogin?.photo || undefined}/>
                 </div>
                 <label htmlFor="image" style={{position: "absolute", bottom: -10, right: -10}}
                        className="p-button p-component p-button-icon-only p-button-rounded p-button-secondary">

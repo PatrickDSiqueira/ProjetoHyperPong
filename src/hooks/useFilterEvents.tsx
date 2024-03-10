@@ -13,14 +13,14 @@ export function useFilterEvents(listening: number) {
 
 function getArrayFilterFromLocalStorage(): string[] {
 
-    const dataParse = JSON.parse(localStorage.getItem('filter_events') || '')
+    const storageItem = localStorage.getItem('filter_events');
 
-    if (Array.isArray(dataParse)) {
+    if(!storageItem){
 
-        return dataParse;
+        return ['0', '1'];
     }
 
-    return ['0', '1']
+        return JSON.parse(storageItem);
 }
 
 export function saveOrDeleteFilter(value: string) {

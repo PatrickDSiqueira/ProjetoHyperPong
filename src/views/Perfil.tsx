@@ -10,10 +10,6 @@ import {loadingStart} from "../App";
 const Perfil = () => {
 
     const userLogin = GetCurrentUser();
-
-    userLogin.name = "Patrick Siqueira"
-    userLogin.foto = foto;
-
     const navigateToSettings = () => {
 
         loadingStart();
@@ -35,9 +31,9 @@ const Perfil = () => {
         <div className="flex flex-column align-items-center"
              style={{color: '#1A202C', padding: 10, backgroundColor: "#ccc"}}>
             <div style={{overflow: "hidden", borderRadius: "50%", border: 'solid black 2px'}}>
-                <Image preview width="150" height="150" src={userLogin.foto}/>
+                <Image preview width="150" height="150" src={userLogin?.photo || undefined}/>
             </div>
-            <span style={{fontWeight: "bolder", fontSize: "large", paddingTop: 16}}>{userLogin.name}</span>
+            <span style={{fontWeight: "bolder", fontSize: "large", paddingTop: 16}}>{userLogin?.full_name || undefined}</span>
             <span style={{fontSize: "small"}}>Hyper atleta desde 2024</span>
             <div style={{paddingTop: 16}}>
                 <Button rounded size="small" icon="pi pi-cog" label="Configurações"

@@ -8,18 +8,17 @@ import {MdOutlineMail} from "react-icons/md";
 import {auth} from "../FirebaseService";
 import foto from "../images/image.jpg";
 import {routes} from "../routes/Routes";
+import {log} from "node:util";
 
 const SettingsUser = () => {
 
     const userLogin = GetCurrentUser();
 
-
-    userLogin.name = "Patrick Siqueira"
-    userLogin.foto = foto;
-
     const navigate = useNavigate();
 
-    const handleLogout = () => auth.signOut();
+    const handleLogout = () => auth.signOut().then(() => {
+        navigate(routes.auth.login)
+    });
 
     const getIcon = (name: string, fontSize = "2rem") => <span className={name} style={{fontSize}}/>;
     const SettingsElementsTemplate = () => {
@@ -84,10 +83,10 @@ const SettingsUser = () => {
         </div>
         <div className="flex align-items-center">
             <div style={{overflow: "hidden", borderRadius: "50%", width: 100, margin: 16}}>
-                <Image preview width="100" height="100" src={userLogin.foto}/>
+                <Image preview width="100" height="100" src={userLogin?.photo || undefined}/>
             </div>
             <div>
-                <span className="font-bold">{userLogin.name}</span>
+                <span className="font-bold">{userLogin?.full_name}</span>
                 <Link to={routes.user.edit} onClick={() => navigate(routes.user.edit)}
                       className="text-decoration-none link-info flex align-items-center">
                     <span style={{fontSize: "small"}}>Editar meus dados</span>

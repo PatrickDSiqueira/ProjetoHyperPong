@@ -7,6 +7,9 @@ import {Link, useNavigate} from "react-router-dom";
 import {routes} from "../routes/Routes";
 import {InputText} from "primereact/inputtext";
 import {Button} from "primereact/button";
+import {firebaseErrors} from "../types/firebase-errors";
+import {Simulate} from "react-dom/test-utils";
+import error = Simulate.error;
 
 const Login = () => {
 
@@ -15,6 +18,7 @@ const Login = () => {
     const formRef = useRef<HTMLFormElement>(null);
 
     const [loading, setLoading] = useState(false);
+    const [errorLogin, setErrorLogin] = useState('');
 
     async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
 
@@ -30,12 +34,11 @@ const Login = () => {
             const {email, password} = values;
             await setPersistence(auth, browserLocalPersistence)
                 .then(async () => await signInWithEmailAndPassword(auth, email.toString(), password.toString()))
-                .catch((e) => {
+                .then(() => navigate(-1))
+                .catch(({code, message}) => {
                     setLoading(false)
-                    console.log(e.code, e.message)
+                    setErrorLogin(firebaseErrors[code] || message)
                 })
-
-            return navigate(routes.user.perfil);
         }
     }
 
@@ -55,6 +58,7 @@ const Login = () => {
                     <InputText type="password" id="password" name="password" required/>
                 </div>
                 <div className="flex flex-column container">
+                    <span className="p-error">{errorLogin}</span>
                     <Button loading={loading} type="submit" severity="success" label="Login"/>
                     <Link
                         className="text-decoration-none p-button p-button-text p-button-secondary flex justify-content-center font-bold"

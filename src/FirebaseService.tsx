@@ -1,7 +1,26 @@
-import { initializeApp } from "firebase/app";
-import { getDatabase, set, ref, onValue, get, child, push, update, remove, limitToFirst, query, limitToLast} from "firebase/database";
-import { getAuth, signInWithEmailAndPassword, browserLocalPersistence, setPersistence, createUserWithEmailAndPassword } from "firebase/auth";
-import { getStorage, ref as refStorage, getDownloadURL } from "firebase/storage";
+import {initializeApp} from "firebase/app";
+import {
+    getDatabase,
+    set,
+    ref,
+    onValue,
+    get,
+    child,
+    push,
+    update,
+    remove,
+    limitToFirst,
+    query,
+    limitToLast
+} from "firebase/database";
+import {
+    getAuth,
+    signInWithEmailAndPassword,
+    browserLocalPersistence,
+    setPersistence,
+    createUserWithEmailAndPassword
+} from "firebase/auth";
+import {getStorage, ref as refStorage, getDownloadURL} from "firebase/storage";
 
 const firebaseConfig = {
     apiKey: process.env.REACT_APP_API_KEY,
@@ -20,8 +39,28 @@ const storage = getStorage(app);
 const auth = getAuth(app);
 
 const createUser = async (email: string, password: string) => createUserWithEmailAndPassword(auth, email, password)
-    .then(({user })=>user)
-    .catch((e :Error)=>  e.message);
+    .then(({user}) => user)
+    .catch((e: Error) => e.message);
 
-
-export {database, set, ref, onValue, get, child, push, update, remove, auth, storage, refStorage, getDownloadURL, limitToFirst, query, limitToLast, signInWithEmailAndPassword, setPersistence, browserLocalPersistence, createUser};
+export {
+    database,
+    set,
+    ref,
+    onValue,
+    get,
+    child,
+    push,
+    update,
+    remove,
+    auth,
+    storage,
+    refStorage,
+    getDownloadURL,
+    limitToFirst,
+    query,
+    limitToLast,
+    signInWithEmailAndPassword,
+    setPersistence,
+    browserLocalPersistence,
+    createUser
+};

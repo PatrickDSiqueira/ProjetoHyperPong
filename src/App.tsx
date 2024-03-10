@@ -31,6 +31,8 @@ import {routes} from "./routes/Routes";
 import SettingsUser from "./views/SettingsUser";
 import EditUser from "./views/EditUser";
 import Register from "./views/Register";
+import {ProtectedAdminRoute} from "./context/ProtectedAdminRoute";
+import {NotAllowed} from "./views/NotAllowed";
 
 const loadingElement = document.getElementById('loading');
 
@@ -58,16 +60,19 @@ function App() {
                 <BrowserRouter>
                     <Routes>
                         <Route element={<ProtectedRoute/>}>
+                            <Route path={routes.user.perfil} element={<Perfil/>}/>
+                            <Route path={routes.user.setting} element={<SettingsUser/>}/>
+                            <Route path={routes.user.edit} element={<EditUser/>}/>
+                            <Route path={routes.event.subscribe} element={<Inscricao/>}/>
+                            <Route path="/evento/:idEvent/categoria/:idCategory/confirmacao"
+                                   element={<ConfirmationInscription/>}/>
+                        </Route>
+                        <Route element={<ProtectedAdminRoute/>}>
+                            <Route path={routes.event.admin} element={<AdminEvento/>}/>
                             <Route path={routes.user.admin} element={<Admin/>}/>
                             <Route path={routes.event.create} element={<CriarEvento/>}/>
-                            <Route path="/evento/:idEvent/admin" element={<AdminEvento/>}/>
-                            <Route path={routes.user.perfil} element={<Perfil/>}/>
-                            <Route path={routes.user.setting} element={<SettingsUser />}/>
-                            <Route path={routes.user.edit} element={<EditUser />}/>
-                            {/*<Route path={routes.user.setting_reloaded} element={<SettingsUser />}/>*/}
                         </Route>
-                        <Route path="/evento/:idEvent/categoria/:idCategory/confirmacao"
-                               element={<ConfirmationInscription/>}/>
+
                         <Route path="/evento/:idEvent/categoria/:idCategory/inscricao"
                                element={<Inscricao/>}/>
                         <Route index
@@ -80,17 +85,15 @@ function App() {
                                element={<Contact/>}/>
                         <Route path="/notfound"
                                element={<NotFound/>}/>
+                        <Route path={routes.auth.not_allowed}
+                               element={<NotAllowed/>}/>
                         <Route path="/evento/:idEvent"
                                element={<Evento/>}/>
                         <Route path="/evento/:idEvent/informacoes"
                                element={<MaisInformacoes/>}/>
                         <Route path="/evento/:idEvent/categoria/:idCategory"
                                element={<Categoria/>}/>
-                        <Route path="/evento/:idEvent/categoria/:idCategory/confirmacao"
-                               element={<ConfirmationInscription/>}/>
-                        <Route path="/evento/:idEvent/categoria/:idCategory/inscricao"
-                               element={<Inscricao/>}/>
-                        <Route path={routes.auth.register} element={<Register />}/>
+                        <Route path={routes.auth.register} element={<Register/>}/>
                         <Route path="*" element={<NotFound/>}/>
                     </Routes>
                 </BrowserRouter>

@@ -4,13 +4,13 @@ export class User {
 
     protected path = '/users';
     static path = '/users';
-    private full_name: string;
+    public full_name: string;
     protected id: string;
-    private date_birth: Date;
-    private email: string;
-    private phone: string;
+    public date_birth: Date;
+    public email: string;
+    public phone: string;
     private type: number;
-    private photo: string | null = null;
+    public photo: string | null = null;
 
     constructor(id: string, full_name: string, date_birth: Date, email: string, phone: string, photo: string | null = null, type = 3) {
         this.id = id;
@@ -21,10 +21,6 @@ export class User {
         this.type = type;
         this.photo = photo;
     }
-
-    notColumns = [
-        'path'
-    ]
 
     async save() {
 
@@ -61,4 +57,8 @@ export class User {
             })
     }
 
+    isAdmin(): boolean {
+
+        return this.type === 2;
+    }
 }

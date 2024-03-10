@@ -59,7 +59,11 @@ const Sidebar = () => {
         if (userLogin) {
 
             items.push({path: routes.user.perfil, label: "Perfil"})
-            items.push({path: routes.user.admin, label: 'Admin'});
+
+            if (userLogin.isAdmin()){
+
+                items.push({path: routes.user.admin, label: 'Admin'});
+            }
 
         } else {
 

@@ -16,16 +16,22 @@ import {Link, useNavigate} from "react-router-dom";
 import {Badge} from "primereact/badge";
 import {Dropdown} from "primereact/dropdown";
 import {GetCurrentUser} from "../context/AuthContext";
+import {routes} from "../routes/Routes";
 
 export default function TableEvents() {
 
+    const navigate = useNavigate();
     const [listening, setListening] = useState(0);
     const eventsList = GetAll(listening);
-
+    const [editEvent, setEventEdit] = useState<EventType>();
     const userLogin = GetCurrentUser();
 
-    const navigate = useNavigate();
-    const [editEvent, setEventEdit] = useState<EventType>();
+    if(!userLogin){
+
+         navigate(routes.auth.login);
+        return <p>error</p>
+    }
+
 
     const updateData = () => setListening(listening + 1);
 
@@ -42,11 +48,11 @@ export default function TableEvents() {
 
         await update(ref(database, `events/${editEvent?.id}`), {status: newStatus})
             .then(() => {
-                CreateLog(2, `<b>${editEvent?.name}</b> - <b>${userLogin?.email}</b> atualizou o status do evento para <b>${StatusEvents[newStatus]}</b>.`);
+                CreateLog(2, `<b>${editEvent?.name}</b> - <b>${userLogin.email}</b> atualizou o status do evento para <b>${StatusEvents[newStatus]}</b>.`);
 
             })
             .catch(() => {
-                CreateLog(3, `<b>${editEvent?.name}</b> - Erro ao <b>${userLogin?.email}</b> tentar atualizar o status para <b>${StatusEvents[newStatus]}</b>.`);
+                CreateLog(3, `<b>${editEvent?.name}</b> - Erro ao <b>${userLogin.email}</b> tentar atualizar o status para <b>${StatusEvents[newStatus]}</b>.`);
             });
 
         updateData();
