@@ -64,7 +64,7 @@ function ListCardEvents() {
                     return <ContainerCard key={index} active={parseInt(event.status) === 2 ? 0.6 : 1}
                                           onClick={() => handleClickCardEvent(event.id)}>
                         <CardImage>
-                            <img src={event.wallpaper} alt=""/>
+                            <img src={event.wallpaper || undefined} alt=""/>
                         </CardImage>
                         <CardDesc>
                             <TituloCard>{event.name}</TituloCard>

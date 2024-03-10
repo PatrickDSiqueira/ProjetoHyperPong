@@ -1,5 +1,11 @@
-import React, {useRef} from "react";
-import {auth, browserLocalPersistence, setPersistence, signInWithEmailAndPassword} from "../FirebaseService";
+import React, {useRef, useState} from "react";
+import {
+    auth,
+    browserLocalPersistence,
+    getFirebaseError,
+    setPersistence,
+    signInWithEmailAndPassword
+} from "../FirebaseService";
 import Header from "../components/Header";
 import {ContainerPageLogin} from "../Pages/styles/Login";
 import {FormDefault, ImageTitle, InputDefault, LabelDefault} from "../components/styles/Form";
@@ -12,6 +18,8 @@ import {routes} from "../routes/Routes";
 const Login = () => {
 
     const navigate = useNavigate();
+
+    const [loginError, setLoginError] = useState('');
 
     const formRef = useRef<HTMLFormElement>(null);
 
@@ -27,10 +35,10 @@ const Login = () => {
             const values = Object.fromEntries(formData.entries());
 
             const {email, password} = values;
-            await setPersistence(auth, browserLocalPersistence).then(async () => await signInWithEmailAndPassword(auth, email.toString(), password.toString()))
-                .catch((e) => console.log(e.code, e.message))
-
-            return navigate(routes.user.perfil);
+            await setPersistence(auth, browserLocalPersistence)
+                .then(async () => await signInWithEmailAndPassword(auth, email.toString(), password.toString()))
+                .then(() => navigate(routes.user.admin))
+                .catch((e) => setLoginError(getFirebaseError(e)))
         }
     }
 
@@ -43,10 +51,11 @@ const Login = () => {
                         <ImageTitle src={logo} alt=""/>
                     </div>
                     <LabelDefault htmlFor="email">Email:</LabelDefault>
-                    <InputDefault type="email" id="email" name="email" required/>
+                    <InputDefault type="email" id="email" autoComplete="username" name="email" required/>
 
                     <LabelDefault htmlFor="password">Password:</LabelDefault>
-                    <InputDefault type="password" id="password" name="password" required/>
+                    <InputDefault type="password" autoComplete="current-password" id="password" name="password" required/>
+                    <span className="p-error p-message-error flex justify-content-center">{loginError}</span>
                     <GroupButtonCancelSubmit model={"Login"}/>
                 </FormDefault>
             </div>

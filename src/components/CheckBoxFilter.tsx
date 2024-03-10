@@ -6,10 +6,9 @@ import {useFilterEvents, saveOrDeleteFilter} from "../hooks/useFilterEvents";
 interface Props {
     value: string,
     setListeningFather: React.Dispatch<React.SetStateAction<number>>,
-    key:number
 }
 
-const CheckBoxFilter = ({value, setListeningFather, key}: Props) => {
+const CheckBoxFilter = ({value, setListeningFather}: Props) => {
 
     const [listening, setListening] = useState(0)
     const filterList = useFilterEvents(listening);
@@ -21,7 +20,7 @@ const CheckBoxFilter = ({value, setListeningFather, key}: Props) => {
     }
 
     return <div style={{margin: 10}}>
-        < Checkbox key={key}
+        < Checkbox
             inputId={value}
             checked={filterList.includes(value)}
             value={value}

@@ -61,8 +61,8 @@ export default function Descricao({event, updateData}: Props) {
         }
 
         return <div className="card">
-            <ScrollPanel onClick={controlEdit.isEditing} style={{width: '100%', height: '400px'}}>
-                <p className="m-3">{parse(event.description)}</p>
+            <ScrollPanel onClick={controlEdit.isEditing} style={{width: '100%', height: '400px', padding: 10}}>
+                {parse(event.description)}
             </ScrollPanel>
         </div>
     }

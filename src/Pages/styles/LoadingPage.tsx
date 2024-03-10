@@ -7,7 +7,6 @@ const spin = keyframes`
   }
 `;
 export const ContainerLoadingPage = styled.div`
-  display: none;
   justify-content: center;
   align-items: center;
   background-color: white;

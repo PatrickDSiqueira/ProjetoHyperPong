@@ -16,7 +16,6 @@ import Inscricao from "./views/Inscricao";
 import CriarEvento from "./views/CriarEvento";
 import Admin from "./views/Admin";
 import {AdminEvento} from "./views/AdminEvento";
-import Perfil from "./views/Perfil";
 
 import AuthContextProvider from "./context/AuthContext";
 import {ProtectedRoute} from "./context/ProtectedRoute";
@@ -30,21 +29,23 @@ import 'primeflex/primeflex.css'
 import {routes} from "./routes/Routes";
 import {auth} from "./FirebaseService";
 
-const loadingElement = document.getElementById('loading');
-
 export function loadingStop() {
 
-    if (loadingElement) {
+    const loading = document.getElementById('loading');
 
-        return loadingElement.style.display = 'none';
+    if (loading) {
+
+        return loading.style.display = 'none';
     }
 }
 
 export function loadingStart() {
 
-    if (loadingElement) {
+    const loading = document.getElementById('loading');
 
-        return loadingElement.style.display = 'flex';
+    if (loading) {
+
+        return loading.style.display = 'flex';
     }
 }
 
@@ -61,7 +62,6 @@ function App() {
                             <Route path={routes.user.admin} element={<Admin/>}/>
                             <Route path={routes.event.create} element={<CriarEvento/>}/>
                             <Route path="/evento/:idEvent/admin" element={<AdminEvento/>}/>
-                            <Route path={routes.user.perfil} element={<Perfil/>}/>
                         </Route>
                         <Route path="/evento/:idEvent/categoria/:idCategory/confirmacao"
                                element={<ConfirmationInscription/>}/>

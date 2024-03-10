@@ -6,6 +6,7 @@ import {routeParams} from "../types/types";
 import Category from "../components/admin/Category";
 import {loadingStart} from "../App";
 import Descricao from "../components/admin/Descricao";
+import LoadingPage from "./LoadingPage";
 
 export const AdminEvento = () => {
 
@@ -18,7 +19,7 @@ export const AdminEvento = () => {
     if (!event) {
 
         loadingStart();
-        return <p>Obtendo dados</p>
+        return <LoadingPage on={true}/>;
     }
 
     return <>

@@ -55,10 +55,8 @@ const Sidebar = () => {
             {path: routes.contact, label: 'Contato'},
         ];
 
-
         if (userLogin) {
 
-            items.push({path: routes.user.perfil, label: "Perfil"})
             items.push({path: routes.user.admin, label: 'Admin'});
 
         } else {
