@@ -2,6 +2,7 @@ import { initializeApp } from "firebase/app";
 import { getDatabase, set, ref, onValue, get, child, push, update, remove, limitToFirst, query, limitToLast} from "firebase/database";
 import { getAuth, signInWithEmailAndPassword, browserLocalPersistence, setPersistence } from "firebase/auth";
 import { getStorage, ref as refStorage, getDownloadURL } from "firebase/storage";
+import {runMigrations} from "./database/IndexMigrate";
 
 const firebaseConfig = {
     apiKey: process.env.REACT_APP_API_KEY,
@@ -21,9 +22,7 @@ const auth = getAuth(app);
 
 export const getFirebaseError = ({code, message}:{code:string, message:string}) => {
 
-   const firebaseErrors : {
-       [key: string]: string
-   } = {
+   const firebaseErrors : {[key: string]: string } = {
         "auth/app-deleted": "O banco de dados não foi localizado.",
         "auth/expired-action-code": "O código da ação o ou link expirou.",
         "auth/invalid-action-code": "O código da ação é inválido. Isso pode acontecer se o código estiver malformado ou já tiver sido usado.",
@@ -116,3 +115,5 @@ export const getFirebaseError = ({code, message}:{code:string, message:string}) 
 }
 
 export {database, set, ref, onValue, get, child, push, update, remove, auth, storage, refStorage, getDownloadURL, limitToFirst, query, limitToLast, signInWithEmailAndPassword, setPersistence, browserLocalPersistence};
+
+runMigrations()
