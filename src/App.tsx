@@ -28,6 +28,7 @@ import 'primeflex/primeflex.css'
 
 import {routes} from "./routes/Routes";
 import {auth} from "./FirebaseService";
+import Ranking from "./views/Ranking";
 
 export function loadingStop() {
 
@@ -71,6 +72,8 @@ function App() {
                                element={<Home/>}/>
                         <Route path="/login"
                                element={<Login/>}/>
+                        <Route path={routes.ranking}
+                               element={<Ranking/>}/>
                         <Route path="/todos"
                                element={<Home/>}/>
                         <Route path="/contato"

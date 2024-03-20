@@ -20,6 +20,7 @@ import {GetCurrentUser} from "../context/AuthContext";
 export default function TableEvents() {
 
     const [listening, setListening] = useState(0);
+
     const eventsList = GetAll(listening);
 
     const userLogin = GetCurrentUser();
