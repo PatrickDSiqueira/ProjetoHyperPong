@@ -7,13 +7,14 @@ import {
     signInWithEmailAndPassword
 } from "../FirebaseService";
 import Header from "../components/Header";
-import {ContainerPageLogin} from "../Pages/styles/Login";
-import {FormDefault, ImageTitle, InputDefault, LabelDefault} from "../components/styles/Form";
-import GroupButtonCancelSubmit from "../components/Form";
+import {ImageTitle} from "../components/styles/Form";
 import logo from "../images/logo.png";
-import {loadingStart, loadingStop} from "../App";
 import {useNavigate} from "react-router-dom";
+import {loadingStop} from "../App";
 import {routes} from "../routes/Routes";
+import {InputText} from "primereact/inputtext";
+import {Button} from "primereact/button";
+import {Password} from "primereact/password";
 
 const Login = () => {
 
@@ -23,9 +24,11 @@ const Login = () => {
 
     const formRef = useRef<HTMLFormElement>(null);
 
+    const [loading, setLoading] = useState(false);
+
     async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
 
-        loadingStart();
+        setLoading(true)
 
         event.preventDefault();
 
@@ -38,30 +41,34 @@ const Login = () => {
             await setPersistence(auth, browserLocalPersistence)
                 .then(async () => await signInWithEmailAndPassword(auth, email.toString(), password.toString()))
                 .then(() => navigate(routes.user.admin))
-                .catch((e) => setLoginError(getFirebaseError(e)))
+                .catch((e) => {
+                    setLoginError(getFirebaseError(e))
+                    setLoading(false);
+                })
         }
         loadingStop();
     }
 
-    return <>
+    return <div>
         <Header titulo={"Login Admin"}/>
-        <ContainerPageLogin style={{alignItems: 'center', justifyContent: 'center'}}>
-            <div>
-                <FormDefault ref={formRef} onSubmit={handleSubmit}>
-                    <div style={{display: "flex", justifyContent: "center"}}>
-                        <ImageTitle src={logo} alt=""/>
-                    </div>
-                    <LabelDefault htmlFor="email">Email:</LabelDefault>
-                    <InputDefault type="email" id="email" autoComplete="username" name="email" required/>
-
-                    <LabelDefault htmlFor="password">Password:</LabelDefault>
-                    <InputDefault type="password" autoComplete="current-password" id="password" name="password" required/>
-                    <span className="p-error p-message-error flex justify-content-center">{loginError}</span>
-                    <GroupButtonCancelSubmit model={"Login"}/>
-                </FormDefault>
+        <form ref={formRef} onSubmit={handleSubmit} className="flex flex-column gap-2">
+            <div style={{display: "flex", justifyContent: "center"}}>
+                <ImageTitle src={logo} alt=""/>
             </div>
-        </ContainerPageLogin>
-    </>
+            <div className="flex flex-column container gap-3">
+                <label htmlFor="email">Email:</label>
+                <InputText type="email" id="email" autoComplete="username" name="email" required/>
+            </div>
+            <div className="flex flex-column container gap-3">
+                <label htmlFor="password">Password:</label>
+                <Password inputStyle={{width: "100%"}} id="password" toggleMask feedback={false} autoComplete="current-password" name="password" required/>
+            </div>
+            <span className="p-error p-message-error flex justify-content-center">{loginError}</span>
+            <div className="flex flex-column container">
+                <Button loading={loading} type="submit" severity="success" label="Login"/>
+            </div>
+        </form>
+    </div>
 }
 
 export default Login;
