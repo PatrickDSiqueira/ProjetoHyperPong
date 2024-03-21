@@ -10,5 +10,6 @@ export const routes = {
     user: {
         admin: "/admin",
         perfil: "/perfil",
-    }
+    },
+    ranking: "/ranking"
 }
