@@ -34,7 +34,6 @@ const Ranking = () => {
         }
 
         return 0;
-
     };
 
     playersList.sort((a, b) => {
@@ -62,12 +61,24 @@ const Ranking = () => {
         return 0
     });
 
+    const playersListWithout  = playersList.filter((player)=> {
+
+         const id = player.getId();
+
+         if(!id){
+
+             return false
+         }
+
+        return usersScore[id] > 0;
+    })
+
     return <>
 
         <Header titulo={"Ranking - " + moment().year()}/>
 
         <div className="flex justify-content-center" style={{paddingTop: 10}}>
-            <DataTable scrollable scrollHeight="700px" value={playersList} >
+            <DataTable scrollable scrollHeight="700px" value={playersListWithout} >
                 <Column body={(_, {rowIndex}) => rowIndex + 1} header="#"/>
                 <Column field="name" header="Atleta"/>
                 <Column body={templateScore} header="Pontos"/>
