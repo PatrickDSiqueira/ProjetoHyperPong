@@ -24,16 +24,28 @@ const Ranking = () => {
         }
     })
 
-    const templateScore = (player: Player) => {
+    const templateScore = (playerList: Player[]) => {
 
-        const idPlayer = player.getId();
+        const id = playerList[0].getId();
 
-        if (idPlayer) {
+        if (!id) {
 
-            return usersScore[idPlayer]
+            return 0
         }
 
-        return 0;
+        return usersScore[id];
+    };
+
+    const templateName = (playerList: Player[]) => {
+
+        if (playerList.length === 1) {
+
+            return playerList[0].getName()
+        }
+
+        return <span style={{display: 'flex', flexDirection: 'column'}}>
+              {playerList.map((player, index) => <span key={index}>{player.getName()}</span>)}
+          </span>
     };
 
     playersList.sort((a, b) => {
@@ -71,18 +83,40 @@ const Ranking = () => {
          }
 
         return usersScore[id] > 0;
-    })
+    });
+
+    const playerOrderByScore: Player[][] = [];
+
+    playersListWithout.forEach(player => {
+        const playerId = player.getId();
+
+        if (!playerId) {
+
+            return;
+        }
+
+        if (!playerOrderByScore[usersScore[playerId]]) {
+
+            playerOrderByScore[usersScore[playerId]] = [];
+        }
+
+        playerOrderByScore[usersScore[playerId]].push(player);
+    });
+
+    const returnPlayers = playerOrderByScore.filter(item => item)
+        .sort((a, b) => {
+            return a[0].getScore() > b[0].getScore() ? 1 : -1
+        })
 
     return <>
 
         <Header titulo={"Ranking - " + moment().year()}/>
 
         <div className="flex justify-content-center" style={{paddingTop: 10}}>
-            <DataTable scrollable scrollHeight="700px" value={playersListWithout} >
+            <DataTable scrollable scrollHeight="700px" value={returnPlayers}>
                 <Column body={(_, {rowIndex}) => rowIndex + 1} header="#"/>
-                <Column field="name" header="Atleta"/>
-                <Column body={templateScore} header="Pontos"/>
-            </DataTable>
+                <Column body={templateName} header="Atleta"/>
+                <Column body={templateScore} header="Pontos"/> </DataTable>
         </div>
     </>
 }
