@@ -23,3 +23,51 @@ body {
 .ck-powered-by {
     display: none;
 }
+
+.image-input {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.image-input input[type="file"] {
+    margin-bottom: 10px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.image-preview {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.image-preview img {
+    max-width: 200px;
+    max-height: 200px;
+    object-fit: cover;
+    margin-right: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.image-preview button {
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+
+@media screen and (max-width: 768px) {
+
+    .custom-responsive-direction {
+        flex-direction: column;
+    }
+
+    .custom-responsive-width-modal {
+        width: 90vw;
+    }
+}

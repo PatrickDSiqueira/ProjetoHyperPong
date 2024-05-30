@@ -1,213 +1,191 @@
 import React, {useRef, useState} from "react";
 import Header from "../components/Header";
-import {ContainerPageCriarEvento} from "../Pages/styles/CriarEvento";
-import {CategoryType, TypeCompetitions} from "../types/types";
-import {child, database, push, ref, set, storage, refStorage, getDownloadURL} from "../FirebaseService";
+import {TypeCompetitions} from "../types/types";
+import {storage, refStorage, getDownloadURL} from "../FirebaseService";
 import {useNavigate} from "react-router-dom";
-import {
-    ButtonCancel,
-    ButtonSave,
-    ButtonCategories,
-    ContainerButtons,
-    FormDefault, FormInForm,
-    InputDefault,
-    LabelDefault, LabelImageDefault, TextAreaDefault
-} from "../components/styles/Form";
-import GroupButtonCancelSubmit from "../components/Form";
 import {useUploadFile} from 'react-firebase-hooks/storage';
-import {loadingStart, loadingStop} from "../App";
-import {CreateLog} from "../hooks/Log";
 import {GetCurrentUser} from "../context/AuthContext";
+import {Texts} from "../trans/texts";
+import {InputText} from "primereact/inputtext";
+import {Calendar} from "primereact/calendar";
+import {Dropdown} from "primereact/dropdown";
+import {Button} from "primereact/button";
+import Event from "../Model/Event";
+import CreateCategory from "../components/CreateCategory";
+import {Category} from "../types/Category";
+import UploadWallpaper from "../components/UploadWallpaper";
+import CreateDescription from "../components/CreateDescription";
+import {CreateLog} from "../hooks/Log";
+import {loadingStart, loadingStop} from "../App";
+import {Message} from "primereact/message";
+
+interface DataEvent {
+    [key: string]: any;
+}
 
 export default function CriarEvento() {
 
-    const [categories, setCategories] = useState<CategoryType[]>([]);
-    const [showNewCat, setShowNewCat] = useState<boolean>(false);
-    const [nameCat, setNameCat] = useState<string>();
-    const [numCat, setNumCat] = useState<number>();
-    const [address, setAddress] = useState('R. Maria Francisca, 915 - Boa Vista, BH - MG')
-    const [description, setDescription] = useState('')
-    const [type, setType] = useState();
+    const [dataEvent, setDataEvent] = useState<DataEvent>({status: 0});
+
+    const [errors, setErrors] = useState<string[]>([])
+
+    const handleChangeEventData = (key: string, value: any) => {
+        setErrors([]);
+        setDataEvent(
+            (prevState) => ({...prevState, [key]: value}));
+    }
+
+    function getDataEvent(key: string) {
+
+        return dataEvent[key] ?? undefined;
+    }
+
+    const getDescriptionData = (): string => {
+
+        const description = getDataEvent('description');
+
+        return description ?? '';
+    }
+
+    function getCategoriesEventData(): Category[] {
+
+        const categories = getDataEvent('categories');
+
+        if (!categories || !Array.isArray(categories)) {
+
+            return [];
+        }
+
+        return categories;
+    }
+
     const [uploadFile] = useUploadFile()
-    const [imageSelected, setImageSelected] = useState<File>();
 
     const userLogin = GetCurrentUser();
 
     const navigate = useNavigate();
 
-    function seeNewCat() {
-        setShowNewCat(!showNewCat)
-    }
-
-    function deleteCategories(name: string) {
-        const cats: CategoryType[] = categories.filter((category) => category.name !== name);
-        setCategories(cats);
-    }
-
     const formRef = useRef<HTMLFormElement>(null);
 
     async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+
         event.preventDefault();
 
         loadingStart();
 
-        if (formRef.current) {
-            const formData = new FormData(formRef.current);
-            const values = Object.fromEntries(formData.entries());
+        const wallpaper = await uploadImageEvent(`events/dsadasd`)
 
-            const {name, time, date, categoriesObj, description, status, end_date, address, type} = values;
+        const {name, time, date, description, end_date, address, type, categories} = dataEvent;
 
-            const categories = JSON.parse(categoriesObj.toString());
+        const newEvent = new Event(
+            name, address, date, time, description, wallpaper, type, end_date, categories
+        );
 
-            const id = push(child(ref(database), 'events')).key;
+        const result = await newEvent.processSave();
 
-            const wallpaper = await uploadImageEvent(`events/${id}`)
-
-            await set(ref(database, "events/" + id), {
-                id,
-                name,
-                date,
-                time,
-                description,
-                status,
-                end_date,
-                type,
-                address,
-                categories,
-                wallpaper
-            })
-                .then(() => {
-                    CreateLog(1, `<b>${userLogin?.email}</b> -  criou o evento <b>${name}</b> .`);
-                })
-                .catch(() => {
-                    CreateLog(3, `Erro ao <b>${userLogin?.email}</b> - criar o evento <b>${name}</b> .`);
-                });
+        if (result.ok) {
 
             loadingStop();
-            navigate(`/evento/${id}`)
+            navigate(`/evento/${newEvent.getId()}`)
+            await CreateLog(1, `<b>${userLogin?.email}</b> -  criou o evento <b>${name}</b> .`);
+
             return;
-
-        }
-    }
-
-    function createNewCat() {
-        if (nameCat !== undefined && numCat !== undefined) {
-            var cat: CategoryType = {
-                name: nameCat,
-                maxParticipants: numCat,
-                participants: []
-            }
-
-            setCategories(categories => [...categories, cat])
-            setNameCat("");
-            setNumCat(0);
         }
 
-        seeNewCat()
+        loadingStop();
+
+        setErrors(result.errors)
     }
 
-    const handleSaveOptionTypeCompetition = (event: any) => {
-        setType(event.target.value)
-    }
+    const setCategories = (categoriesList: Category[]) => handleChangeEventData('categories', categoriesList);
 
     const uploadImageEvent = async (rota: string) => {
 
-        if (imageSelected) {
-
-            const ref = await refStorage(storage, `${rota}/wallpaper.jpg`)
-            await uploadFile(ref, imageSelected, {contentType: 'image/jpeg'})
-            return getDownloadURL(ref);
-        }
-        return false;
+        const ref = await refStorage(storage, `${rota}/wallpaper.jpg`)
+        await uploadFile(ref, getDataEvent('wallpaper'), {contentType: 'image/jpeg'})
+        return getDownloadURL(ref);
     }
 
+    const handleChangeImage = ({files}: EventTarget & HTMLInputElement) => {
+
+        if (files) {
+
+            handleChangeEventData('wallpaper', files.item(0));
+        }
+    };
+
+    const handleChangeDescription = (data: string) => handleChangeEventData('description', data);
+
     return <>
+
         <Header titulo="Criar Evento"/>
 
-        <ContainerPageCriarEvento>
+        <div className="flex flex-column justify-content-center align-items-center">
 
-            <FormDefault method="post" ref={formRef} onSubmit={handleSubmit}>
-                <LabelDefault htmlFor="name">Nome:</LabelDefault>
-                <InputDefault type="text" placeholder="Nome do Evento" id="name" name="name" required/>
+            <form method="post" ref={formRef} onSubmit={handleSubmit}>
 
-                <LabelDefault htmlFor="time">Horário:</LabelDefault>
-                <InputDefault type="time" placeholder="Horário" id="time" name="time" required/>
-
-                <LabelDefault htmlFor="date">Data:</LabelDefault>
-                <InputDefault type="date" placeholder="Data" id="date" name="date" required/>
-
-                <LabelDefault htmlFor="end_date">Inscrições até:</LabelDefault>
-                <InputDefault type="date" id="end_date" name="end_date" required/>
-
-                <LabelDefault htmlFor="address">Local:</LabelDefault>
-                <InputDefault type="text" placeholder="Endereço" id="address" name="address" value={address}
-                              onChange={(e) => setAddress(e.target.value)} required/>
-
-                <InputDefault readOnly type="number" id="status" name="status" hidden value={0}/>
-
-                <LabelDefault htmlFor="">Categorias:</LabelDefault>
-                <InputDefault readOnly type="text" id="categoriesObj" name="categoriesObj" hidden
-                              value={JSON.stringify(categories)}/>
-
-                <div className={categories.length ? "" : "hidden"}>
-                    {
-                        categories.map((elem, key) => {
-                            return <div key={key} className="labelCategoria">
-                                <p>
-                                    {elem.name + " - " + elem.maxParticipants}
-                                    <span onClick={() => deleteCategories(elem.name)} className="deleteCategories">
-                                        X
-                                    </span>
-                                </p>
-                            </ div>
-                        })
-                    }
+                <div className="flex flex-column gap-2" style={{marginTop: 10}}>
+                    <label className="form-label" htmlFor="event-name">{Texts.name} :</label>
+                    <InputText id="event-name" required placeholder="Nome do Evento" name="name"
+                               value={getDataEvent('name')}
+                               onChange={({target}) => handleChangeEventData(target.name, target.value)}/>
                 </div>
 
-                {showNewCat && <FormInForm>
-                    <LabelDefault>Nome:</LabelDefault>
-                    <InputDefault type="text" value={nameCat} onChange={(e) => setNameCat(e.target.value)}
-                                  placeholder="Nome da Categoria"/>
+                <div className="flex flex-column gap-2" style={{marginTop: 10}}>
+                    <label className="form-label" htmlFor="event-time">{Texts.time} :</label>
+                    <Calendar timeOnly id="event-time" placeholder="00:00" required name="time"
+                              value={getDataEvent('time')}
+                              onChange={({target}) => handleChangeEventData(target.name, target.value)}/>
+                </div>
 
-                    <LabelDefault>Participantes:</LabelDefault>
-                    <InputDefault type="number" value={numCat} onChange={(e) => setNumCat(parseInt(e.target.value))}
-                                  placeholder="Número de Participantes"/>
+                <div className="flex flex-column gap-2" style={{marginTop: 10}}>
+                    <label className="form-label" htmlFor="event-date">{Texts.date} :</label>
+                    <Calendar id="event-date" required name="date" minDate={new Date()} dateFormat="dd/mm/yy"
+                              value={getDataEvent('date')}
+                              onChange={({target}) => handleChangeEventData(target.name, target.value)}/>
+                </div>
 
-                    <ContainerButtons>
-                        <ButtonCancel type="button" onClick={seeNewCat}>Cancel</ButtonCancel>
-                        <ButtonSave type="button" onClick={createNewCat}>Criar</ButtonSave>
-                    </ContainerButtons>
-                </FormInForm>}
+                {/* Esta data deve ter um range relacionada com a data do evento */}
+                <div className="flex flex-column gap-2" style={{marginTop: 10}}>
+                    <label className="form-label" htmlFor="event-end-date">{Texts.end_date_event} :</label>
+                    <Calendar id="event-end-date" required name="end_date" minDate={getDataEvent('date')}
+                              dateFormat="dd/mm/yy" value={getDataEvent('end_date')}
+                              onChange={({target}) => handleChangeEventData(target.name, target.value)}/>
+                </div>
 
-                <ButtonCategories onClick={seeNewCat} type="button" className={!showNewCat ? "" : "hidden"}>Criar
-                    Categorias
-                </ButtonCategories>
+                <div className="flex flex-column gap-2" style={{marginTop: 10}}>
+                    <label className="form-label" htmlFor="event-adress">{Texts.address} :</label>
+                    <InputText id="event-adress" required placeholder="Endereço" name="address"
+                               value={getDataEvent('address')}
+                               onChange={({target}) => handleChangeEventData(target.name, target.value)}/>
+                </div>
 
-                <LabelDefault htmlFor="tipo">Tipo de Torneio :</LabelDefault>
-                <select name="type" id="type" value={type} onChange={handleSaveOptionTypeCompetition}>
-                    {TypeCompetitions.map((value, index) => {
-                        return <option key={index} value={index}>{value}</option>
-                    })}
-                </select>
+                <div className="flex flex-column gap-2" style={{marginTop: 10}}>
+                    <label className="form-label" htmlFor="event-tournament-type">{Texts.tournament_type} :</label>
+                    <Dropdown id="event-tournament-type" required placeholder={Texts.tournament_type} name="type"
+                              options={TypeCompetitions.map((label, id) => {
+                                  return {id, label}
+                              })}
+                              value={getDataEvent('type')}
+                              onChange={({target}) => handleChangeEventData(target.name, target.value)}/>
+                </div>
 
-                <LabelDefault htmlFor="descriptionArea">Descrição:</LabelDefault>
-                <TextAreaDefault id="descriptionArea" cols={20} rows={10} value={description}
-                                 onChange={(e) => setDescription(e.target.value)}/>
-                <textarea hidden readOnly name="description" cols={20} rows={10} value={JSON.stringify(description)}/>
+                <div className="flex gap-3 custom-responsive-direction" style={{marginTop: 10, marginBottom: 10}}>
 
-                <LabelImageDefault hasFile={imageSelected === undefined} htmlFor="image">
-                    {imageSelected ? "Capa Selecionada" : "Inserir Capa"}
-                </LabelImageDefault>
+                    <CreateCategory categories={getCategoriesEventData()} setCategories={setCategories}/>
 
-                <InputDefault type="file" id="image" hidden onChange={(e) => {
-                    const file = e.target.files ? e.target.files[0] : undefined
-                    setImageSelected(file)
-                }
-                }/>
+                    <UploadWallpaper selectedImage={getDataEvent('wallpaper')} handleChangeImage={handleChangeImage}/>
 
-                <GroupButtonCancelSubmit model={"Salvar"}/>
+                    <CreateDescription description={getDescriptionData()} handleChangeDescription={handleChangeDescription}/>
 
-            </FormDefault>
-        </ContainerPageCriarEvento>
+                </div>
+
+                <div className="flex flex-wrap flex-column align-items-center justify-content-center gap-3">
+                    {errors.map(item => <Message severity="info" text={item}/>)}
+                </div>
+
+                <Button label={Texts.create} type="submit" severity="success" style={{width: '100%'}}/>
+            </form>
+        </div>
     </>
 }

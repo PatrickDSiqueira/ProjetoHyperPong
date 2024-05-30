@@ -1,0 +1,18 @@
+export const Texts =  {
+    name: "Nome",
+    time: "Horário",
+    date: "Data",
+    end_date_event: "Inscrições Até",
+    address : "Endereço",
+    tournament_type : "Tipo de Torneio",
+    description: "Descrição",
+    select_image: "Selecione uma imagem.",
+    wallpaper: "Capa",
+    save: "Salvar",
+    cancel: "Cancelar",
+    categories: "Categorias",
+    create: "Criar",
+    new_category : "Nova Categoria",
+    qtd_participants: "Qtd. Participantes",
+    max_participants : "Max. Participantes",
+}

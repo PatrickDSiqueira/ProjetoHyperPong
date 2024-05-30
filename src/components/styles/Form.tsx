@@ -32,18 +32,6 @@ export const LabelImageDefault = styled(LabelDefault)<PropsLabelImageDefault>`
 
 `;
 
-export const FormDefault = styled.form`
-  display: flex;
-  flex-direction: column;
-  border: black 1px solid;
-  border-radius: 12px;
-  padding: 8px;
-  margin-top: 80px;
-  margin-right: 30px;
-  margin-left: 30px;
-  margin-bottom: 30px;
-`;
-
 export const FormInForm = styled.form`
   display: flex;
   flex-direction: column;

@@ -1,14 +1,15 @@
 import {useEffect, useState} from "react";
-import {EventType} from "../types/types";
+import {EventType, ParticipantType} from "../types/types";
 import {child, database, get, onValue, ref} from "../FirebaseService";
 import {useNavigate} from "react-router-dom";
 import {loadingStart, loadingStop} from "../App";
 import moment from "moment";
-
+import Event from "../Model/Event";
+import {Category} from "../types/Category";
 
 export function GetAll(listening = 0) {
 
-    const [eventsList, setEventsList] = useState<EventType[]>([]);
+    const [eventsList, setEventsList] = useState<Event[]>([]);
 
     useEffect(() => {
 
@@ -18,20 +19,39 @@ export function GetAll(listening = 0) {
 
             const allEventsRef = ref(database, "events/");
 
-            const allEvents: EventType[] = [];
+            const allEvents: Event[] = [];
 
             await onValue(allEventsRef, (snapshot) => {
                 snapshot.forEach((elem) => {
-                    allEvents.push(elem.val());
+
+                    const {
+                        name, address, date, time, description, wallpaper,
+                        type, end_date, categories, id, status
+                    } = elem.val();
+
+                    const categoryList = categories.map(
+                        ({
+                             name, participants, maxParticipant
+                         }: {
+                            name: string,
+                            participants: ParticipantType[],
+                            maxParticipant: number
+                        }) => new Category(name, participants ? participants : [], maxParticipant ? maxParticipant : 0)
+                    );
+
+                    allEvents.push(
+                        new Event(name, address, new Date(date), new Date(time), description, wallpaper,
+                            parseInt(type), end_date, categoryList, id, parseInt(status))
+                    );
                 });
 
-                allEvents.sort((a: EventType, b: EventType) => {
+                allEvents.sort((a: Event, b: Event) => {
 
-                    if (a.date < b.date) {
+                    if (a.getDate() < b.getDate()) {
 
                         return -1;
 
-                    } else if (a.date > b.date) {
+                    } else if (a.getDate() > b.getDate()) {
 
                         return 1;
 
@@ -99,7 +119,7 @@ export function GetOne(idEvent: string | undefined, listening: number = 0) {
 
     loadingStart();
 
-    const [event, setEvent] = useState<EventType>();
+    const [event, setEvent] = useState<Event>();
 
     const navigate = useNavigate();
 
@@ -110,7 +130,23 @@ export function GetOne(idEvent: string | undefined, listening: number = 0) {
 
                 if (snapshot.exists()) {
 
-                    setEvent(snapshot.val())
+                    const {
+                        name, address, date, time, description, wallpaper,
+                        type, end_date, categories, id,status
+                    } = snapshot.val();
+
+                    const categoryList = categories.map(
+                        ({
+                             name, participants, maxParticipant
+                         }: {
+                            name: string,
+                            participants: ParticipantType[],
+                            maxParticipant: number
+                        }) => new Category(name, participants ? participants : [], maxParticipant ? maxParticipant : 0)
+                    );
+
+                    setEvent(new Event(name, address, new Date(date), new Date(time), description, wallpaper,
+                        parseInt(type), end_date, categoryList, id, parseInt(status)))
 
                 } else {
 

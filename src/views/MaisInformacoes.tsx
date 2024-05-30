@@ -13,6 +13,8 @@ import CardInfo from "../components/CardInfo";
 import {GetOne} from "../hooks/Event";
 import {routeParams} from "../types/types";
 import {ButtonInscribe} from "../components/styles/ButtonInscreva";
+import {loadingStart} from "../App";
+import LoadingPage from "./LoadingPage";
 
 export const MaisInformacoes = () => {
 
@@ -26,36 +28,42 @@ export const MaisInformacoes = () => {
         justifyContent: "space-around"
     }
 
+    if (!event) {
+
+        loadingStart();
+        return <LoadingPage on={true}/>;
+    }
+
     return <>
-        <Header titulo={event?.name}/>
-        {event && <ContainerMaisInformacoesPage>
+        <Header titulo={event.getName()}/>
+        <ContainerMaisInformacoesPage>
             <CardInfo
                 Icon={<IconLocal/>}
                 title={"Local"}
-                containment={event.address ? event.address : ""}
+                containment={event.getAddress()}
             />
             <div style={styleDiv}>
                 <CardInfo
                     Icon={<IconClock/>}
                     title={"Data"}
-                    containment={moment(event.date).format("DD/MM/YY") + " ás " + event?.time}
+                    containment={moment(event.getDate()).format("DD/MM/YY") + " ás " + event.getTime()}
                 />
                 <CardInfo
                     Icon={<IconEnd/>}
                     title={"Inscrições Até"}
-                    containment={moment(event.end_date).format("DD/MM/YY")}
+                    containment={moment(event.getEndDate()).format("DD/MM/YY")}
                 />
             </div>
             <CardInfo
                 Icon={<IconInfo/>}
                 title={"Informações Adicionais"}
-                containment={event.description ? event.description : ""}
+                containment={event.getDescription()}
             />
 
             <ButtonInscribe onClick={() => {
                 navigate(`/evento/${idEvent}`)
             }}>Inscreva-se</ButtonInscribe>
 
-        </ContainerMaisInformacoesPage>}
+        </ContainerMaisInformacoesPage>
     </>;
 }

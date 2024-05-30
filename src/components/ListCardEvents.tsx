@@ -29,7 +29,7 @@ function ListCardEvents() {
     const navigate = useNavigate();
     const filterEvents = useFilterEvents(loading);
 
-    const handleClickCardEvent = (eventId: string) => navigate(`/evento/${eventId}/informacoes`);
+    const handleClickCardEvent = (eventId: string|null) => navigate(`/evento/${eventId}/informacoes`);
 
     const handleClickStatus = (value: number) => {
 
@@ -42,6 +42,7 @@ function ListCardEvents() {
             setFilterStatus(prevArray => [...prevArray, value]);
         }
     }
+    // console.clear()
 
     return <>
         <ListCard>
@@ -56,25 +57,26 @@ function ListCardEvents() {
                         onClick={() => handleClickStatus(2)}/>
             </div>
 
-
             {eventsList.map((event, index) => {
 
-                if (filterEvents.includes(event.type) && filterStatus.includes(parseInt(event.status))) {
+                // console.log(filterEvents, event.getType());
 
-                    return <ContainerCard key={index} active={parseInt(event.status) === 2 ? 0.6 : 1}
-                                          onClick={() => handleClickCardEvent(event.id)}>
+                if (filterEvents.includes(event.getType().toString()) && filterStatus.includes(event.getStatus())) {
+
+                    return <ContainerCard key={index} active={event.getStatus() === 2 ? 0.6 : 1}
+                                          onClick={() => handleClickCardEvent(event.getId())}>
                         <CardImage>
-                            <img src={event.wallpaper || undefined} alt=""/>
+                            <img src={event.getWallpaper()} alt=""/>
                         </CardImage>
                         <CardDesc>
-                            <TituloCard>{event.name}</TituloCard>
+                            <TituloCard>{event.getName()}</TituloCard>
                             <div style={{display: 'flex', flexDirection: "row", alignItems: "center"}}>
                                 <IconCalendar size={35}/>
                                 <div style={{paddingLeft: "15px"}}>
-                                    <span>{moment(event?.date).format("DD/MM/YY") + " - " + event.time}</span>
+                                    <span>{moment(event.getDate()).format("DD/MM/YY") + " - " + event.getTime()}</span>
                                     <div style={{display: "flex", justifyContent: "center"}}>
                                         <LabelStatusEvent
-                                            status={parseInt(event.status)}>{StatusEvents[parseInt(event.status)]}</LabelStatusEvent>
+                                            status={event.getStatus()}>{event.getStatusLabel()}</LabelStatusEvent>
                                     </div>
                                 </div>
                             </div>
