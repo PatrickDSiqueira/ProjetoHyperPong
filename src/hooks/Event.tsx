@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import {EventType, ParticipantType} from "../types/types";
+import {ParticipantType} from "../types/types";
 import {child, database, get, onValue, ref} from "../FirebaseService";
 import {useNavigate} from "react-router-dom";
 import {loadingStart, loadingStop} from "../App";
