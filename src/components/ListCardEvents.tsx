@@ -42,7 +42,6 @@ function ListCardEvents() {
             setFilterStatus(prevArray => [...prevArray, value]);
         }
     }
-    // console.clear()
 
     return <>
         <ListCard>
@@ -58,8 +57,6 @@ function ListCardEvents() {
             </div>
 
             {eventsList.map((event, index) => {
-
-                // console.log(filterEvents, event.getType());
 
                 if (filterEvents.includes(event.getType().toString()) && filterStatus.includes(event.getStatus())) {
 

@@ -36,8 +36,7 @@ export default function UploadWallpaper({selectedImage, handleChangeImage}: Uplo
         <Button type="button" size="small" label="Capa" icon="pi pi-external-link" onClick={() => setVisible(true)}
         outlined={!selectedImage}/>
 
-        <Dialog visible={visible} modal header={Texts.wallpaper}
-                style={{width: '50rem'}}
+        <Dialog visible={visible} header={Texts.wallpaper} className="custom-responsive-width-modal"
                 onHide={() => setVisible(false)}
         >
             <div className="modal-content">
@@ -48,7 +47,7 @@ export default function UploadWallpaper({selectedImage, handleChangeImage}: Uplo
                        hidden/>
 
                 <div className="flex flex-column justify-content-center align-items-center p-dialog-content">
-                    <Image src={imagePreview} alt="Image" width="250" preview/>
+                    <Image src={imagePreview} alt="Image" width="200" preview/>
                 </div>
 
                 <div className="flex flex-column justify-content-center align-items-center p-dialog-content">

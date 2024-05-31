@@ -28,7 +28,7 @@ export default function CreateDescription({handleChangeDescription, description}
         <Button type="button" size="small" label={Texts.description} icon="pi pi-external-link" onClick={() => setVisible(true)}
         outlined={!description}/>
 
-        <Dialog header={Texts.description} visible={visible} style={{width: '70vw'}} onHide={() => setVisible(false)}
+        <Dialog header={Texts.description} visible={visible} className="custom-responsive-width-modal" onHide={() => setVisible(false)}
                 footer={footer}>
             <div className="modal-content">
 
