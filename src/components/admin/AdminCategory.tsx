@@ -158,6 +158,7 @@ export default function AdminCategory({categoryList, updateData}: Props) {
         updateData()
     };
 
+
     return <div style={{padding: 12}}>
         <h1>Categorias</h1>
         <Accordion>

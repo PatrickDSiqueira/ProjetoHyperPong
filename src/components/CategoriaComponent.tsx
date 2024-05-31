@@ -28,17 +28,13 @@ const CategoriaComponent = ({category, index, statusEvent}: Props) => {
 
     const userLogin = GetCurrentUser();
 
-    console.clear()
-
-    console.log(category.getParticipants())
-
     useEffect(() => {
 
 
         // eslint-disable-next-line
         setCounter(Object.values(category.getParticipants()).filter(obj => obj.status == '1').length)
 
-    }, []);
+    }, [category]);
 
     useEffect(() => {
         const timer = setTimeout(() => {

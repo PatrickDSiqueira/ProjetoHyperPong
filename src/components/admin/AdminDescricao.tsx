@@ -17,7 +17,6 @@ interface Props {
 export default function AdminDescricao({event, updateData}: Props) {
 
     const [isEditing, setIsEditing] = useState(false);
-    const [eventEdit, setEventEdit] = useState(event);
 
     const descriptionFormat = event.getDescription().split("\\n").join('<br>');
 
@@ -30,7 +29,7 @@ export default function AdminDescricao({event, updateData}: Props) {
 
         loadingStart();
 
-        await update(ref(database, `events/${event.getId()}`), {description: eventEdit.getDescription()})
+        await update(ref(database, `events/${event.getId()}`), {description: event.getDescription()})
             .then(loadingStop).catch((e) => console.log(e));
 
         controlEdit.isNotEditing()
@@ -41,19 +40,19 @@ export default function AdminDescricao({event, updateData}: Props) {
     const getEditorOrView = () => {
 
         if (isEditing) {
+
             return <><CKEditor
                 config={{
                     removePlugins: ['About']
                 }}
                 editor={ClassicEditor}
                 data={descriptionFormat}
-                onChange={(event, editor) =>eventEdit.setDescription(editor.getData())}
+                onChange={(_, editor) =>event.setDescription(editor.getData())}
             />
 
                 <div style={{paddingTop: '5px'}} className="modal-footer">
                     <Button size="small" label="Cancelar" text severity="secondary" onClick={controlEdit.isNotEditing}/>
-                    <Button size="small" label="Salvar" onClick={updateDescription}
-                            disabled={eventEdit.getDescription() === event.getDescription()}/>
+                    <Button size="small" label="Salvar" onClick={updateDescription}/>
                 </div>
             </>
         }
