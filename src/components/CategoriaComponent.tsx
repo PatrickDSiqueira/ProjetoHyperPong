@@ -3,11 +3,18 @@ import {AiFillPlusCircle as IconPlus} from "react-icons/ai";
 import {Capacidade, ContainerCategoria, TituloCategoria} from "./styles/CategoriaComponent";
 import {useNavigate, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
-import {PropsComponetCategory, routeParams, typeMessage} from "../types/types";
+import {routeParams, typeMessage} from "../types/types";
 import { Message } from "./Message";
 import {GetCurrentUser} from "../context/AuthContext";
+import {Category} from "../types/Category";
 
-const CategoriaComponent = ({category, index, statusEvent}: PropsComponetCategory) => {
+export interface Props {
+    category: Category,
+    index: number,
+    statusEvent: number
+}
+
+const CategoriaComponent = ({category, index, statusEvent}: Props) => {
 
     const {idEvent} = useParams<routeParams>();
 
@@ -23,27 +30,23 @@ const CategoriaComponent = ({category, index, statusEvent}: PropsComponetCategor
 
     useEffect(() => {
 
-        if (category.participants === undefined || category.participants === null) {
 
-            setCounter(0)
+        // eslint-disable-next-line
+        setCounter(Object.values(category.getParticipants()).filter(obj => obj.status == '1').length)
 
-        } else {
-
-            // eslint-disable-next-line
-            setCounter(Object.values(category.participants).filter(obj => obj.status == '1').length)
-        }
-    },[category.participants]);
+    }, [category]);
 
     useEffect(() => {
         const timer = setTimeout(() => {
             setVisibleMessage(false)
+            
         }, 3000);
 
         return () => clearTimeout(timer)
     },[]);
 
     const handleClickCategory = () => {
-        if (statusEvent === "3" && !userLogin) {
+        if (statusEvent === 3 && !userLogin) {
             setAlertMessageText("As inscrições para este evento não estão abertas neste momento!");
             setAlertMessageType('Observation');
 
@@ -60,8 +63,8 @@ const CategoriaComponent = ({category, index, statusEvent}: PropsComponetCategor
 
         <ContainerCategoria onClick={handleClickCategory}>
             <IconPerson size={35}/>
-            <Capacidade>{counter}/{category.maxParticipants}</Capacidade>
-            <TituloCategoria>{category.name}</TituloCategoria>
+            <Capacidade>{counter}/{category.getMaxParticipant()}</Capacidade>
+            <TituloCategoria>{category.getName()}</TituloCategoria>
             <IconPlus color={'#036537'} size={35}/>
         </ContainerCategoria>
     </>

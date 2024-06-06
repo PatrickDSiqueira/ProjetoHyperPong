@@ -19,7 +19,7 @@ export default function UserList() {
 
     const players: Player[] = GetAll();
 
-    const events = GetOnlyAttributes(['id', 'name', 'end_date']);
+    const events = GetOnlyAttributes(['id', 'name', 'date']);
 
     const tableHeader = (
         <div style={{display: "flex", alignItems: "center", justifyContent: "space-between"}}>

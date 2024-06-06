@@ -3,7 +3,6 @@ import {Tag} from "primereact/tag";
 import {DataTable} from "primereact/datatable";
 import {Column, ColumnEditorOptions} from "primereact/column";
 import {
-    CategoryType,
     ParticipantType,
     routeParams,
     SeverityStatusParticipants,
@@ -20,29 +19,27 @@ import {useParams} from "react-router-dom";
 import {Dropdown} from "primereact/dropdown";
 import {loadingStart, loadingStop} from "../../App";
 import {ConfirmDialog, confirmDialog} from "primereact/confirmdialog";
+import {Category} from "../../types/Category";
 
 interface Props {
-    categoryList: CategoryType[],
+    categoryList: Category[],
     updateData: () => void
 }
 
-const initialCategory: CategoryType = {
-    maxParticipants: 0,
-    name: "",
-    participants: []
-};
+const initialCategory = new Category('', [], 0);
 
-export default function Category({categoryList, updateData}: Props) {
+export default function AdminCategory({categoryList, updateData}: Props) {
 
     const {idEvent} = useParams<routeParams>();
 
     const [viewModalEdit, setViewModalEdit] = useState(false);
 
-    const [categoryToEdit, setCategoryToEdit] = useState<CategoryType>(initialCategory);
+    const [categoryToEdit, setCategoryToEdit] = useState<Category>(initialCategory);
+
     const [categoryToEditId, setCategoryToEditId] = useState<number>(0);
 
     const modalEdit = {
-        show: (category: CategoryType, id: number) => {
+        show: (category: Category, id: number) => {
             setCategoryToEditId(id)
             setCategoryToEdit(category);
             setViewModalEdit(true);
@@ -58,15 +55,17 @@ export default function Category({categoryList, updateData}: Props) {
     const saveCategoryDate = async () => {
 
         await update(ref(database, `events/${idEvent}/categories/${categoryToEditId}`),
-            {name: categoryToEdit.name, maxParticipants: categoryToEdit.maxParticipants})
+            {name: categoryToEdit.getName(), maxParticipants: categoryToEdit.getMaxParticipant()})
             .then(modalEdit.hide);
 
         updateData();
     }
 
-    const headerCategory = (category: CategoryType, categoryId: number) => {
+    const headerCategory = (category: Category, categoryId: number) => {
 
-        const {name, participants} = category;
+        const name = category.getName();
+
+        const participants = category.getParticipants();
 
         const counter: number[] = [];
         // const counter: { [status: string]: number } = {};
@@ -89,7 +88,7 @@ export default function Category({categoryList, updateData}: Props) {
         return <div className="flex align-items-center gap-2 w-full">
             <span>{name}</span>
             {counter.map((value, i) => <Tag key={i} severity={SeverityStatusParticipants[i]}
-                value={value}/>)}
+                                            value={value}/>)}
             <Button rounded text severity="secondary" onClick={() => modalEdit.show(category, categoryId)}>
                 <FaRegEdit size={24}/>
             </Button>
@@ -103,7 +102,7 @@ export default function Category({categoryList, updateData}: Props) {
         return <Tag severity={SeverityStatusParticipants[status]}>{StatusPartipants[status]}</Tag>
     }
 
-    const handleDeleteParticipants = async (player: ParticipantType, category: CategoryType, categoryId: number) => {
+    const handleDeleteParticipants = async (player: ParticipantType, category: Category, categoryId: number) => {
 
         loadingStart();
 
@@ -111,7 +110,7 @@ export default function Category({categoryList, updateData}: Props) {
             .then(updateData);
 
     }
-    const deletePlayerTemplate = (player: ParticipantType, category: CategoryType, categoryId: number) => {
+    const deletePlayerTemplate = (player: ParticipantType, category: Category, categoryId: number) => {
 
         const confirmDelete = () => {
             confirmDialog({
@@ -125,7 +124,7 @@ export default function Category({categoryList, updateData}: Props) {
         return <Button icon="pi pi-trash" text severity="secondary" onClick={confirmDelete}/>
     }
 
-    const inputSelectPaticipantEditor = (props: ColumnEditorOptions, field: string, categoryId: number, category: CategoryType) => {
+    const inputSelectPaticipantEditor = (props: ColumnEditorOptions, field: string, categoryId: number, category: Category) => {
 
         const statusId = props.rowData[field];
 
@@ -147,7 +146,7 @@ export default function Category({categoryList, updateData}: Props) {
         );
     };
 
-    const onEditorValueChange = async (props: ColumnEditorOptions, newStatus: number, categoryId: number, category: CategoryType) => {
+    const onEditorValueChange = async (props: ColumnEditorOptions, newStatus: number, categoryId: number, category: Category) => {
 
         loadingStart();
 
@@ -159,12 +158,13 @@ export default function Category({categoryList, updateData}: Props) {
         updateData()
     };
 
+
     return <div style={{padding: 12}}>
         <h1>Categorias</h1>
         <Accordion>
             {categoryList.map((category, categoryId) => {
 
-                const {participants} = category;
+                const participants = category.getParticipants();
 
                 const data = Object.values(participants || {})
 
@@ -198,21 +198,15 @@ export default function Category({categoryList, updateData}: Props) {
                 <div className="flex flex-column gap-2">
                     <label htmlFor="max_participants">Max. Participantes</label>
                     <InputNumber inputId="max_participants"
-                                 value={categoryToEdit?.maxParticipants}
-                                 onChange={(e) => setCategoryToEdit((prevState) => ({
-                                     ...prevState,
-                                     maxParticipants: e.value ?? 0
-                                 }))}
+                                 value={categoryToEdit?.getMaxParticipant()}
+                                 onChange={({value}) => categoryToEdit.setMaxParticipant(value ? value : 0)}
                                  max={50}/>
                 </div>
 
                 <div className="flex flex-column gap-2">
                     <label htmlFor="name">Nome</label>
-                    <InputText id="name" value={categoryToEdit?.name}
-                               onChange={event => setCategoryToEdit((prevState) => ({
-                                   ...prevState,
-                                   name: event.target.value
-                               }))}/>
+                    <InputText id="name" value={categoryToEdit?.getName()}
+                               onChange={({target}) => categoryToEdit.setName(target.value)}/>
                 </div>
             </div>
         </Dialog>

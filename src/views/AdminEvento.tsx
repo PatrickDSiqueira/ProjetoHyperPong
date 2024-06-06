@@ -3,9 +3,9 @@ import Header from "../components/Header";
 import {useParams} from "react-router-dom";
 import {GetOne} from "../hooks/Event";
 import {routeParams} from "../types/types";
-import Category from "../components/admin/Category";
+import AdminCategory from "../components/admin/AdminCategory";
 import {loadingStart} from "../App";
-import Descricao from "../components/admin/Descricao";
+import AdminDescricao from "../components/admin/AdminDescricao";
 import LoadingPage from "./LoadingPage";
 
 export const AdminEvento = () => {
@@ -23,8 +23,8 @@ export const AdminEvento = () => {
     }
 
     return <>
-        <Header titulo={event.name + " - Editar"}/>
-        <Category categoryList={event.categories} updateData={updateData}/>
-        <Descricao event={event} updateData={updateData}/>
+        <Header titulo={event.getName() + " - Editar"}/>
+        <AdminCategory categoryList={event.getCategories()} updateData={updateData}/>
+        <AdminDescricao event={event} updateData={updateData}/>
     </>;
 }

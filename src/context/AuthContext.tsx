@@ -1,4 +1,4 @@
-import React, {createContext, ReactNode, useContext, useState} from "react";
+import React, {createContext, ReactNode, useContext, useEffect, useState} from "react";
 import {auth} from "../FirebaseService";
 
 interface AuthContextProviderProps {
@@ -15,16 +15,11 @@ export default function AuthContextProvider({children}: AuthContextProviderProps
 
     const [user, setUser] = useState<any | null>(null);
 
-    auth.onAuthStateChanged((user) => {
-        if (user) {
+    useEffect(() => {
 
-            setUser(user);
+        auth.onAuthStateChanged((user) => setUser(user || false));
 
-        } else {
-
-            setUser(false)
-        }
-    });
+    }, []);
 
     return <AuthContext.Provider value={user}>{children}</AuthContext.Provider>
 }

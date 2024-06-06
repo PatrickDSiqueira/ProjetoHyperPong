@@ -10,18 +10,18 @@ import {Tag} from "primereact/tag";
 
 interface Props {
     player: Player,
-    events: { id: string, name: string, end_date: string }[]
+    events: { id: string, name: string, date: string }[]
 }
 
 export const EditScore = ({player, events}: Props) => {
 
-    const groupedEvents: { [date: number]: { id: string, name: string, end_date: string }[] } = {};
+    const groupedEvents: { [date: number]: { id: string, name: string, date: string }[] } = {};
 
     const [score, setScore] = useState(player.getScore())
 
     events.forEach(event => {
 
-        const year = moment(event.end_date).year();
+        const year = moment(event.date).year();
 
         if (!groupedEvents[year]) {
 
@@ -79,9 +79,9 @@ export const EditScore = ({player, events}: Props) => {
             <div className="modal-body">
                 <div className="card">
                     <TabView>
-                        {Object.keys(groupedEvents).map((year) => {
+                        {Object.keys(groupedEvents).map((year, index) => {
 
-                            return <TabPanel header={<span className="flex flex-column">{year}<Tag
+                            return <TabPanel header={<span className="flex flex-column" key={index}>{year}<Tag
                                 value={player.getYearScore(groupedEvents[parseInt(year)].map(({id}) => id))}/></span>}>
                                 <ScrollPanel style={{width: '100%', height: '400px'}}>
 

@@ -63,12 +63,6 @@ export type routeParams = {
     idCategory: string
 }
 
-export interface PropsComponetCategory {
-    category: CategoryType,
-    index: number,
-    statusEvent: typeof StatusEvents[number]
-}
-
 export interface TypesMessages {
     type: "success" | "error" | "Observation"
 }
