@@ -25,13 +25,13 @@ export const Evento = () => {
     return <>
         <Header titulo={event.getName()}/>
         <ContainerEvento>
-            <p>{"Data : " + moment(event.getDate()).format("DD/MM/YY") + " ás " + moment(event.getTime())}</p>
+            <p>{"Data : " + moment(event.getDate()).format("DD/MM/YY") + " ás " + event.getTime()}</p>
             <Link to={`/evento/${event.getId()}/informacoes`}>Mais Informações</Link>
-            {event !== undefined && event.getCategories().map((category, index) => {
+            {event.getCategories().map((category, index) => {
 
-                        return <CategoriaComponent statusEvent={event.getStatus()} category={category}
-                                                   index={index}/>
-                    })
+                return <CategoriaComponent statusEvent={event.getStatus()} category={category}
+                                           index={index}/>
+            })
             }
             <ButtonShareEvent/>
         </ContainerEvento>

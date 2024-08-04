@@ -40,7 +40,6 @@ export default class Player {
 
     async save() {
 
-
         const {isValid, errors} = this.validateData();
 
         if (!isValid) {
@@ -73,14 +72,16 @@ export default class Player {
     private validateData() {
 
         let isValid = true;
+
         let errors = [];
 
-        const hasFirstNameLastName = /^\w+\s+\w+$/;
+        const quantWord = this.getName().trim().split(" ").length
 
-        if (!hasFirstNameLastName.test(this.getName())) {
+        if (quantWord < 2) {
 
             isValid = false;
-            errors.push("O nome deve ter nome e sobrenome")
+
+            errors.push("Deve ter nome e sobrenome")
         }
 
         return {isValid, errors};

@@ -145,10 +145,9 @@ export default function CriarEvento() {
                               onChange={({target}) => handleChangeEventData(target.name, target.value)}/>
                 </div>
 
-                {/* Esta data deve ter um range relacionada com a data do evento */}
                 <div className="flex flex-column gap-2" style={{marginTop: 10}}>
                     <label className="form-label" htmlFor="event-end-date">{Texts.end_date_event} :</label>
-                    <Calendar id="event-end-date" required name="end_date" minDate={getDataEvent('date')}
+                    <Calendar id="event-end-date" required name="end_date" minDate={new Date()} maxDate={getDataEvent('date')}
                               dateFormat="dd/mm/yy" value={getDataEvent('end_date')}
                               onChange={({target}) => handleChangeEventData(target.name, target.value)}/>
                 </div>

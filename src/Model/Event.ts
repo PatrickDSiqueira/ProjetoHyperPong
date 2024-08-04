@@ -129,8 +129,8 @@ export default class Event extends Model {
                 notPassed: (value: number) => TypeCompetitions[value] === undefined,
             },
             isAfterDate: {
-                text: (label: string) => `${label} deve ser após o inicio das inscrições.`,
-                notPassed: (value: Date) => !(value > this.getDate())
+                text: (label: string) => `${label} deve ser antes da realização do evento.`,
+                notPassed: (value: Date) => !(value < this.getDate())
             },
             eventStatus: {
                 text: () => `Status de evento não é válido.`,
@@ -190,6 +190,11 @@ export default class Event extends Model {
         if (validations.isAfterDate.notPassed(this.getEndDate())) {
 
             errors.push(validations.isAfterDate.text(Texts.end_date_event));
+        }
+
+        if (validations.dateIsAfterToday.notPassed(this.getEndDate())) {
+
+            errors.push(validations.dateIsAfterToday.text(Texts.end_date_event));
         }
 
         if (validations.categories.notPassed(this.getCategories())) {
