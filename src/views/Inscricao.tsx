@@ -26,7 +26,7 @@ const Inscricao = () => {
     const dtaNascimento = localStorage.getItem('dtaNascimentoInscription') || "";
     const [rememberMe, setRememberMe] = useState(nomeSobrenome !== "");
 
-    const {maxParticipantsCategory, participantsConfirm} = useMaxParticipantsCategory(idEvent, idCategory);
+    const {maxParticipantsCategory, allParticipantsCounter} = useMaxParticipantsCategory(idEvent, idCategory);
 
     async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
 
@@ -73,8 +73,10 @@ const Inscricao = () => {
 
     function checkParticipantsNumber() {
 
-        if (maxParticipantsCategory && participantsConfirm >= maxParticipantsCategory) {
+        if (allParticipantsCounter >= maxParticipantsCategory) {
+
             setOpeModalConfirmation(true);
+
         } else {
             const button = document.getElementById('sendInscription');
             if (button) {
