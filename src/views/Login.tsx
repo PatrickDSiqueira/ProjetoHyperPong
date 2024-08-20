@@ -15,8 +15,14 @@ import {routes} from "../routes/Routes";
 import {InputText} from "primereact/inputtext";
 import {Button} from "primereact/button";
 import {Password} from "primereact/password";
+import axios from "axios";
 
 const Login = () => {
+
+    axios.get('http://54.224.202.125:3333/').then((response)=>{
+
+        console.log(response)
+    })
 
     const navigate = useNavigate();
 
@@ -28,7 +34,7 @@ const Login = () => {
 
     async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
 
-        setLoading(true)
+        setLoading(true);
 
         event.preventDefault();
 
