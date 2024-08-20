@@ -28,7 +28,7 @@ const Login = () => {
 
     async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
 
-        setLoading(true)
+        setLoading(true);
 
         event.preventDefault();
 
